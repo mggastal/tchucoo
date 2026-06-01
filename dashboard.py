@@ -15,7 +15,7 @@ from pathlib import Path
 # ══════════════════════════════════════════════════════
 # CONFIG
 # ══════════════════════════════════════════════════════
-SHEET_ID         = "SEU_SHEET_ID_AQUI"
+SHEET_ID         = "1FUPZl8XwP09ADnswnfENoPUxWNcQRp8PR_hyv0o0XC8"
 TEMPLATE_FILE    = "dashboard.html"
 OUTPUT_FILE      = "index.html"
 
