@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title id="pageTab">Dashboard E-commerce</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+<style>
+:root{--bg:#f0f2f7;--surface:#fff;--surface2:#f7f8fc;--border:rgba(0,0,0,.07);--text:#0f1523;--muted:#6b7280;--muted2:#9ca3af;--accent:#e11d48;--sh:0 1px 4px rgba(0,0,0,.06);--r:12px;}
+[data-theme="dark"]{--bg:#0a0f1e;--surface:#111827;--surface2:#1a2236;--border:rgba(255,255,255,.08);--text:#f0f4ff;--muted:#8b95a9;--muted2:#5a6478;--sh:0 1px 4px rgba(0,0,0,.3);}
+[data-theme="dark"] .sb{background:#060b14;}
+[data-theme="dark"] .tc thead th{background:#1a2236;}
+[data-theme="dark"] .f-rate-txt{background:rgba(255,255,255,.12);color:#fff;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;min-height:100vh;overflow-x:hidden;}
+.app{display:grid;grid-template-columns:210px 1fr;min-height:100vh;align-items:start;}
+
+/* SIDEBAR */
+.sb{background:#0f1523;display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto;}
+.sb-logo{display:flex;align-items:center;gap:10px;padding:18px 16px 14px;border-bottom:1px solid rgba(255,255,255,.07);}
+.logo-box{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:#fff;flex-shrink:0;}
+.logo-name{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:#fff;}
+.logo-sub{font-size:10px;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:1.5px;}
+.sb-nav{padding:10px 8px;flex:1;}
+.sb-section{padding:16px 10px 4px;}
+.sb-platform-group{padding:4px 4px 0;}
+.sb-platform-hd{display:flex;align-items:center;gap:8px;padding:6px 10px 4px;margin-bottom:2px;}
+.sb-platform-icon{width:20px;height:20px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#fff;font-family:'Syne',sans-serif;flex-shrink:0;}
+.sb-platform-lbl{font-size:10px;font-weight:700;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:1.5px;}
+.sb-item{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:7px;cursor:pointer;color:rgba(255,255,255,.45);font-size:12px;font-weight:500;transition:all .15s;margin-bottom:1px;text-decoration:none;}
+.sb-item:hover{background:rgba(255,255,255,.06);color:rgba(255,255,255,.8);}
+.sb-item.active{background:rgba(255,255,255,.1);color:#fff;}
+.sb-item .ico{font-size:14px;width:18px;text-align:center;}
+.sb-dot{width:5px;height:5px;border-radius:50%;margin-left:auto;}
+.sb-footer{padding:10px 16px;border-top:1px solid rgba(255,255,255,.05);}
+.sb-footer span{font-size:10px;color:rgba(255,255,255,.25);}
+
+/* TOPBAR */
+.main{display:flex;flex-direction:column;overflow-x:hidden;}
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:9px 20px;display:flex;align-items:center;justify-content:space-between;position:fixed;top:0;left:210px;right:0;z-index:9000;box-shadow:0 2px 8px rgba(0,0,0,.12);gap:8px;flex-wrap:wrap;}
+.topbar-l{display:flex;align-items:center;gap:8px;flex-shrink:0;}
+.page-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;}
+.live-badge{display:flex;align-items:center;gap:5px;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600;}
+.pulse{width:5px;height:5px;border-radius:50%;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.topbar-r{display:flex;align-items:center;gap:5px;flex-wrap:wrap;}
+.period-bar{display:flex;gap:2px;background:var(--bg);padding:3px;border-radius:8px;border:1px solid var(--border);}
+.pb{padding:4px 10px;border-radius:6px;border:none;background:transparent;cursor:pointer;font-size:11px;font-weight:600;color:var(--muted);transition:all .15s;font-family:'DM Sans',sans-serif;white-space:nowrap;}
+.pb.active{background:var(--surface);color:var(--text);box-shadow:var(--sh);}
+.date-range{display:flex;align-items:center;gap:4px;background:var(--surface2);padding:3px 8px;border-radius:8px;border:1px solid var(--border);}
+.date-range input{border:none;background:transparent;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;color:var(--muted);cursor:pointer;outline:none;width:88px;}
+.date-range span{font-size:11px;color:var(--muted2);}
+.dr-clear{padding:2px 6px;border-radius:5px;border:none;background:transparent;color:var(--muted2);font-size:13px;cursor:pointer;}
+.lct-bar{display:none;gap:2px;background:var(--bg);padding:3px;border-radius:8px;border:1px solid var(--border);}
+.label-toggle{display:flex;align-items:center;gap:5px;padding:4px 9px;border-radius:6px;border:1px solid var(--border);background:var(--surface2);cursor:pointer;font-size:11px;font-weight:600;color:var(--muted);user-select:none;}
+.label-toggle.on{background:var(--accent);color:#fff;border-color:var(--accent);}
+.theme-btn{padding:4px 10px;border-radius:7px;border:1px solid var(--border);background:var(--surface2);cursor:pointer;font-size:11px;font-weight:600;color:var(--muted);font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:4px;}
+
+/* CONTENT */
+.content{padding:115px 22px 18px 22px;flex:1;overflow-x:hidden;}
+.page-section{display:none;}
+.page-section.active{display:block;}
+
+/* KPI */
+.krow{display:grid;gap:10px;margin-bottom:14px;}
+.k5{grid-template-columns:repeat(5,1fr);}
+.k4{grid-template-columns:repeat(4,1fr);}
+.k3{grid-template-columns:repeat(3,1fr);}
+.kpi{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:13px 15px;position:relative;overflow:hidden;box-shadow:var(--sh);}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--kc,#e2e8f0);}
+.kpi-lbl{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:1.2px;font-weight:600;margin-bottom:5px;}
+.kpi-val{font-family:'Syne',sans-serif;font-size:20px;font-weight:700;line-height:1;color:var(--kc,var(--text));margin-bottom:2px;}
+.kpi-sub{font-size:10px;color:var(--muted);}
+
+/* FUNIL */
+.funnel-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px 22px;margin-bottom:14px;box-shadow:var(--sh);}
+.funnel-title{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;margin-bottom:16px;}
+.funnel-steps{display:flex;flex-direction:column;gap:0;}
+.f-step{display:flex;flex-direction:column;}
+.f-bar{height:40px;border-radius:7px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;transition:width .4s;min-width:110px;}
+.f-bar-lbl{font-size:12px;font-weight:600;color:#fff;}
+.f-bar-val{font-family:'DM Mono',monospace;font-size:14px;font-weight:700;color:#fff;}
+.f-between{display:flex;align-items:center;gap:8px;padding:4px 0 4px 12px;}
+.f-arrow{color:var(--muted2);font-size:14px;}
+.f-rate-txt{font-size:13px;font-weight:800;padding:2px 10px;border-radius:20px;}
+
+/* CHARTS */
+.cc{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:15px;box-shadow:var(--sh);min-width:0;overflow:hidden;}
+.cc-t{font-family:'Syne',sans-serif;font-size:12px;font-weight:700;margin-bottom:2px;}
+.cc-s{font-size:11px;color:var(--muted);margin-bottom:10px;}
+.cw{position:relative;width:100%;overflow:hidden;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:14px;}
+.mb14{margin-bottom:14px;}
+
+/* MÉTRICAS DIÁRIAS */
+.daily-row{display:grid;grid-template-columns:72px 1fr;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;box-shadow:var(--sh);margin-bottom:10px;}
+.daily-side{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:12px 8px;border-right:1px solid var(--border);background:var(--surface2);}
+.ds-lbl{font-size:8px;color:var(--muted2);text-transform:uppercase;letter-spacing:.8px;font-weight:700;margin-bottom:3px;text-align:center;}
+.ds-val{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;text-align:center;}
+.daily-main{padding:12px 14px 10px 10px;}
+.daily-ttl{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;color:var(--muted);margin-bottom:6px;}
+
+/* SECTION */
+.sec-hd{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;margin-bottom:10px;}
+.section{margin-bottom:20px;}
+
+/* TABELAS */
+.tc{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;box-shadow:var(--sh);overflow-x:auto;margin-bottom:14px;}
+.tc table{width:100%;border-collapse:collapse;min-width:700px;}
+.tc thead th{font-size:9px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);font-weight:700;padding:8px 10px;text-align:left;background:var(--surface2);border-bottom:1px solid var(--border);white-space:nowrap;}
+.tc thead th.num{text-align:right;}
+.tc tbody td{padding:7px 10px;font-size:11px;border-bottom:1px solid var(--border);white-space:nowrap;}
+.tc tbody tr:last-child td{border-bottom:none;}
+.tc tbody tr:hover td{background:var(--surface2);}
+.num{text-align:right;font-family:'DM Mono',monospace;}
+.cg{color:#059669;font-weight:700;}.cw2{color:#d97706;font-weight:700;}.cr{color:#dc2626;font-weight:700;}.cn{color:var(--muted);}
+
+/* CRIATIVOS */
+.ads-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:10px;}
+.ad-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;box-shadow:var(--sh);transition:transform .15s;}
+.ad-card:hover{transform:translateY(-2px);}
+.ad-img{width:100%;aspect-ratio:4/5;background:var(--surface2);overflow:hidden;}
+.ad-img img{width:100%;height:100%;object-fit:cover;}
+.ad-img-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:26px;color:var(--muted2);}
+.ad-info{padding:8px 10px;}
+.ad-name{font-size:10px;font-weight:600;margin-bottom:6px;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;line-height:1.3;color:var(--muted);}
+.ad-stats{display:grid;grid-template-columns:1fr 1fr;gap:3px;margin-top:4px;}
+.as-l{font-size:8px;color:var(--muted2);text-transform:uppercase;letter-spacing:.5px;}
+.as-v{font-size:11px;font-weight:700;font-family:'DM Mono',monospace;}
+
+/* SEG */
+.seg-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;box-shadow:var(--sh);overflow-x:auto;}
+.seg-card table{width:100%;border-collapse:collapse;}
+.seg-card thead th{font-size:9px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);font-weight:700;padding:7px 10px;background:var(--surface2);border-bottom:1px solid var(--border);}
+.seg-card thead th.num{text-align:right;}
+.seg-card tbody td{padding:6px 10px;font-size:11px;border-bottom:1px solid var(--border);}
+.seg-card tbody tr:last-child td{border-bottom:none;}
+.seg-ttl{font-family:'Syne',sans-serif;font-size:12px;font-weight:700;margin-bottom:8px;}
+
+/* MOB */
+.mob-menu{display:none;width:34px;height:34px;border-radius:7px;background:var(--surface2);border:1px solid var(--border);cursor:pointer;font-size:17px;align-items:center;justify-content:center;}
+.desk-only{display:block!important;}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:250;}
+.overlay.open{display:block;}
+@media(max-width:768px){
+  .desk-only{display:none!important;}
+  .app{grid-template-columns:1fr;}
+  .sb{display:none;position:fixed;top:0;left:0;width:240px;height:100vh;z-index:400!important;}
+  .sb.open{display:flex;}
+  .mob-menu{display:flex;}
+  .topbar{left:0;right:0;z-index:299!important;}
+  .content{padding:12px;overflow-x:hidden;padding-top:185px!important;}
+  .main{overflow-x:hidden;max-width:100vw;}
+  .k5,.k4,.k3{grid-template-columns:repeat(2,1fr);}
+  .g2,.g3{grid-template-columns:1fr;}
+  .tc{overflow-x:auto;}
+  .daily-row{grid-template-columns:1fr;}
+  .daily-side{flex-direction:row;gap:12px;border-right:none;border-bottom:1px solid var(--border);}
+  .seg-card{overflow-x:auto!important;}
+  .seg-card table{min-width:280px;}
+}
+</style>
+</head>
+<body>
+<div class="overlay" id="overlay" onclick="closeSb()"></div>
+<div class="app">
+
+<aside class="sb" id="sidebar">
+  <div class="sb-logo">
+    <img src="logo.png" alt="Logo" style="width:160px;height:40px;object-fit:contain;object-position:left center;" onerror="this.style.display='none';document.getElementById('logoFallback').style.display='flex'">
+    <div id="logoFallback" style="display:none;align-items:center;gap:8px">
+      <div class="logo-box" id="logoBoxSb" style="background:var(--accent)"></div>
+      <div><div class="logo-name" id="logoNameSb"></div><div class="logo-sub">E-commerce</div></div>
+    </div>
+  </div>
+  <div class="sb-nav">
+    <div class="sb-platform-group">
+      <div class="sb-platform-hd">
+        <div class="sb-platform-icon" style="background:linear-gradient(135deg,#1877f2,#42a5f5)">f</div>
+        <span class="sb-platform-lbl">Meta Ads</span>
+      </div>
+      <a href="#" class="sb-item active" id="sbMeta" onclick="goPage('meta',this);return false;"><span class="ico">📋</span>Geral</a>
+      <a href="#" class="sb-item" id="sbDiario" onclick="goPage('diario',this);return false;"><span class="ico">📊</span>Métricas Diárias<span class="sb-dot" style="background:#1877f2"></span></a>
+      <a href="#" class="sb-item" id="sbMetaHist" onclick="goPage('meta-hist',this);return false;"><span class="ico">📅</span>Dados Históricos</a>
+    </div>
+    <div class="sb-platform-group" style="margin-top:8px;opacity:.4;pointer-events:none">
+      <div class="sb-platform-hd">
+        <div class="sb-platform-icon" style="background:linear-gradient(135deg,#fbbc04,#ea4335)">G</div>
+        <span class="sb-platform-lbl">Google Ads</span>
+      </div>
+      <a href="#" class="sb-item" style="cursor:default"><span class="ico">📋</span>Geral<span style="margin-left:auto;font-size:9px;background:rgba(255,255,255,.1);padding:1px 5px;border-radius:4px">Em breve</span></a>
+    </div>
+  </div>
+  <div class="sb-footer"><span id="sbAtual">--/--/---- · via planilha</span></div>
+</aside>
+
+<main class="main">
+  <div class="topbar">
+    <div class="topbar-l">
+      <button class="mob-menu" onclick="toggleSb()">☰</button>
+      <div class="page-title" id="pageTitle">Meta Ads — Geral</div>
+      <div class="live-badge" id="liveBadge"><div class="pulse" id="livePulse"></div><span id="liveTxt">—</span></div>
+      <div class="desk-only" style="display:flex;align-items:center;gap:5px;margin-left:2px;">
+        <span style="font-size:9px;color:var(--muted2);font-weight:600">Aa</span>
+        <input type="range" id="labelSizeSlider" min="6" max="14" value="8" step="1"
+          oninput="onLabelSize(this.value)"
+          style="width:56px;height:3px;accent-color:var(--accent);cursor:pointer;opacity:.55;">
+      </div>
+    </div>
+    <div class="topbar-r">
+      <div class="period-bar">
+        <button class="pb" onclick="setPeriod(1,this)">Ontem</button>
+        <button class="pb" onclick="setPeriod(7,this)">7d</button>
+        <button class="pb" onclick="setPeriod(14,this)">14d</button>
+        <button class="pb active" onclick="setPeriod(30,this)">30d</button>
+        <button class="pb" onclick="setPeriod(0,this)">Tudo</button>
+      </div>
+      <div class="date-range">
+        <input type="date" id="dtI"><span>→</span><input type="date" id="dtF">
+        <button class="dr-clear" onclick="clearDates()">✕</button>
+      </div>
+      <div class="lct-bar" id="lctBar">
+        <button class="pb active" id="btnLctOn" onclick="setLct(true,this)">Campanha</button>
+        <button class="pb" id="btnLctOff" onclick="setLct(false,this)">Tudo</button>
+      </div>
+      <div class="label-toggle on" id="labelToggle" onclick="toggleLabels(this)" title="Rótulos">Rótulos</div>
+      <button class="theme-btn" onclick="toggleTheme()"><span id="themeIcon">🌙</span><span id="themeLabel">Escuro</span></button>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- META ADS (aba principal) -->
+    <div class="page-section active" id="page-meta">
+      <details style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:0;margin-bottom:14px;box-shadow:var(--sh);" id="metaCampFilterDetails" class="desk-only">
+        <summary style="padding:10px 14px;cursor:pointer;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;list-style:none;display:flex;align-items:center;justify-content:space-between;user-select:none;">
+          Filtrar por campanha <span id="metaCampFilterCount" style="font-weight:400;font-size:10px"></span>
+          <span style="font-size:13px;color:var(--muted2)">▾</span>
+        </summary>
+        <div style="padding:0 14px 12px;" id="metaCampFilter"></div>
+      </details>
+      <div class="krow k4 mb14" id="metaKpis"></div>
+      <!-- Funil E-commerce -->
+      <div class="funnel-card mb14">
+        <div class="funnel-title">🛒 Funil E-commerce · Meta Ads</div>
+        <div class="funnel-steps" id="funnelSteps"></div>
+      </div>
+      <!-- Gráfico principal -->
+      <div class="cc mb14">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;flex-wrap:wrap;gap:6px;">
+          <div>
+            <div class="cc-t" id="chMainTitle">Vendas Diárias & Investimento</div>
+            <div class="cc-s" id="chMainSub">Compras · Invest. (linha verde) · Custo/Venda (linha preta tracejada)</div>
+          </div>
+          <div style="display:flex;gap:3px;background:var(--bg);padding:3px;border-radius:8px;border:1px solid var(--border);flex-shrink:0;">
+            <button id="modeVendas"  class="pb active" onclick="setChartMode('vendas',this)"  style="font-size:10px;padding:3px 9px">🛒 Vendas</button>
+            <button id="modeCarrinho" class="pb" onclick="setChartMode('carrinho',this)" style="font-size:10px;padding:3px 9px">🛍️ Carrinho</button>
+            <button id="modeAlcance" class="pb" onclick="setChartMode('alcance',this)"  style="font-size:10px;padding:3px 9px">📢 Alcance</button>
+          </div>
+        </div>
+        <div class="cw" style="height:210px"><canvas id="chMetaMain"></canvas></div>
+      </div>
+      <!-- Campanhas -->
+      <div class="section">
+        <div class="sec-hd">Campanhas</div>
+        <div class="tc" id="tCamps"></div>
+      </div>
+      <!-- Segmentação -->
+      <div class="section" style="margin-top:16px">
+        <div class="sec-hd">Segmentação</div>
+        <div class="g3">
+          <div><div class="seg-ttl">Gênero</div><div class="seg-card" id="tGender"></div></div>
+          <div><div class="seg-ttl">Faixa Etária</div><div class="seg-card" id="tAge"></div></div>
+          <div><div class="seg-ttl">Posicionamento</div><div class="seg-card" id="tPlatform"></div></div>
+        </div>
+      </div>
+      <!-- Ranking de Criativos -->
+      <div class="section" style="margin-top:16px">
+        <div class="sec-hd">Ranking de Criativos</div>
+        <div class="ads-grid" id="adsGrid"></div>
+      </div>
+    </div>
+
+    <!-- MÉTRICAS DIÁRIAS -->
+    <div class="page-section" id="page-diario">
+      <details style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:0;margin-bottom:14px;box-shadow:var(--sh);" id="campFilterDetails">
+        <summary style="padding:10px 14px;cursor:pointer;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;list-style:none;display:flex;align-items:center;justify-content:space-between;user-select:none;">
+          Filtrar por campanha <span id="campFilterCount" style="font-weight:400;font-size:10px"></span>
+          <span style="font-size:13px;color:var(--muted2)">▾</span>
+        </summary>
+        <div style="padding:0 14px 12px;" id="campFilter"></div>
+      </details>
+      <div id="dailyCharts"></div>
+    </div>
+
+    <!-- META HISTÓRICO -->
+    <div class="page-section" id="page-meta-hist">
+      <div style="margin-bottom:16px">
+        <div style="font-family:'Syne',sans-serif;font-size:17px;font-weight:700;margin-bottom:3px">Meta Ads — Dados Históricos</div>
+        <div style="font-size:12px;color:var(--muted)">Análise mensal · todos os dados da conta</div>
+      </div>
+      <div class="krow k5 mb14" id="mHistKpis"></div>
+      <div class="cc mb14">
+        <div class="cc-t">Vendas · Investimento · CPV Mensal</div>
+        <div class="cc-s">Compras (barras azuis) · Invest. (linha verde) · Custo/Venda (linha preta tracejada)</div>
+        <div class="cw" style="height:220px"><canvas id="chMHistMain"></canvas></div>
+      </div>
+      <div class="g2 mb14">
+        <div class="cc"><div class="cc-t">CPM Mensal (R$)</div><div class="cw" style="height:170px"><canvas id="chMHistCPM"></canvas></div></div>
+        <div class="cc"><div class="cc-t">CTR Mensal (%)</div><div class="cw" style="height:170px"><canvas id="chMHistCTR"></canvas></div></div>
+      </div>
+      <div class="g2 mb14">
+        <div class="cc"><div class="cc-t" style="margin-bottom:10px">🏆 Melhores Meses por CPV</div><div id="mHistRankCPV"></div></div>
+        <div class="cc"><div class="cc-t" style="margin-bottom:10px">📈 Maior Volume de Vendas</div><div id="mHistRankVendas"></div></div>
+      </div>
+      <div class="section">
+        <div class="sec-hd">Ranking de Campanhas — todos os meses</div>
+        <div class="tc" id="mHistCamps"></div>
+      </div>
+    </div>
+
+  </div>
+</main>
+</div>
+
+<script>
+Chart.register(ChartDataLabels);
+
+// ═══ DADOS (injetados pelo Python) ═══
+const META_KPIS = {"lct": {"spend": 340.87, "impressions": 11182, "link_clicks": 456, "clicks": 546, "page_view": 30, "view_content": 31, "add_to_cart": 11, "init_checkout": 2, "purchase": 0, "ctr": 4.08, "ctr_all": 4.88, "connect_rate": 6.58, "vc_rate": 103.33, "atc_rate": 35.48, "ic_rate": 18.18, "purch_rate": 0.0, "cpv": null, "cpa": 30.99, "cpm": 30.48}, "all": {"spend": 340.87, "impressions": 11182, "link_clicks": 456, "clicks": 546, "page_view": 30, "view_content": 31, "add_to_cart": 11, "init_checkout": 2, "purchase": 0, "ctr": 4.08, "ctr_all": 4.88, "connect_rate": 6.58, "vc_rate": 103.33, "atc_rate": 35.48, "ic_rate": 18.18, "purch_rate": 0.0, "cpv": null, "cpa": 30.99, "cpm": 30.48}};
+const META_DAILY = {"lct": {"days": ["23/05", "24/05", "25/05", "26/05", "27/05", "28/05", "29/05", "30/05", "31/05"], "spend": [15.16, 33.67, 45.81, 39.91, 44.32, 43.21, 39.17, 32.41, 47.21], "impressions": [827, 1425, 1325, 1410, 1295, 1087, 1137, 1234, 1442], "link_clicks": [20, 59, 48, 61, 58, 50, 36, 47, 77], "clicks": [29, 75, 61, 66, 69, 60, 47, 53, 86], "page_view": [2, 8, 1, 6, 2, 6, 0, 3, 2], "view_content": [6, 6, 4, 6, 1, 5, 0, 0, 3], "add_to_cart": [4, 1, 3, 1, 2, 0, 0, 0, 0], "init_checkout": [0, 0, 0, 0, 1, 1, 0, 0, 0], "purchase": [0, 0, 0, 0, 0, 0, 0, 0, 0], "ctr": [2.42, 4.14, 3.62, 4.33, 4.48, 4.6, 3.17, 3.81, 5.34], "ctr_all": [3.51, 5.26, 4.6, 4.68, 5.33, 5.52, 4.13, 4.29, 5.96], "connect_rate": [10.0, 13.56, 2.08, 9.84, 3.45, 12.0, 0.0, 6.38, 2.6], "vc_rate": [300.0, 75.0, 400.0, 100.0, 50.0, 83.33, null, 0.0, 150.0], "atc_rate": [66.67, 16.67, 75.0, 16.67, 200.0, 0.0, null, null, 0.0], "ic_rate": [0.0, 0.0, 0.0, 0.0, 50.0, null, null, null, null], "purch_rate": [null, null, null, null, 0.0, 0.0, null, null, null], "cpv": [null, null, null, null, null, null, null, null, null], "cpm": [18.33, 23.63, 34.57, 28.3, 34.22, 39.75, 34.45, 26.26, 32.74], "engagement": [190, 423, 497, 526, 516, 421, 402, 423, 537]}, "all": {"days": ["23/05", "24/05", "25/05", "26/05", "27/05", "28/05", "29/05", "30/05", "31/05"], "spend": [15.16, 33.67, 45.81, 39.91, 44.32, 43.21, 39.17, 32.41, 47.21], "impressions": [827, 1425, 1325, 1410, 1295, 1087, 1137, 1234, 1442], "link_clicks": [20, 59, 48, 61, 58, 50, 36, 47, 77], "clicks": [29, 75, 61, 66, 69, 60, 47, 53, 86], "page_view": [2, 8, 1, 6, 2, 6, 0, 3, 2], "view_content": [6, 6, 4, 6, 1, 5, 0, 0, 3], "add_to_cart": [4, 1, 3, 1, 2, 0, 0, 0, 0], "init_checkout": [0, 0, 0, 0, 1, 1, 0, 0, 0], "purchase": [0, 0, 0, 0, 0, 0, 0, 0, 0], "ctr": [2.42, 4.14, 3.62, 4.33, 4.48, 4.6, 3.17, 3.81, 5.34], "ctr_all": [3.51, 5.26, 4.6, 4.68, 5.33, 5.52, 4.13, 4.29, 5.96], "connect_rate": [10.0, 13.56, 2.08, 9.84, 3.45, 12.0, 0.0, 6.38, 2.6], "vc_rate": [300.0, 75.0, 400.0, 100.0, 50.0, 83.33, null, 0.0, 150.0], "atc_rate": [66.67, 16.67, 75.0, 16.67, 200.0, 0.0, null, null, 0.0], "ic_rate": [0.0, 0.0, 0.0, 0.0, 50.0, null, null, null, null], "purch_rate": [null, null, null, null, 0.0, 0.0, null, null, null], "cpv": [null, null, null, null, null, null, null, null, null], "cpm": [18.33, 23.63, 34.57, 28.3, 34.22, 39.75, 34.45, 26.26, 32.74], "engagement": [190, 423, 497, 526, 516, 421, 402, 423, 537]}};
+const META_DAILY_CAMPS = {"lct": {"GM-DISTRIBUICAO-SEGUIDORES": {"days": ["23/05", "24/05", "25/05", "26/05", "27/05", "28/05", "29/05", "30/05", "31/05"], "spend": [3.48, 11.28, 9.46, 10.12, 10.5, 9.79, 9.83, 8.67, 11.78], "impressions": [325, 792, 634, 707, 600, 500, 627, 798, 871], "link_clicks": [11, 43, 41, 47, 45, 36, 29, 42, 63], "clicks": [11, 52, 43, 47, 48, 35, 33, 42, 66], "page_view": [0, 0, 0, 0, 0, 1, 0, 1, 0], "view_content": [0, 0, 0, 0, 0, 0, 0, 0, 2], "add_to_cart": [0, 0, 0, 0, 0, 0, 0, 0, 0], "init_checkout": [0, 0, 0, 0, 0, 0, 0, 0, 0], "purchase": [0, 0, 0, 0, 0, 0, 0, 0, 0], "ctr": [3.38, 5.43, 6.47, 6.65, 7.5, 7.2, 4.63, 5.26, 7.23], "ctr_all": [3.38, 6.57, 6.78, 6.65, 8.0, 7.0, 5.26, 5.26, 7.58], "connect_rate": [0.0, 0.0, 0.0, 0.0, 0.0, 2.78, 0.0, 2.38, 0.0], "vc_rate": [null, null, null, null, null, 0.0, null, 0.0, null], "atc_rate": [null, null, null, null, null, null, null, null, 0.0], "ic_rate": [null, null, null, null, null, null, null, null, null], "purch_rate": [null, null, null, null, null, null, null, null, null], "cpv": [null, null, null, null, null, null, null, null, null], "cpm": [10.71, 14.24, 14.92, 14.31, 17.5, 19.58, 15.68, 10.86, 13.52], "engagement": [88, 313, 247, 283, 280, 210, 232, 273, 361]}, "GM-TCHUCOO-VENDAS-F": {"days": ["23/05", "24/05", "25/05", "26/05", "27/05", "28/05", "29/05", "30/05", "31/05"], "spend": [7.07, 16.22, 22.41, 19.96, 22.28, 23.38, 20.44, 14.31, 26.49], "impressions": [326, 448, 436, 482, 395, 362, 309, 267, 370], "link_clicks": [8, 13, 4, 11, 10, 6, 7, 4, 12], "clicks": [15, 19, 12, 14, 16, 13, 10, 9, 18], "page_view": [2, 8, 1, 5, 1, 4, 0, 2, 2], "view_content": [6, 6, 4, 6, 1, 2, 0, 0, 1], "add_to_cart": [4, 1, 3, 1, 1, 0, 0, 0, 0], "init_checkout": [0, 0, 0, 0, 1, 1, 0, 0, 0], "purchase": [0, 0, 0, 0, 0, 0, 0, 0, 0], "ctr": [2.45, 2.9, 0.92, 2.28, 2.53, 1.66, 2.27, 1.5, 3.24], "ctr_all": [4.6, 4.24, 2.75, 2.9, 4.05, 3.59, 3.24, 3.37, 4.86], "connect_rate": [25.0, 61.54, 25.0, 45.45, 10.0, 66.67, 0.0, 50.0, 16.67], "vc_rate": [300.0, 75.0, 400.0, 120.0, 100.0, 50.0, null, 0.0, 50.0], "atc_rate": [66.67, 16.67, 75.0, 16.67, 100.0, 0.0, null, null, 0.0], "ic_rate": [0.0, 0.0, 0.0, 0.0, 100.0, null, null, null, null], "purch_rate": [null, null, null, null, 0.0, 0.0, null, null, null], "cpv": [null, null, null, null, null, null, null, null, null], "cpm": [21.69, 36.21, 51.4, 41.41, 56.41, 64.59, 66.15, 53.6, 71.59], "engagement": [90, 69, 167, 187, 151, 161, 130, 106, 149]}, "GM-TCHUCOO-VENDAS-Q": {"days": ["23/05", "24/05", "25/05", "26/05", "27/05", "28/05", "29/05", "30/05", "31/05"], "spend": [4.61, 6.17, 13.94, 9.83, 11.54, 10.04, 8.9, 9.43, 8.94], "impressions": [176, 185, 255, 221, 300, 225, 201, 169, 201], "link_clicks": [1, 3, 3, 3, 3, 8, 0, 1, 2], "clicks": [3, 4, 6, 5, 5, 12, 4, 2, 2], "page_view": [0, 0, 0, 1, 1, 1, 0, 0, 0], "view_content": [0, 0, 0, 0, 0, 3, 0, 0, 0], "add_to_cart": [0, 0, 0, 0, 1, 0, 0, 0, 0], "init_checkout": [0, 0, 0, 0, 0, 0, 0, 0, 0], "purchase": [0, 0, 0, 0, 0, 0, 0, 0, 0], "ctr": [0.57, 1.62, 1.18, 1.36, 1.0, 3.56, 0.0, 0.59, 1.0], "ctr_all": [1.7, 2.16, 2.35, 2.26, 1.67, 5.33, 1.99, 1.18, 1.0], "connect_rate": [0.0, 0.0, 0.0, 33.33, 33.33, 12.5, null, 0.0, 0.0], "vc_rate": [null, null, null, 0.0, 0.0, 300.0, null, null, null], "atc_rate": [null, null, null, null, null, 0.0, null, null, null], "ic_rate": [null, null, null, null, 0.0, null, null, null, null], "purch_rate": [null, null, null, null, null, null, null, null, null], "cpv": [null, null, null, null, null, null, null, null, null], "cpm": [26.19, 33.35, 54.67, 44.48, 38.47, 44.62, 44.28, 55.8, 44.48], "engagement": [12, 41, 83, 56, 85, 50, 40, 44, 27]}}, "all": {"GM-DISTRIBUICAO-SEGUIDORES": {"days": ["23/05", "24/05", "25/05", "26/05", "27/05", "28/05", "29/05", "30/05", "31/05"], "spend": [3.48, 11.28, 9.46, 10.12, 10.5, 9.79, 9.83, 8.67, 11.78], "impressions": [325, 792, 634, 707, 600, 500, 627, 798, 871], "link_clicks": [11, 43, 41, 47, 45, 36, 29, 42, 63], "clicks": [11, 52, 43, 47, 48, 35, 33, 42, 66], "page_view": [0, 0, 0, 0, 0, 1, 0, 1, 0], "view_content": [0, 0, 0, 0, 0, 0, 0, 0, 2], "add_to_cart": [0, 0, 0, 0, 0, 0, 0, 0, 0], "init_checkout": [0, 0, 0, 0, 0, 0, 0, 0, 0], "purchase": [0, 0, 0, 0, 0, 0, 0, 0, 0], "ctr": [3.38, 5.43, 6.47, 6.65, 7.5, 7.2, 4.63, 5.26, 7.23], "ctr_all": [3.38, 6.57, 6.78, 6.65, 8.0, 7.0, 5.26, 5.26, 7.58], "connect_rate": [0.0, 0.0, 0.0, 0.0, 0.0, 2.78, 0.0, 2.38, 0.0], "vc_rate": [null, null, null, null, null, 0.0, null, 0.0, null], "atc_rate": [null, null, null, null, null, null, null, null, 0.0], "ic_rate": [null, null, null, null, null, null, null, null, null], "purch_rate": [null, null, null, null, null, null, null, null, null], "cpv": [null, null, null, null, null, null, null, null, null], "cpm": [10.71, 14.24, 14.92, 14.31, 17.5, 19.58, 15.68, 10.86, 13.52], "engagement": [88, 313, 247, 283, 280, 210, 232, 273, 361]}, "GM-TCHUCOO-VENDAS-F": {"days": ["23/05", "24/05", "25/05", "26/05", "27/05", "28/05", "29/05", "30/05", "31/05"], "spend": [7.07, 16.22, 22.41, 19.96, 22.28, 23.38, 20.44, 14.31, 26.49], "impressions": [326, 448, 436, 482, 395, 362, 309, 267, 370], "link_clicks": [8, 13, 4, 11, 10, 6, 7, 4, 12], "clicks": [15, 19, 12, 14, 16, 13, 10, 9, 18], "page_view": [2, 8, 1, 5, 1, 4, 0, 2, 2], "view_content": [6, 6, 4, 6, 1, 2, 0, 0, 1], "add_to_cart": [4, 1, 3, 1, 1, 0, 0, 0, 0], "init_checkout": [0, 0, 0, 0, 1, 1, 0, 0, 0], "purchase": [0, 0, 0, 0, 0, 0, 0, 0, 0], "ctr": [2.45, 2.9, 0.92, 2.28, 2.53, 1.66, 2.27, 1.5, 3.24], "ctr_all": [4.6, 4.24, 2.75, 2.9, 4.05, 3.59, 3.24, 3.37, 4.86], "connect_rate": [25.0, 61.54, 25.0, 45.45, 10.0, 66.67, 0.0, 50.0, 16.67], "vc_rate": [300.0, 75.0, 400.0, 120.0, 100.0, 50.0, null, 0.0, 50.0], "atc_rate": [66.67, 16.67, 75.0, 16.67, 100.0, 0.0, null, null, 0.0], "ic_rate": [0.0, 0.0, 0.0, 0.0, 100.0, null, null, null, null], "purch_rate": [null, null, null, null, 0.0, 0.0, null, null, null], "cpv": [null, null, null, null, null, null, null, null, null], "cpm": [21.69, 36.21, 51.4, 41.41, 56.41, 64.59, 66.15, 53.6, 71.59], "engagement": [90, 69, 167, 187, 151, 161, 130, 106, 149]}, "GM-TCHUCOO-VENDAS-Q": {"days": ["23/05", "24/05", "25/05", "26/05", "27/05", "28/05", "29/05", "30/05", "31/05"], "spend": [4.61, 6.17, 13.94, 9.83, 11.54, 10.04, 8.9, 9.43, 8.94], "impressions": [176, 185, 255, 221, 300, 225, 201, 169, 201], "link_clicks": [1, 3, 3, 3, 3, 8, 0, 1, 2], "clicks": [3, 4, 6, 5, 5, 12, 4, 2, 2], "page_view": [0, 0, 0, 1, 1, 1, 0, 0, 0], "view_content": [0, 0, 0, 0, 0, 3, 0, 0, 0], "add_to_cart": [0, 0, 0, 0, 1, 0, 0, 0, 0], "init_checkout": [0, 0, 0, 0, 0, 0, 0, 0, 0], "purchase": [0, 0, 0, 0, 0, 0, 0, 0, 0], "ctr": [0.57, 1.62, 1.18, 1.36, 1.0, 3.56, 0.0, 0.59, 1.0], "ctr_all": [1.7, 2.16, 2.35, 2.26, 1.67, 5.33, 1.99, 1.18, 1.0], "connect_rate": [0.0, 0.0, 0.0, 33.33, 33.33, 12.5, null, 0.0, 0.0], "vc_rate": [null, null, null, 0.0, 0.0, 300.0, null, null, null], "atc_rate": [null, null, null, null, null, 0.0, null, null, null], "ic_rate": [null, null, null, null, 0.0, null, null, null, null], "purch_rate": [null, null, null, null, null, null, null, null, null], "cpv": [null, null, null, null, null, null, null, null, null], "cpm": [26.19, 33.35, 54.67, 44.48, 38.47, 44.62, 44.28, 55.8, 44.48], "engagement": [12, 41, 83, 56, 85, 50, 40, 44, 27]}}};
+const META_RAW_CAMP = [{"d": "23/05", "c": "GM-DISTRIBUICAO-SEGUIDORES", "a": "F-ADVANTAGE", "lct": true, "sp": 3.48, "pu": 0, "imp": 325, "lc": 11, "cl": 11, "pv": 0, "vc": 0, "atc": 0, "ic": 0}, {"d": "23/05", "c": "GM-TCHUCOO-VENDAS-F", "a": "F-ADVANTAGE", "lct": true, "sp": 7.07, "pu": 0, "imp": 326, "lc": 8, "cl": 15, "pv": 2, "vc": 6, "atc": 4, "ic": 0}, {"d": "23/05", "c": "GM-TCHUCOO-VENDAS-Q", "a": "Q-MIX-QUENTE", "lct": true, "sp": 4.61, "pu": 0, "imp": 176, "lc": 1, "cl": 3, "pv": 0, "vc": 0, "atc": 0, "ic": 0}, {"d": "24/05", "c": "GM-DISTRIBUICAO-SEGUIDORES", "a": "F-ADVANTAGE", "lct": true, "sp": 11.28, "pu": 0, "imp": 792, "lc": 43, "cl": 52, "pv": 0, "vc": 0, "atc": 0, "ic": 0}, {"d": "24/05", "c": "GM-TCHUCOO-VENDAS-F", "a": "F-ADVANTAGE", "lct": true, "sp": 16.22, "pu": 0, "imp": 448, "lc": 13, "cl": 19, "pv": 8, "vc": 6, "atc": 1, "ic": 0}, {"d": "24/05", "c": "GM-TCHUCOO-VENDAS-Q", "a": "Q-MIX-QUENTE", "lct": true, "sp": 6.17, "pu": 0, "imp": 185, "lc": 3, "cl": 4, "pv": 0, "vc": 0, "atc": 0, "ic": 0}, {"d": "25/05", "c": "GM-DISTRIBUICAO-SEGUIDORES", "a": "F-ADVANTAGE", "lct": true, "sp": 9.46, "pu": 0, "imp": 634, "lc": 41, "cl": 43, "pv": 0, "vc": 0, "atc": 0, "ic": 0}, {"d": "25/05", "c": "GM-TCHUCOO-VENDAS-F", "a": "F-ADVANTAGE", "lct": true, "sp": 22.41, "pu": 0, "imp": 436, "lc": 4, "cl": 12, "pv": 1, "vc": 4, "atc": 3, "ic": 0}, {"d": "25/05", "c": "GM-TCHUCOO-VENDAS-Q", "a": "Q-MIX-QUENTE", "lct": true, "sp": 13.94, "pu": 0, "imp": 255, "lc": 3, "cl": 6, "pv": 0, "vc": 0, "atc": 0, "ic": 0}, {"d": "26/05", "c": "GM-DISTRIBUICAO-SEGUIDORES", "a": "F-ADVANTAGE", "lct": true, "sp": 10.12, "pu": 0, "imp": 707, "lc": 47, "cl": 47, "pv": 0, "vc": 0, "atc": 0, "ic": 0}, {"d": "26/05", "c": "GM-TCHUCOO-VENDAS-F", "a": "F-ADVANTAGE", "lct": true, "sp": 19.96, "pu": 0, "imp": 482, "lc": 11, "cl": 14, "pv": 5, "vc": 6, "atc": 1, "ic": 0}, {"d": "26/05", "c": "GM-TCHUCOO-VENDAS-Q", "a": "Q-MIX-QUENTE", "lct": true, "sp": 9.83, "pu": 0, "imp": 221, "lc": 3, "cl": 5, "pv": 1, "vc": 0, "atc": 0, "ic": 0}, {"d": "27/05", "c": "GM-DISTRIBUICAO-SEGUIDORES", "a": "F-ADVANTAGE", "lct": true, "sp": 10.5, "pu": 0, "imp": 600, "lc": 45, "cl": 48, "pv": 0, "vc": 0, "atc": 0, "ic": 0}, {"d": "27/05", "c": "GM-TCHUCOO-VENDAS-F", "a": "F-ADVANTAGE", "lct": true, "sp": 22.28, "pu": 0, "imp": 395, "lc": 10, "cl": 16, "pv": 1, "vc": 1, "atc": 1, "ic": 1}, {"d": "27/05", "c": "GM-TCHUCOO-VENDAS-Q", "a": "Q-MIX-QUENTE", "lct": true, "sp": 11.54, "pu": 0, "imp": 300, "lc": 3, "cl": 5, "pv": 1, "vc": 0, "atc": 1, "ic": 0}, {"d": "28/05", "c": "GM-DISTRIBUICAO-SEGUIDORES", "a": "F-ADVANTAGE", "lct": true, "sp": 9.79, "pu": 0, "imp": 500, "lc": 36, "cl": 35, "pv": 1, "vc": 0, "atc": 0, "ic": 0}, {"d": "28/05", "c": "GM-TCHUCOO-VENDAS-F", "a": "F-ADVANTAGE", "lct": true, "sp": 23.38, "pu": 0, "imp": 362, "lc": 6, "cl": 13, "pv": 4, "vc": 2, "atc": 0, "ic": 1}, {"d": "28/05", "c": "GM-TCHUCOO-VENDAS-Q", "a": "Q-MIX-QUENTE", "lct": true, "sp": 10.04, "pu": 0, "imp": 225, "lc": 8, "cl": 12, "pv": 1, "vc": 3, "atc": 0, "ic": 0}, {"d": "29/05", "c": "GM-DISTRIBUICAO-SEGUIDORES", "a": "F-ADVANTAGE", "lct": true, "sp": 9.83, "pu": 0, "imp": 627, "lc": 29, "cl": 33, "pv": 0, "vc": 0, "atc": 0, "ic": 0}, {"d": "29/05", "c": "GM-TCHUCOO-VENDAS-F", "a": "F-ADVANTAGE", "lct": true, "sp": 20.44, "pu": 0, "imp": 309, "lc": 7, "cl": 10, "pv": 0, "vc": 0, "atc": 0, "ic": 0}, {"d": "29/05", "c": "GM-TCHUCOO-VENDAS-Q", "a": "Q-MIX-QUENTE", "lct": true, "sp": 8.9, "pu": 0, "imp": 201, "lc": 0, "cl": 4, "pv": 0, "vc": 0, "atc": 0, "ic": 0}, {"d": "30/05", "c": "GM-DISTRIBUICAO-SEGUIDORES", "a": "F-ADVANTAGE", "lct": true, "sp": 8.67, "pu": 0, "imp": 798, "lc": 42, "cl": 42, "pv": 1, "vc": 0, "atc": 0, "ic": 0}, {"d": "30/05", "c": "GM-TCHUCOO-VENDAS-F", "a": "F-ADVANTAGE", "lct": true, "sp": 14.31, "pu": 0, "imp": 267, "lc": 4, "cl": 9, "pv": 2, "vc": 0, "atc": 0, "ic": 0}, {"d": "30/05", "c": "GM-TCHUCOO-VENDAS-Q", "a": "Q-MIX-QUENTE", "lct": true, "sp": 9.43, "pu": 0, "imp": 169, "lc": 1, "cl": 2, "pv": 0, "vc": 0, "atc": 0, "ic": 0}, {"d": "31/05", "c": "GM-DISTRIBUICAO-SEGUIDORES", "a": "F-ADVANTAGE", "lct": true, "sp": 11.78, "pu": 0, "imp": 871, "lc": 63, "cl": 66, "pv": 0, "vc": 2, "atc": 0, "ic": 0}, {"d": "31/05", "c": "GM-TCHUCOO-VENDAS-F", "a": "F-ADVANTAGE", "lct": true, "sp": 26.49, "pu": 0, "imp": 370, "lc": 12, "cl": 18, "pv": 2, "vc": 1, "atc": 0, "ic": 0}, {"d": "31/05", "c": "GM-TCHUCOO-VENDAS-Q", "a": "Q-MIX-QUENTE", "lct": true, "sp": 8.94, "pu": 0, "imp": 201, "lc": 2, "cl": 2, "pv": 0, "vc": 0, "atc": 0, "ic": 0}];
+const META_TABLES = {"lct": {"1": {"camps": [{"n": "GM-DISTRIBUICAO-SEGUIDORES", "spend": 11.78, "imp": 871, "lc": 63, "cl": 66, "pv": 0, "vc": 2, "atc": 0, "ic": 0, "pu": 0, "ctr": 7.23, "ctr_all": 7.58, "connect_rate": 0.0, "vc_rate": null, "atc_rate": 0.0, "ic_rate": null, "purch_rate": null, "cpv": null, "cpm": 13.52}, {"n": "GM-TCHUCOO-VENDAS-F", "spend": 26.49, "imp": 370, "lc": 12, "cl": 18, "pv": 2, "vc": 1, "atc": 0, "ic": 0, "pu": 0, "ctr": 3.24, "ctr_all": 4.86, "connect_rate": 16.67, "vc_rate": 50.0, "atc_rate": 0.0, "ic_rate": null, "purch_rate": null, "cpv": null, "cpm": 71.59}, {"n": "GM-TCHUCOO-VENDAS-Q", "spend": 8.94, "imp": 201, "lc": 2, "cl": 2, "pv": 0, "vc": 0, "atc": 0, "ic": 0, "pu": 0, "ctr": 1.0, "ctr_all": 1.0, "connect_rate": 0.0, "vc_rate": null, "atc_rate": null, "ic_rate": null, "purch_rate": null, "cpv": null, "cpm": 44.48}], "adsets": [{"n": "F-ADVANTAGE", "camp": "GM-DISTRIBUICAO-SEGUIDORES", "spend": 11.78, "imp": 871, "lc": 63, "cl": 66, "pv": 0, "vc": 2, "atc": 0, "ic": 0, "pu": 0, "ctr": 7.23, "ctr_all": 7.58, "connect_rate": 0.0, "vc_rate": null, "atc_rate": 0.0, "ic_rate": null, "purch_rate": null, "cpv": null, "cpm": 13.52}, {"n": "F-ADVANTAGE", "camp": "GM-TCHUCOO-VENDAS-F", "spend": 26.49, "imp": 370, "lc": 12, "cl": 18, "pv": 2, "vc": 1, "atc": 0, "ic": 0, "pu": 0, "ctr": 3.24, "ctr_all": 4.86, "connect_rate": 16.67, "vc_rate": 50.0, "atc_rate": 0.0, "ic_rate": null, "purch_rate": null, "cpv": null, "cpm": 71.59}, {"n": "Q-MIX-QUENTE", "camp": "GM-TCHUCOO-VENDAS-Q", "spend": 8.94, "imp": 201, "lc": 2, "cl": 2, "pv": 0, "vc": 0, "atc": 0, "ic": 0, "pu": 0, "ctr": 1.0, "ctr_all": 1.0, "connect_rate": 0.0, "vc_rate": null, "atc_rate": null, "ic_rate": null, "purch_rate": null, "cpv": null, "cpm": 44.48}], "ads": [{"n": "AD01-23MAI", "adset": "F-ADVANTAGE", "camp": "GM-DISTRIBUICAO-SEGUIDORES", "thumb": "imgs/2a8d867115e218fd.jpg", "spend": 11.78, "imp": 871, "lc": 63, "cl": 66, "pu": 0, "atc": 0, "ctr": 7.23, "ctr_all": 7.58, "cpv": null}, {"n": "AD01-VIDEO-COLAB-LOGAN", "adset": "F-ADVANTAGE", "camp": "GM-TCHUCOO-VENDAS-F", "thumb": "imgs/b96c558c9cb21cfc.jpg", "spend": 26.49, "imp": 370, "lc": 12, "cl": 18, "pu": 0, "atc": 0, "ctr": 3.24, "ctr_all": 4.86, "cpv": null}, {"n": "AD01-VIDEO-COLAB-LOGAN", "adset": "Q-MIX-QUENTE", "camp": "GM-TCHUCOO-VENDAS-Q", "thumb": "imgs/1bdd14a61ceebb07.jpg", "spend": 7.66, "imp": 139, "lc": 1, "cl": 1, "pu": 0, "atc": 0, "ctr": 0.72, "ctr_all": 0.72, "cpv": null}, {"n": "AD02-COLEIRA-ROSA", "adset": "Q-MIX-QUENTE", "camp": "GM-TCHUCOO-VENDAS-Q", "thumb": "imgs/c4b5c8bb82fcf340.jpg", "spend": 1.28, "imp": 62, "lc": 1, "cl": 1, "pu": 0, "atc": 0, "ctr": 1.61, "ctr_all": 1.61, "cpv": null}]}, "7": {"camps": [{"n": "GM-DISTRIBUICAO-SEGUIDORES", "spend": 60.69, "imp": 4103, "lc": 262, "cl": 271, "pv": 2, "vc": 2, "atc": 0, "ic": 0, "pu": 0, "ctr": 6.39, "ctr_all": 6.6, "connect_rate": 0.76, "vc_rate": 100.0, "atc_rate": 0.0, "ic_rate": null, "purch_rate": null, "cpv": null, "cpm": 14.79}, {"n": "GM-TCHUCOO-VENDAS-F", "spend": 126.86, "imp": 2185, "lc": 50, "cl": 80, "pv": 14, "vc": 10, "atc": 2, "ic": 2, "pu": 0, "ctr": 2.29, "ctr_all": 3.66, "connect_rate": 28.0, "vc_rate": 71.43, "atc_rate": 20.0, "ic_rate": 100.0, "purch_rate": 0.0, "cpv": null, "cpm": 58.06}, {"n": "GM-TCHUCOO-VENDAS-Q", "spend": 58.68, "imp": 1317, "lc": 17, "cl": 30, "pv": 3, "vc": 3, "atc": 1, "ic": 0, "pu": 0, "ctr": 1.29, "ctr_all": 2.28, "connect_rate": 17.65, "vc_rate": 100.0, "atc_rate": 33.33, "ic_rate": 0.0, "purch_rate": null, "cpv": null, "cpm": 44.56}], "adsets": [{"n": "F-ADVANTAGE", "camp": "GM-DISTRIBUICAO-SEGUIDORES", "spend": 60.69, "imp": 4103, "lc": 262, "cl": 271, "pv": 2, "vc": 2, "atc": 0, "ic": 0, "pu": 0, "ctr": 6.39, "ctr_all": 6.6, "connect_rate": 0.76, "vc_rate": 100.0, "atc_rate": 0.0, "ic_rate": null, "purch_rate": null, "cpv": null, "cpm": 14.79}, {"n": "F-ADVANTAGE", "camp": "GM-TCHUCOO-VENDAS-F", "spend": 126.86, "imp": 2185, "lc": 50, "cl": 80, "pv": 14, "vc": 10, "atc": 2, "ic": 2, "pu": 0, "ctr": 2.29, "ctr_all": 3.66, "connect_rate": 28.0, "vc_rate": 71.43, "atc_rate": 20.0, "ic_rate": 100.0, "purch_rate": 0.0, "cpv": null, "cpm": 58.06}, {"n": "Q-MIX-QUENTE", "camp": "GM-TCHUCOO-VENDAS-Q", "spend": 58.68, "imp": 1317, "lc": 17, "cl": 30, "pv": 3, "vc": 3, "atc": 1, "ic": 0, "pu": 0, "ctr": 1.29, "ctr_all": 2.28, "connect_rate": 17.65, "vc_rate": 100.0, "atc_rate": 33.33, "ic_rate": 0.0, "purch_rate": null, "cpv": null, "cpm": 44.56}], "ads": [{"n": "AD01-23MAI", "adset": "F-ADVANTAGE", "camp": "GM-DISTRIBUICAO-SEGUIDORES", "thumb": "imgs/2a8d867115e218fd.jpg", "spend": 60.69, "imp": 4103, "lc": 262, "cl": 271, "pu": 0, "atc": 0, "ctr": 6.39, "ctr_all": 6.6, "cpv": null}, {"n": "AD01-VIDEO-COLAB-LOGAN", "adset": "F-ADVANTAGE", "camp": "GM-TCHUCOO-VENDAS-F", "thumb": "imgs/b96c558c9cb21cfc.jpg", "spend": 126.86, "imp": 2185, "lc": 50, "cl": 80, "pu": 0, "atc": 2, "ctr": 2.29, "ctr_all": 3.66, "cpv": null}, {"n": "AD01-VIDEO-COLAB-LOGAN", "adset": "Q-MIX-QUENTE", "camp": "GM-TCHUCOO-VENDAS-Q", "thumb": "imgs/1bdd14a61ceebb07.jpg", "spend": 53.46, "imp": 1175, "lc": 14, "cl": 27, "pu": 0, "atc": 1, "ctr": 1.19, "ctr_all": 2.3, "cpv": null}, {"n": "AD02-COLEIRA-ROSA", "adset": "Q-MIX-QUENTE", "camp": "GM-TCHUCOO-VENDAS-Q", "thumb": "imgs/c4b5c8bb82fcf340.jpg", "spend": 5.22, "imp": 142, "lc": 3, "cl": 3, "pu": 0, "atc": 0, "ctr": 2.11, "ctr_all": 2.11, "cpv": null}]}, "14": {"camps": [{"n": "GM-DISTRIBUICAO-SEGUIDORES", "spend": 84.91, "imp": 5854, "lc": 357, "cl": 377, "pv": 2, "vc": 2, "atc": 0, "ic": 0, "pu": 0, "ctr": 6.1, "ctr_all": 6.44, "connect_rate": 0.56, "vc_rate": 100.0, "atc_rate": 0.0, "ic_rate": null, "purch_rate": null, "cpv": null, "cpm": 14.5}, {"n": "GM-TCHUCOO-VENDAS-F", "spend": 172.56, "imp": 3395, "lc": 75, "cl": 126, "pv": 25, "vc": 26, "atc": 10, "ic": 2, "pu": 0, "ctr": 2.21, "ctr_all": 3.71, "connect_rate": 33.33, "vc_rate": 104.0, "atc_rate": 38.46, "ic_rate": 20.0, "purch_rate": 0.0, "cpv": null, "cpm": 50.83}, {"n": "GM-TCHUCOO-VENDAS-Q", "spend": 83.4, "imp": 1933, "lc": 24, "cl": 43, "pv": 3, "vc": 3, "atc": 1, "ic": 0, "pu": 0, "ctr": 1.24, "ctr_all": 2.22, "connect_rate": 12.5, "vc_rate": 100.0, "atc_rate": 33.33, "ic_rate": 0.0, "purch_rate": null, "cpv": null, "cpm": 43.15}], "adsets": [{"n": "F-ADVANTAGE", "camp": "GM-DISTRIBUICAO-SEGUIDORES", "spend": 84.91, "imp": 5854, "lc": 357, "cl": 377, "pv": 2, "vc": 2, "atc": 0, "ic": 0, "pu": 0, "ctr": 6.1, "ctr_all": 6.44, "connect_rate": 0.56, "vc_rate": 100.0, "atc_rate": 0.0, "ic_rate": null, "purch_rate": null, "cpv": null, "cpm": 14.5}, {"n": "F-ADVANTAGE", "camp": "GM-TCHUCOO-VENDAS-F", "spend": 172.56, "imp": 3395, "lc": 75, "cl": 126, "pv": 25, "vc": 26, "atc": 10, "ic": 2, "pu": 0, "ctr": 2.21, "ctr_all": 3.71, "connect_rate": 33.33, "vc_rate": 104.0, "atc_rate": 38.46, "ic_rate": 20.0, "purch_rate": 0.0, "cpv": null, "cpm": 50.83}, {"n": "Q-MIX-QUENTE", "camp": "GM-TCHUCOO-VENDAS-Q", "spend": 83.4, "imp": 1933, "lc": 24, "cl": 43, "pv": 3, "vc": 3, "atc": 1, "ic": 0, "pu": 0, "ctr": 1.24, "ctr_all": 2.22, "connect_rate": 12.5, "vc_rate": 100.0, "atc_rate": 33.33, "ic_rate": 0.0, "purch_rate": null, "cpv": null, "cpm": 43.15}], "ads": [{"n": "AD01-23MAI", "adset": "F-ADVANTAGE", "camp": "GM-DISTRIBUICAO-SEGUIDORES", "thumb": "imgs/2a8d867115e218fd.jpg", "spend": 84.91, "imp": 5854, "lc": 357, "cl": 377, "pu": 0, "atc": 0, "ctr": 6.1, "ctr_all": 6.44, "cpv": null}, {"n": "AD01-VIDEO-COLAB-LOGAN", "adset": "F-ADVANTAGE", "camp": "GM-TCHUCOO-VENDAS-F", "thumb": "imgs/b96c558c9cb21cfc.jpg", "spend": 160.77, "imp": 3023, "lc": 64, "cl": 110, "pu": 0, "atc": 9, "ctr": 2.12, "ctr_all": 3.64, "cpv": null}, {"n": "AD01-VIDEO-COLAB-LOGAN", "adset": "Q-MIX-QUENTE", "camp": "GM-TCHUCOO-VENDAS-Q", "thumb": "imgs/1bdd14a61ceebb07.jpg", "spend": 74.01, "imp": 1632, "lc": 21, "cl": 39, "pu": 0, "atc": 1, "ctr": 1.29, "ctr_all": 2.39, "cpv": null}, {"n": "AD02-COLEIRA-ROSA", "adset": "F-ADVANTAGE", "camp": "GM-TCHUCOO-VENDAS-F", "thumb": "imgs/251f9f54a4927e67.jpg", "spend": 11.79, "imp": 372, "lc": 11, "cl": 16, "pu": 0, "atc": 1, "ctr": 2.96, "ctr_all": 4.3, "cpv": null}, {"n": "AD02-COLEIRA-ROSA", "adset": "Q-MIX-QUENTE", "camp": "GM-TCHUCOO-VENDAS-Q", "thumb": "imgs/c4b5c8bb82fcf340.jpg", "spend": 5.31, "imp": 150, "lc": 3, "cl": 3, "pu": 0, "atc": 0, "ctr": 2.0, "ctr_all": 2.0, "cpv": null}, {"n": "AD03-CATALOGO", "adset": "Q-MIX-QUENTE", "camp": "GM-TCHUCOO-VENDAS-Q", "thumb": "imgs/0fbecb2428810b2c.png", "spend": 4.08, "imp": 151, "lc": 0, "cl": 1, "pu": 0, "atc": 0, "ctr": 0.0, "ctr_all": 0.66, "cpv": null}]}, "30": {"camps": [{"n": "GM-DISTRIBUICAO-SEGUIDORES", "spend": 84.91, "imp": 5854, "lc": 357, "cl": 377, "pv": 2, "vc": 2, "atc": 0, "ic": 0, "pu": 0, "ctr": 6.1, "ctr_all": 6.44, "connect_rate": 0.56, "vc_rate": 100.0, "atc_rate": 0.0, "ic_rate": null, "purch_rate": null, "cpv": null, "cpm": 14.5}, {"n": "GM-TCHUCOO-VENDAS-F", "spend": 172.56, "imp": 3395, "lc": 75, "cl": 126, "pv": 25, "vc": 26, "atc": 10, "ic": 2, "pu": 0, "ctr": 2.21, "ctr_all": 3.71, "connect_rate": 33.33, "vc_rate": 104.0, "atc_rate": 38.46, "ic_rate": 20.0, "purch_rate": 0.0, "cpv": null, "cpm": 50.83}, {"n": "GM-TCHUCOO-VENDAS-Q", "spend": 83.4, "imp": 1933, "lc": 24, "cl": 43, "pv": 3, "vc": 3, "atc": 1, "ic": 0, "pu": 0, "ctr": 1.24, "ctr_all": 2.22, "connect_rate": 12.5, "vc_rate": 100.0, "atc_rate": 33.33, "ic_rate": 0.0, "purch_rate": null, "cpv": null, "cpm": 43.15}], "adsets": [{"n": "F-ADVANTAGE", "camp": "GM-DISTRIBUICAO-SEGUIDORES", "spend": 84.91, "imp": 5854, "lc": 357, "cl": 377, "pv": 2, "vc": 2, "atc": 0, "ic": 0, "pu": 0, "ctr": 6.1, "ctr_all": 6.44, "connect_rate": 0.56, "vc_rate": 100.0, "atc_rate": 0.0, "ic_rate": null, "purch_rate": null, "cpv": null, "cpm": 14.5}, {"n": "F-ADVANTAGE", "camp": "GM-TCHUCOO-VENDAS-F", "spend": 172.56, "imp": 3395, "lc": 75, "cl": 126, "pv": 25, "vc": 26, "atc": 10, "ic": 2, "pu": 0, "ctr": 2.21, "ctr_all": 3.71, "connect_rate": 33.33, "vc_rate": 104.0, "atc_rate": 38.46, "ic_rate": 20.0, "purch_rate": 0.0, "cpv": null, "cpm": 50.83}, {"n": "Q-MIX-QUENTE", "camp": "GM-TCHUCOO-VENDAS-Q", "spend": 83.4, "imp": 1933, "lc": 24, "cl": 43, "pv": 3, "vc": 3, "atc": 1, "ic": 0, "pu": 0, "ctr": 1.24, "ctr_all": 2.22, "connect_rate": 12.5, "vc_rate": 100.0, "atc_rate": 33.33, "ic_rate": 0.0, "purch_rate": null, "cpv": null, "cpm": 43.15}], "ads": [{"n": "AD01-23MAI", "adset": "F-ADVANTAGE", "camp": "GM-DISTRIBUICAO-SEGUIDORES", "thumb": "imgs/2a8d867115e218fd.jpg", "spend": 84.91, "imp": 5854, "lc": 357, "cl": 377, "pu": 0, "atc": 0, "ctr": 6.1, "ctr_all": 6.44, "cpv": null}, {"n": "AD01-VIDEO-COLAB-LOGAN", "adset": "F-ADVANTAGE", "camp": "GM-TCHUCOO-VENDAS-F", "thumb": "imgs/b96c558c9cb21cfc.jpg", "spend": 160.77, "imp": 3023, "lc": 64, "cl": 110, "pu": 0, "atc": 9, "ctr": 2.12, "ctr_all": 3.64, "cpv": null}, {"n": "AD01-VIDEO-COLAB-LOGAN", "adset": "Q-MIX-QUENTE", "camp": "GM-TCHUCOO-VENDAS-Q", "thumb": "imgs/1bdd14a61ceebb07.jpg", "spend": 74.01, "imp": 1632, "lc": 21, "cl": 39, "pu": 0, "atc": 1, "ctr": 1.29, "ctr_all": 2.39, "cpv": null}, {"n": "AD02-COLEIRA-ROSA", "adset": "F-ADVANTAGE", "camp": "GM-TCHUCOO-VENDAS-F", "thumb": "imgs/251f9f54a4927e67.jpg", "spend": 11.79, "imp": 372, "lc": 11, "cl": 16, "pu": 0, "atc": 1, "ctr": 2.96, "ctr_all": 4.3, "cpv": null}, {"n": "AD02-COLEIRA-ROSA", "adset": "Q-MIX-QUENTE", "camp": "GM-TCHUCOO-VENDAS-Q", "thumb": "imgs/c4b5c8bb82fcf340.jpg", "spend": 5.31, "imp": 150, "lc": 3, "cl": 3, "pu": 0, "atc": 0, "ctr": 2.0, "ctr_all": 2.0, "cpv": null}, {"n": "AD03-CATALOGO", "adset": "Q-MIX-QUENTE", "camp": "GM-TCHUCOO-VENDAS-Q", "thumb": "imgs/0fbecb2428810b2c.png", "spend": 4.08, "imp": 151, "lc": 0, "cl": 1, "pu": 0, "atc": 0, "ctr": 0.0, "ctr_all": 0.66, "cpv": null}]}, "all": {"camps": [{"n": "GM-DISTRIBUICAO-SEGUIDORES", "spend": 84.91, "imp": 5854, "lc": 357, "cl": 377, "pv": 2, "vc": 2, "atc": 0, "ic": 0, "pu": 0, "ctr": 6.1, "ctr_all": 6.44, "connect_rate": 0.56, "vc_rate": 100.0, "atc_rate": 0.0, "ic_rate": null, "purch_rate": null, "cpv": null, "cpm": 14.5}, {"n": "GM-TCHUCOO-VENDAS-F", "spend": 172.56, "imp": 3395, "lc": 75, "cl": 126, "pv": 25, "vc": 26, "atc": 10, "ic": 2, "pu": 0, "ctr": 2.21, "ctr_all": 3.71, "connect_rate": 33.33, "vc_rate": 104.0, "atc_rate": 38.46, "ic_rate": 20.0, "purch_rate": 0.0, "cpv": null, "cpm": 50.83}, {"n": "GM-TCHUCOO-VENDAS-Q", "spend": 83.4, "imp": 1933, "lc": 24, "cl": 43, "pv": 3, "vc": 3, "atc": 1, "ic": 0, "pu": 0, "ctr": 1.24, "ctr_all": 2.22, "connect_rate": 12.5, "vc_rate": 100.0, "atc_rate": 33.33, "ic_rate": 0.0, "purch_rate": null, "cpv": null, "cpm": 43.15}], "adsets": [{"n": "F-ADVANTAGE", "camp": "GM-DISTRIBUICAO-SEGUIDORES", "spend": 84.91, "imp": 5854, "lc": 357, "cl": 377, "pv": 2, "vc": 2, "atc": 0, "ic": 0, "pu": 0, "ctr": 6.1, "ctr_all": 6.44, "connect_rate": 0.56, "vc_rate": 100.0, "atc_rate": 0.0, "ic_rate": null, "purch_rate": null, "cpv": null, "cpm": 14.5}, {"n": "F-ADVANTAGE", "camp": "GM-TCHUCOO-VENDAS-F", "spend": 172.56, "imp": 3395, "lc": 75, "cl": 126, "pv": 25, "vc": 26, "atc": 10, "ic": 2, "pu": 0, "ctr": 2.21, "ctr_all": 3.71, "connect_rate": 33.33, "vc_rate": 104.0, "atc_rate": 38.46, "ic_rate": 20.0, "purch_rate": 0.0, "cpv": null, "cpm": 50.83}, {"n": "Q-MIX-QUENTE", "camp": "GM-TCHUCOO-VENDAS-Q", "spend": 83.4, "imp": 1933, "lc": 24, "cl": 43, "pv": 3, "vc": 3, "atc": 1, "ic": 0, "pu": 0, "ctr": 1.24, "ctr_all": 2.22, "connect_rate": 12.5, "vc_rate": 100.0, "atc_rate": 33.33, "ic_rate": 0.0, "purch_rate": null, "cpv": null, "cpm": 43.15}], "ads": [{"n": "AD01-23MAI", "adset": "F-ADVANTAGE", "camp": "GM-DISTRIBUICAO-SEGUIDORES", "thumb": "imgs/2a8d867115e218fd.jpg", "spend": 84.91, "imp": 5854, "lc": 357, "cl": 377, "pu": 0, "atc": 0, "ctr": 6.1, "ctr_all": 6.44, "cpv": null}, {"n": "AD01-VIDEO-COLAB-LOGAN", "adset": "F-ADVANTAGE", "camp": "GM-TCHUCOO-VENDAS-F", "thumb": "imgs/b96c558c9cb21cfc.jpg", "spend": 160.77, "imp": 3023, "lc": 64, "cl": 110, "pu": 0, "atc": 9, "ctr": 2.12, "ctr_all": 3.64, "cpv": null}, {"n": "AD01-VIDEO-COLAB-LOGAN", "adset": "Q-MIX-QUENTE", "camp": "GM-TCHUCOO-VENDAS-Q", "thumb": "imgs/1bdd14a61ceebb07.jpg", "spend": 74.01, "imp": 1632, "lc": 21, "cl": 39, "pu": 0, "atc": 1, "ctr": 1.29, "ctr_all": 2.39, "cpv": null}, {"n": "AD02-COLEIRA-ROSA", "adset": "F-ADVANTAGE", "camp": "GM-TCHUCOO-VENDAS-F", "thumb": "imgs/251f9f54a4927e67.jpg", "spend": 11.79, "imp": 372, "lc": 11, "cl": 16, "pu": 0, "atc": 1, "ctr": 2.96, "ctr_all": 4.3, "cpv": null}, {"n": "AD02-COLEIRA-ROSA", "adset": "Q-MIX-QUENTE", "camp": "GM-TCHUCOO-VENDAS-Q", "thumb": "imgs/c4b5c8bb82fcf340.jpg", "spend": 5.31, "imp": 150, "lc": 3, "cl": 3, "pu": 0, "atc": 0, "ctr": 2.0, "ctr_all": 2.0, "cpv": null}, {"n": "AD03-CATALOGO", "adset": "Q-MIX-QUENTE", "camp": "GM-TCHUCOO-VENDAS-Q", "thumb": "imgs/0fbecb2428810b2c.png", "spend": 4.08, "imp": 151, "lc": 0, "cl": 1, "pu": 0, "atc": 0, "ctr": 0.0, "ctr_all": 0.66, "cpv": null}]}}, "all": {"1": {"camps": [{"n": "GM-DISTRIBUICAO-SEGUIDORES", "spend": 11.78, "imp": 871, "lc": 63, "cl": 66, "pv": 0, "vc": 2, "atc": 0, "ic": 0, "pu": 0, "ctr": 7.23, "ctr_all": 7.58, "connect_rate": 0.0, "vc_rate": null, "atc_rate": 0.0, "ic_rate": null, "purch_rate": null, "cpv": null, "cpm": 13.52}, {"n": "GM-TCHUCOO-VENDAS-F", "spend": 26.49, "imp": 370, "lc": 12, "cl": 18, "pv": 2, "vc": 1, "atc": 0, "ic": 0, "pu": 0, "ctr": 3.24, "ctr_all": 4.86, "connect_rate": 16.67, "vc_rate": 50.0, "atc_rate": 0.0, "ic_rate": null, "purch_rate": null, "cpv": null, "cpm": 71.59}, {"n": "GM-TCHUCOO-VENDAS-Q", "spend": 8.94, "imp": 201, "lc": 2, "cl": 2, "pv": 0, "vc": 0, "atc": 0, "ic": 0, "pu": 0, "ctr": 1.0, "ctr_all": 1.0, "connect_rate": 0.0, "vc_rate": null, "atc_rate": null, "ic_rate": null, "purch_rate": null, "cpv": null, "cpm": 44.48}], "adsets": [{"n": "F-ADVANTAGE", "camp": "GM-DISTRIBUICAO-SEGUIDORES", "spend": 11.78, "imp": 871, "lc": 63, "cl": 66, "pv": 0, "vc": 2, "atc": 0, "ic": 0, "pu": 0, "ctr": 7.23, "ctr_all": 7.58, "connect_rate": 0.0, "vc_rate": null, "atc_rate": 0.0, "ic_rate": null, "purch_rate": null, "cpv": null, "cpm": 13.52}, {"n": "F-ADVANTAGE", "camp": "GM-TCHUCOO-VENDAS-F", "spend": 26.49, "imp": 370, "lc": 12, "cl": 18, "pv": 2, "vc": 1, "atc": 0, "ic": 0, "pu": 0, "ctr": 3.24, "ctr_all": 4.86, "connect_rate": 16.67, "vc_rate": 50.0, "atc_rate": 0.0, "ic_rate": null, "purch_rate": null, "cpv": null, "cpm": 71.59}, {"n": "Q-MIX-QUENTE", "camp": "GM-TCHUCOO-VENDAS-Q", "spend": 8.94, "imp": 201, "lc": 2, "cl": 2, "pv": 0, "vc": 0, "atc": 0, "ic": 0, "pu": 0, "ctr": 1.0, "ctr_all": 1.0, "connect_rate": 0.0, "vc_rate": null, "atc_rate": null, "ic_rate": null, "purch_rate": null, "cpv": null, "cpm": 44.48}], "ads": [{"n": "AD01-23MAI", "adset": "F-ADVANTAGE", "camp": "GM-DISTRIBUICAO-SEGUIDORES", "thumb": "imgs/2a8d867115e218fd.jpg", "spend": 11.78, "imp": 871, "lc": 63, "cl": 66, "pu": 0, "atc": 0, "ctr": 7.23, "ctr_all": 7.58, "cpv": null}, {"n": "AD01-VIDEO-COLAB-LOGAN", "adset": "F-ADVANTAGE", "camp": "GM-TCHUCOO-VENDAS-F", "thumb": "imgs/b96c558c9cb21cfc.jpg", "spend": 26.49, "imp": 370, "lc": 12, "cl": 18, "pu": 0, "atc": 0, "ctr": 3.24, "ctr_all": 4.86, "cpv": null}, {"n": "AD01-VIDEO-COLAB-LOGAN", "adset": "Q-MIX-QUENTE", "camp": "GM-TCHUCOO-VENDAS-Q", "thumb": "imgs/1bdd14a61ceebb07.jpg", "spend": 7.66, "imp": 139, "lc": 1, "cl": 1, "pu": 0, "atc": 0, "ctr": 0.72, "ctr_all": 0.72, "cpv": null}, {"n": "AD02-COLEIRA-ROSA", "adset": "Q-MIX-QUENTE", "camp": "GM-TCHUCOO-VENDAS-Q", "thumb": "imgs/c4b5c8bb82fcf340.jpg", "spend": 1.28, "imp": 62, "lc": 1, "cl": 1, "pu": 0, "atc": 0, "ctr": 1.61, "ctr_all": 1.61, "cpv": null}]}, "7": {"camps": [{"n": "GM-DISTRIBUICAO-SEGUIDORES", "spend": 60.69, "imp": 4103, "lc": 262, "cl": 271, "pv": 2, "vc": 2, "atc": 0, "ic": 0, "pu": 0, "ctr": 6.39, "ctr_all": 6.6, "connect_rate": 0.76, "vc_rate": 100.0, "atc_rate": 0.0, "ic_rate": null, "purch_rate": null, "cpv": null, "cpm": 14.79}, {"n": "GM-TCHUCOO-VENDAS-F", "spend": 126.86, "imp": 2185, "lc": 50, "cl": 80, "pv": 14, "vc": 10, "atc": 2, "ic": 2, "pu": 0, "ctr": 2.29, "ctr_all": 3.66, "connect_rate": 28.0, "vc_rate": 71.43, "atc_rate": 20.0, "ic_rate": 100.0, "purch_rate": 0.0, "cpv": null, "cpm": 58.06}, {"n": "GM-TCHUCOO-VENDAS-Q", "spend": 58.68, "imp": 1317, "lc": 17, "cl": 30, "pv": 3, "vc": 3, "atc": 1, "ic": 0, "pu": 0, "ctr": 1.29, "ctr_all": 2.28, "connect_rate": 17.65, "vc_rate": 100.0, "atc_rate": 33.33, "ic_rate": 0.0, "purch_rate": null, "cpv": null, "cpm": 44.56}], "adsets": [{"n": "F-ADVANTAGE", "camp": "GM-DISTRIBUICAO-SEGUIDORES", "spend": 60.69, "imp": 4103, "lc": 262, "cl": 271, "pv": 2, "vc": 2, "atc": 0, "ic": 0, "pu": 0, "ctr": 6.39, "ctr_all": 6.6, "connect_rate": 0.76, "vc_rate": 100.0, "atc_rate": 0.0, "ic_rate": null, "purch_rate": null, "cpv": null, "cpm": 14.79}, {"n": "F-ADVANTAGE", "camp": "GM-TCHUCOO-VENDAS-F", "spend": 126.86, "imp": 2185, "lc": 50, "cl": 80, "pv": 14, "vc": 10, "atc": 2, "ic": 2, "pu": 0, "ctr": 2.29, "ctr_all": 3.66, "connect_rate": 28.0, "vc_rate": 71.43, "atc_rate": 20.0, "ic_rate": 100.0, "purch_rate": 0.0, "cpv": null, "cpm": 58.06}, {"n": "Q-MIX-QUENTE", "camp": "GM-TCHUCOO-VENDAS-Q", "spend": 58.68, "imp": 1317, "lc": 17, "cl": 30, "pv": 3, "vc": 3, "atc": 1, "ic": 0, "pu": 0, "ctr": 1.29, "ctr_all": 2.28, "connect_rate": 17.65, "vc_rate": 100.0, "atc_rate": 33.33, "ic_rate": 0.0, "purch_rate": null, "cpv": null, "cpm": 44.56}], "ads": [{"n": "AD01-23MAI", "adset": "F-ADVANTAGE", "camp": "GM-DISTRIBUICAO-SEGUIDORES", "thumb": "imgs/2a8d867115e218fd.jpg", "spend": 60.69, "imp": 4103, "lc": 262, "cl": 271, "pu": 0, "atc": 0, "ctr": 6.39, "ctr_all": 6.6, "cpv": null}, {"n": "AD01-VIDEO-COLAB-LOGAN", "adset": "F-ADVANTAGE", "camp": "GM-TCHUCOO-VENDAS-F", "thumb": "imgs/b96c558c9cb21cfc.jpg", "spend": 126.86, "imp": 2185, "lc": 50, "cl": 80, "pu": 0, "atc": 2, "ctr": 2.29, "ctr_all": 3.66, "cpv": null}, {"n": "AD01-VIDEO-COLAB-LOGAN", "adset": "Q-MIX-QUENTE", "camp": "GM-TCHUCOO-VENDAS-Q", "thumb": "imgs/1bdd14a61ceebb07.jpg", "spend": 53.46, "imp": 1175, "lc": 14, "cl": 27, "pu": 0, "atc": 1, "ctr": 1.19, "ctr_all": 2.3, "cpv": null}, {"n": "AD02-COLEIRA-ROSA", "adset": "Q-MIX-QUENTE", "camp": "GM-TCHUCOO-VENDAS-Q", "thumb": "imgs/c4b5c8bb82fcf340.jpg", "spend": 5.22, "imp": 142, "lc": 3, "cl": 3, "pu": 0, "atc": 0, "ctr": 2.11, "ctr_all": 2.11, "cpv": null}]}, "14": {"camps": [{"n": "GM-DISTRIBUICAO-SEGUIDORES", "spend": 84.91, "imp": 5854, "lc": 357, "cl": 377, "pv": 2, "vc": 2, "atc": 0, "ic": 0, "pu": 0, "ctr": 6.1, "ctr_all": 6.44, "connect_rate": 0.56, "vc_rate": 100.0, "atc_rate": 0.0, "ic_rate": null, "purch_rate": null, "cpv": null, "cpm": 14.5}, {"n": "GM-TCHUCOO-VENDAS-F", "spend": 172.56, "imp": 3395, "lc": 75, "cl": 126, "pv": 25, "vc": 26, "atc": 10, "ic": 2, "pu": 0, "ctr": 2.21, "ctr_all": 3.71, "connect_rate": 33.33, "vc_rate": 104.0, "atc_rate": 38.46, "ic_rate": 20.0, "purch_rate": 0.0, "cpv": null, "cpm": 50.83}, {"n": "GM-TCHUCOO-VENDAS-Q", "spend": 83.4, "imp": 1933, "lc": 24, "cl": 43, "pv": 3, "vc": 3, "atc": 1, "ic": 0, "pu": 0, "ctr": 1.24, "ctr_all": 2.22, "connect_rate": 12.5, "vc_rate": 100.0, "atc_rate": 33.33, "ic_rate": 0.0, "purch_rate": null, "cpv": null, "cpm": 43.15}], "adsets": [{"n": "F-ADVANTAGE", "camp": "GM-DISTRIBUICAO-SEGUIDORES", "spend": 84.91, "imp": 5854, "lc": 357, "cl": 377, "pv": 2, "vc": 2, "atc": 0, "ic": 0, "pu": 0, "ctr": 6.1, "ctr_all": 6.44, "connect_rate": 0.56, "vc_rate": 100.0, "atc_rate": 0.0, "ic_rate": null, "purch_rate": null, "cpv": null, "cpm": 14.5}, {"n": "F-ADVANTAGE", "camp": "GM-TCHUCOO-VENDAS-F", "spend": 172.56, "imp": 3395, "lc": 75, "cl": 126, "pv": 25, "vc": 26, "atc": 10, "ic": 2, "pu": 0, "ctr": 2.21, "ctr_all": 3.71, "connect_rate": 33.33, "vc_rate": 104.0, "atc_rate": 38.46, "ic_rate": 20.0, "purch_rate": 0.0, "cpv": null, "cpm": 50.83}, {"n": "Q-MIX-QUENTE", "camp": "GM-TCHUCOO-VENDAS-Q", "spend": 83.4, "imp": 1933, "lc": 24, "cl": 43, "pv": 3, "vc": 3, "atc": 1, "ic": 0, "pu": 0, "ctr": 1.24, "ctr_all": 2.22, "connect_rate": 12.5, "vc_rate": 100.0, "atc_rate": 33.33, "ic_rate": 0.0, "purch_rate": null, "cpv": null, "cpm": 43.15}], "ads": [{"n": "AD01-23MAI", "adset": "F-ADVANTAGE", "camp": "GM-DISTRIBUICAO-SEGUIDORES", "thumb": "imgs/2a8d867115e218fd.jpg", "spend": 84.91, "imp": 5854, "lc": 357, "cl": 377, "pu": 0, "atc": 0, "ctr": 6.1, "ctr_all": 6.44, "cpv": null}, {"n": "AD01-VIDEO-COLAB-LOGAN", "adset": "F-ADVANTAGE", "camp": "GM-TCHUCOO-VENDAS-F", "thumb": "imgs/b96c558c9cb21cfc.jpg", "spend": 160.77, "imp": 3023, "lc": 64, "cl": 110, "pu": 0, "atc": 9, "ctr": 2.12, "ctr_all": 3.64, "cpv": null}, {"n": "AD01-VIDEO-COLAB-LOGAN", "adset": "Q-MIX-QUENTE", "camp": "GM-TCHUCOO-VENDAS-Q", "thumb": "imgs/1bdd14a61ceebb07.jpg", "spend": 74.01, "imp": 1632, "lc": 21, "cl": 39, "pu": 0, "atc": 1, "ctr": 1.29, "ctr_all": 2.39, "cpv": null}, {"n": "AD02-COLEIRA-ROSA", "adset": "F-ADVANTAGE", "camp": "GM-TCHUCOO-VENDAS-F", "thumb": "imgs/251f9f54a4927e67.jpg", "spend": 11.79, "imp": 372, "lc": 11, "cl": 16, "pu": 0, "atc": 1, "ctr": 2.96, "ctr_all": 4.3, "cpv": null}, {"n": "AD02-COLEIRA-ROSA", "adset": "Q-MIX-QUENTE", "camp": "GM-TCHUCOO-VENDAS-Q", "thumb": "imgs/c4b5c8bb82fcf340.jpg", "spend": 5.31, "imp": 150, "lc": 3, "cl": 3, "pu": 0, "atc": 0, "ctr": 2.0, "ctr_all": 2.0, "cpv": null}, {"n": "AD03-CATALOGO", "adset": "Q-MIX-QUENTE", "camp": "GM-TCHUCOO-VENDAS-Q", "thumb": "imgs/0fbecb2428810b2c.png", "spend": 4.08, "imp": 151, "lc": 0, "cl": 1, "pu": 0, "atc": 0, "ctr": 0.0, "ctr_all": 0.66, "cpv": null}]}, "30": {"camps": [{"n": "GM-DISTRIBUICAO-SEGUIDORES", "spend": 84.91, "imp": 5854, "lc": 357, "cl": 377, "pv": 2, "vc": 2, "atc": 0, "ic": 0, "pu": 0, "ctr": 6.1, "ctr_all": 6.44, "connect_rate": 0.56, "vc_rate": 100.0, "atc_rate": 0.0, "ic_rate": null, "purch_rate": null, "cpv": null, "cpm": 14.5}, {"n": "GM-TCHUCOO-VENDAS-F", "spend": 172.56, "imp": 3395, "lc": 75, "cl": 126, "pv": 25, "vc": 26, "atc": 10, "ic": 2, "pu": 0, "ctr": 2.21, "ctr_all": 3.71, "connect_rate": 33.33, "vc_rate": 104.0, "atc_rate": 38.46, "ic_rate": 20.0, "purch_rate": 0.0, "cpv": null, "cpm": 50.83}, {"n": "GM-TCHUCOO-VENDAS-Q", "spend": 83.4, "imp": 1933, "lc": 24, "cl": 43, "pv": 3, "vc": 3, "atc": 1, "ic": 0, "pu": 0, "ctr": 1.24, "ctr_all": 2.22, "connect_rate": 12.5, "vc_rate": 100.0, "atc_rate": 33.33, "ic_rate": 0.0, "purch_rate": null, "cpv": null, "cpm": 43.15}], "adsets": [{"n": "F-ADVANTAGE", "camp": "GM-DISTRIBUICAO-SEGUIDORES", "spend": 84.91, "imp": 5854, "lc": 357, "cl": 377, "pv": 2, "vc": 2, "atc": 0, "ic": 0, "pu": 0, "ctr": 6.1, "ctr_all": 6.44, "connect_rate": 0.56, "vc_rate": 100.0, "atc_rate": 0.0, "ic_rate": null, "purch_rate": null, "cpv": null, "cpm": 14.5}, {"n": "F-ADVANTAGE", "camp": "GM-TCHUCOO-VENDAS-F", "spend": 172.56, "imp": 3395, "lc": 75, "cl": 126, "pv": 25, "vc": 26, "atc": 10, "ic": 2, "pu": 0, "ctr": 2.21, "ctr_all": 3.71, "connect_rate": 33.33, "vc_rate": 104.0, "atc_rate": 38.46, "ic_rate": 20.0, "purch_rate": 0.0, "cpv": null, "cpm": 50.83}, {"n": "Q-MIX-QUENTE", "camp": "GM-TCHUCOO-VENDAS-Q", "spend": 83.4, "imp": 1933, "lc": 24, "cl": 43, "pv": 3, "vc": 3, "atc": 1, "ic": 0, "pu": 0, "ctr": 1.24, "ctr_all": 2.22, "connect_rate": 12.5, "vc_rate": 100.0, "atc_rate": 33.33, "ic_rate": 0.0, "purch_rate": null, "cpv": null, "cpm": 43.15}], "ads": [{"n": "AD01-23MAI", "adset": "F-ADVANTAGE", "camp": "GM-DISTRIBUICAO-SEGUIDORES", "thumb": "imgs/2a8d867115e218fd.jpg", "spend": 84.91, "imp": 5854, "lc": 357, "cl": 377, "pu": 0, "atc": 0, "ctr": 6.1, "ctr_all": 6.44, "cpv": null}, {"n": "AD01-VIDEO-COLAB-LOGAN", "adset": "F-ADVANTAGE", "camp": "GM-TCHUCOO-VENDAS-F", "thumb": "imgs/b96c558c9cb21cfc.jpg", "spend": 160.77, "imp": 3023, "lc": 64, "cl": 110, "pu": 0, "atc": 9, "ctr": 2.12, "ctr_all": 3.64, "cpv": null}, {"n": "AD01-VIDEO-COLAB-LOGAN", "adset": "Q-MIX-QUENTE", "camp": "GM-TCHUCOO-VENDAS-Q", "thumb": "imgs/1bdd14a61ceebb07.jpg", "spend": 74.01, "imp": 1632, "lc": 21, "cl": 39, "pu": 0, "atc": 1, "ctr": 1.29, "ctr_all": 2.39, "cpv": null}, {"n": "AD02-COLEIRA-ROSA", "adset": "F-ADVANTAGE", "camp": "GM-TCHUCOO-VENDAS-F", "thumb": "imgs/251f9f54a4927e67.jpg", "spend": 11.79, "imp": 372, "lc": 11, "cl": 16, "pu": 0, "atc": 1, "ctr": 2.96, "ctr_all": 4.3, "cpv": null}, {"n": "AD02-COLEIRA-ROSA", "adset": "Q-MIX-QUENTE", "camp": "GM-TCHUCOO-VENDAS-Q", "thumb": "imgs/c4b5c8bb82fcf340.jpg", "spend": 5.31, "imp": 150, "lc": 3, "cl": 3, "pu": 0, "atc": 0, "ctr": 2.0, "ctr_all": 2.0, "cpv": null}, {"n": "AD03-CATALOGO", "adset": "Q-MIX-QUENTE", "camp": "GM-TCHUCOO-VENDAS-Q", "thumb": "imgs/0fbecb2428810b2c.png", "spend": 4.08, "imp": 151, "lc": 0, "cl": 1, "pu": 0, "atc": 0, "ctr": 0.0, "ctr_all": 0.66, "cpv": null}]}, "all": {"camps": [{"n": "GM-DISTRIBUICAO-SEGUIDORES", "spend": 84.91, "imp": 5854, "lc": 357, "cl": 377, "pv": 2, "vc": 2, "atc": 0, "ic": 0, "pu": 0, "ctr": 6.1, "ctr_all": 6.44, "connect_rate": 0.56, "vc_rate": 100.0, "atc_rate": 0.0, "ic_rate": null, "purch_rate": null, "cpv": null, "cpm": 14.5}, {"n": "GM-TCHUCOO-VENDAS-F", "spend": 172.56, "imp": 3395, "lc": 75, "cl": 126, "pv": 25, "vc": 26, "atc": 10, "ic": 2, "pu": 0, "ctr": 2.21, "ctr_all": 3.71, "connect_rate": 33.33, "vc_rate": 104.0, "atc_rate": 38.46, "ic_rate": 20.0, "purch_rate": 0.0, "cpv": null, "cpm": 50.83}, {"n": "GM-TCHUCOO-VENDAS-Q", "spend": 83.4, "imp": 1933, "lc": 24, "cl": 43, "pv": 3, "vc": 3, "atc": 1, "ic": 0, "pu": 0, "ctr": 1.24, "ctr_all": 2.22, "connect_rate": 12.5, "vc_rate": 100.0, "atc_rate": 33.33, "ic_rate": 0.0, "purch_rate": null, "cpv": null, "cpm": 43.15}], "adsets": [{"n": "F-ADVANTAGE", "camp": "GM-DISTRIBUICAO-SEGUIDORES", "spend": 84.91, "imp": 5854, "lc": 357, "cl": 377, "pv": 2, "vc": 2, "atc": 0, "ic": 0, "pu": 0, "ctr": 6.1, "ctr_all": 6.44, "connect_rate": 0.56, "vc_rate": 100.0, "atc_rate": 0.0, "ic_rate": null, "purch_rate": null, "cpv": null, "cpm": 14.5}, {"n": "F-ADVANTAGE", "camp": "GM-TCHUCOO-VENDAS-F", "spend": 172.56, "imp": 3395, "lc": 75, "cl": 126, "pv": 25, "vc": 26, "atc": 10, "ic": 2, "pu": 0, "ctr": 2.21, "ctr_all": 3.71, "connect_rate": 33.33, "vc_rate": 104.0, "atc_rate": 38.46, "ic_rate": 20.0, "purch_rate": 0.0, "cpv": null, "cpm": 50.83}, {"n": "Q-MIX-QUENTE", "camp": "GM-TCHUCOO-VENDAS-Q", "spend": 83.4, "imp": 1933, "lc": 24, "cl": 43, "pv": 3, "vc": 3, "atc": 1, "ic": 0, "pu": 0, "ctr": 1.24, "ctr_all": 2.22, "connect_rate": 12.5, "vc_rate": 100.0, "atc_rate": 33.33, "ic_rate": 0.0, "purch_rate": null, "cpv": null, "cpm": 43.15}], "ads": [{"n": "AD01-23MAI", "adset": "F-ADVANTAGE", "camp": "GM-DISTRIBUICAO-SEGUIDORES", "thumb": "imgs/2a8d867115e218fd.jpg", "spend": 84.91, "imp": 5854, "lc": 357, "cl": 377, "pu": 0, "atc": 0, "ctr": 6.1, "ctr_all": 6.44, "cpv": null}, {"n": "AD01-VIDEO-COLAB-LOGAN", "adset": "F-ADVANTAGE", "camp": "GM-TCHUCOO-VENDAS-F", "thumb": "imgs/b96c558c9cb21cfc.jpg", "spend": 160.77, "imp": 3023, "lc": 64, "cl": 110, "pu": 0, "atc": 9, "ctr": 2.12, "ctr_all": 3.64, "cpv": null}, {"n": "AD01-VIDEO-COLAB-LOGAN", "adset": "Q-MIX-QUENTE", "camp": "GM-TCHUCOO-VENDAS-Q", "thumb": "imgs/1bdd14a61ceebb07.jpg", "spend": 74.01, "imp": 1632, "lc": 21, "cl": 39, "pu": 0, "atc": 1, "ctr": 1.29, "ctr_all": 2.39, "cpv": null}, {"n": "AD02-COLEIRA-ROSA", "adset": "F-ADVANTAGE", "camp": "GM-TCHUCOO-VENDAS-F", "thumb": "imgs/251f9f54a4927e67.jpg", "spend": 11.79, "imp": 372, "lc": 11, "cl": 16, "pu": 0, "atc": 1, "ctr": 2.96, "ctr_all": 4.3, "cpv": null}, {"n": "AD02-COLEIRA-ROSA", "adset": "Q-MIX-QUENTE", "camp": "GM-TCHUCOO-VENDAS-Q", "thumb": "imgs/c4b5c8bb82fcf340.jpg", "spend": 5.31, "imp": 150, "lc": 3, "cl": 3, "pu": 0, "atc": 0, "ctr": 2.0, "ctr_all": 2.0, "cpv": null}, {"n": "AD03-CATALOGO", "adset": "Q-MIX-QUENTE", "camp": "GM-TCHUCOO-VENDAS-Q", "thumb": "imgs/0fbecb2428810b2c.png", "spend": 4.08, "imp": 151, "lc": 0, "cl": 1, "pu": 0, "atc": 0, "ctr": 0.0, "ctr_all": 0.66, "cpv": null}]}}};
+const META_BD = {"lct": {"1": {"age": [], "gender": [], "platform": []}, "7": {"age": [{"n": "18-24", "spend": 4.84, "pu": 0, "atc": 0, "cpv": null}, {"n": "25-34", "spend": 28.16, "pu": 0, "atc": 3, "cpv": null}, {"n": "35-44", "spend": 57.78, "pu": 0, "atc": 0, "cpv": null}, {"n": "45-54", "spend": 54.73, "pu": 0, "atc": 0, "cpv": null}, {"n": "55-64", "spend": 72.6, "pu": 0, "atc": 0, "cpv": null}, {"n": "65+", "spend": 28.12, "pu": 0, "atc": 0, "cpv": null}], "gender": [{"n": "female", "spend": 168.15, "pu": 0, "atc": 1, "cpv": null}, {"n": "male", "spend": 77.38, "pu": 0, "atc": 2, "cpv": null}], "platform": [{"n": "facebook_reels", "spend": 1.7, "pu": 0, "atc": 0, "cpv": null}, {"n": "feed", "spend": 93.35, "pu": 0, "atc": 0, "cpv": null}, {"n": "instagram_reels", "spend": 50.74, "pu": 0, "atc": 2, "cpv": null}, {"n": "instagram_stories", "spend": 100.44, "pu": 0, "atc": 1, "cpv": null}]}, "14": {"age": [{"n": "18-24", "spend": 6.97, "pu": 0, "atc": 0, "cpv": null}, {"n": "25-34", "spend": 42.78, "pu": 0, "atc": 3, "cpv": null}, {"n": "35-44", "spend": 84.58, "pu": 0, "atc": 5, "cpv": null}, {"n": "45-54", "spend": 74.66, "pu": 0, "atc": 0, "cpv": null}, {"n": "55-64", "spend": 92.86, "pu": 0, "atc": 3, "cpv": null}, {"n": "65+", "spend": 39.02, "pu": 0, "atc": 0, "cpv": null}], "gender": [{"n": "female", "spend": 233.38, "pu": 0, "atc": 9, "cpv": null}, {"n": "male", "spend": 106.5, "pu": 0, "atc": 2, "cpv": null}], "platform": [{"n": "facebook_reels", "spend": 2.26, "pu": 0, "atc": 0, "cpv": null}, {"n": "feed", "spend": 131.87, "pu": 0, "atc": 7, "cpv": null}, {"n": "instagram_explore_grid_home", "spend": 0.01, "pu": 0, "atc": 0, "cpv": null}, {"n": "instagram_reels", "spend": 71.47, "pu": 0, "atc": 2, "cpv": null}, {"n": "instagram_stories", "spend": 135.25, "pu": 0, "atc": 2, "cpv": null}, {"n": "instream_video", "spend": 0.01, "pu": 0, "atc": 0, "cpv": null}]}, "30": {"age": [{"n": "18-24", "spend": 6.97, "pu": 0, "atc": 0, "cpv": null}, {"n": "25-34", "spend": 42.78, "pu": 0, "atc": 3, "cpv": null}, {"n": "35-44", "spend": 84.58, "pu": 0, "atc": 5, "cpv": null}, {"n": "45-54", "spend": 74.66, "pu": 0, "atc": 0, "cpv": null}, {"n": "55-64", "spend": 92.86, "pu": 0, "atc": 3, "cpv": null}, {"n": "65+", "spend": 39.02, "pu": 0, "atc": 0, "cpv": null}], "gender": [{"n": "female", "spend": 233.38, "pu": 0, "atc": 9, "cpv": null}, {"n": "male", "spend": 106.5, "pu": 0, "atc": 2, "cpv": null}], "platform": [{"n": "facebook_reels", "spend": 2.26, "pu": 0, "atc": 0, "cpv": null}, {"n": "feed", "spend": 131.87, "pu": 0, "atc": 7, "cpv": null}, {"n": "instagram_explore_grid_home", "spend": 0.01, "pu": 0, "atc": 0, "cpv": null}, {"n": "instagram_reels", "spend": 71.47, "pu": 0, "atc": 2, "cpv": null}, {"n": "instagram_stories", "spend": 135.25, "pu": 0, "atc": 2, "cpv": null}, {"n": "instream_video", "spend": 0.01, "pu": 0, "atc": 0, "cpv": null}]}, "all": {"age": [{"n": "18-24", "spend": 6.97, "pu": 0, "atc": 0, "cpv": null}, {"n": "25-34", "spend": 42.78, "pu": 0, "atc": 3, "cpv": null}, {"n": "35-44", "spend": 84.58, "pu": 0, "atc": 5, "cpv": null}, {"n": "45-54", "spend": 74.66, "pu": 0, "atc": 0, "cpv": null}, {"n": "55-64", "spend": 92.86, "pu": 0, "atc": 3, "cpv": null}, {"n": "65+", "spend": 39.02, "pu": 0, "atc": 0, "cpv": null}], "gender": [{"n": "female", "spend": 233.38, "pu": 0, "atc": 9, "cpv": null}, {"n": "male", "spend": 106.5, "pu": 0, "atc": 2, "cpv": null}], "platform": [{"n": "facebook_reels", "spend": 2.26, "pu": 0, "atc": 0, "cpv": null}, {"n": "feed", "spend": 131.87, "pu": 0, "atc": 7, "cpv": null}, {"n": "instagram_explore_grid_home", "spend": 0.01, "pu": 0, "atc": 0, "cpv": null}, {"n": "instagram_reels", "spend": 71.47, "pu": 0, "atc": 2, "cpv": null}, {"n": "instagram_stories", "spend": 135.25, "pu": 0, "atc": 2, "cpv": null}, {"n": "instream_video", "spend": 0.01, "pu": 0, "atc": 0, "cpv": null}]}}, "all": {"1": {"age": [], "gender": [], "platform": []}, "7": {"age": [{"n": "18-24", "spend": 4.84, "pu": 0, "atc": 0, "cpv": null}, {"n": "25-34", "spend": 28.16, "pu": 0, "atc": 3, "cpv": null}, {"n": "35-44", "spend": 57.78, "pu": 0, "atc": 0, "cpv": null}, {"n": "45-54", "spend": 54.73, "pu": 0, "atc": 0, "cpv": null}, {"n": "55-64", "spend": 72.6, "pu": 0, "atc": 0, "cpv": null}, {"n": "65+", "spend": 28.12, "pu": 0, "atc": 0, "cpv": null}], "gender": [{"n": "female", "spend": 168.15, "pu": 0, "atc": 1, "cpv": null}, {"n": "male", "spend": 77.38, "pu": 0, "atc": 2, "cpv": null}], "platform": [{"n": "facebook_reels", "spend": 1.7, "pu": 0, "atc": 0, "cpv": null}, {"n": "feed", "spend": 93.35, "pu": 0, "atc": 0, "cpv": null}, {"n": "instagram_reels", "spend": 50.74, "pu": 0, "atc": 2, "cpv": null}, {"n": "instagram_stories", "spend": 100.44, "pu": 0, "atc": 1, "cpv": null}]}, "14": {"age": [{"n": "18-24", "spend": 6.97, "pu": 0, "atc": 0, "cpv": null}, {"n": "25-34", "spend": 42.78, "pu": 0, "atc": 3, "cpv": null}, {"n": "35-44", "spend": 84.58, "pu": 0, "atc": 5, "cpv": null}, {"n": "45-54", "spend": 74.66, "pu": 0, "atc": 0, "cpv": null}, {"n": "55-64", "spend": 92.86, "pu": 0, "atc": 3, "cpv": null}, {"n": "65+", "spend": 39.02, "pu": 0, "atc": 0, "cpv": null}], "gender": [{"n": "female", "spend": 233.38, "pu": 0, "atc": 9, "cpv": null}, {"n": "male", "spend": 106.5, "pu": 0, "atc": 2, "cpv": null}], "platform": [{"n": "facebook_reels", "spend": 2.26, "pu": 0, "atc": 0, "cpv": null}, {"n": "feed", "spend": 131.87, "pu": 0, "atc": 7, "cpv": null}, {"n": "instagram_explore_grid_home", "spend": 0.01, "pu": 0, "atc": 0, "cpv": null}, {"n": "instagram_reels", "spend": 71.47, "pu": 0, "atc": 2, "cpv": null}, {"n": "instagram_stories", "spend": 135.25, "pu": 0, "atc": 2, "cpv": null}, {"n": "instream_video", "spend": 0.01, "pu": 0, "atc": 0, "cpv": null}]}, "30": {"age": [{"n": "18-24", "spend": 6.97, "pu": 0, "atc": 0, "cpv": null}, {"n": "25-34", "spend": 42.78, "pu": 0, "atc": 3, "cpv": null}, {"n": "35-44", "spend": 84.58, "pu": 0, "atc": 5, "cpv": null}, {"n": "45-54", "spend": 74.66, "pu": 0, "atc": 0, "cpv": null}, {"n": "55-64", "spend": 92.86, "pu": 0, "atc": 3, "cpv": null}, {"n": "65+", "spend": 39.02, "pu": 0, "atc": 0, "cpv": null}], "gender": [{"n": "female", "spend": 233.38, "pu": 0, "atc": 9, "cpv": null}, {"n": "male", "spend": 106.5, "pu": 0, "atc": 2, "cpv": null}], "platform": [{"n": "facebook_reels", "spend": 2.26, "pu": 0, "atc": 0, "cpv": null}, {"n": "feed", "spend": 131.87, "pu": 0, "atc": 7, "cpv": null}, {"n": "instagram_explore_grid_home", "spend": 0.01, "pu": 0, "atc": 0, "cpv": null}, {"n": "instagram_reels", "spend": 71.47, "pu": 0, "atc": 2, "cpv": null}, {"n": "instagram_stories", "spend": 135.25, "pu": 0, "atc": 2, "cpv": null}, {"n": "instream_video", "spend": 0.01, "pu": 0, "atc": 0, "cpv": null}]}, "all": {"age": [{"n": "18-24", "spend": 6.97, "pu": 0, "atc": 0, "cpv": null}, {"n": "25-34", "spend": 42.78, "pu": 0, "atc": 3, "cpv": null}, {"n": "35-44", "spend": 84.58, "pu": 0, "atc": 5, "cpv": null}, {"n": "45-54", "spend": 74.66, "pu": 0, "atc": 0, "cpv": null}, {"n": "55-64", "spend": 92.86, "pu": 0, "atc": 3, "cpv": null}, {"n": "65+", "spend": 39.02, "pu": 0, "atc": 0, "cpv": null}], "gender": [{"n": "female", "spend": 233.38, "pu": 0, "atc": 9, "cpv": null}, {"n": "male", "spend": 106.5, "pu": 0, "atc": 2, "cpv": null}], "platform": [{"n": "facebook_reels", "spend": 2.26, "pu": 0, "atc": 0, "cpv": null}, {"n": "feed", "spend": 131.87, "pu": 0, "atc": 7, "cpv": null}, {"n": "instagram_explore_grid_home", "spend": 0.01, "pu": 0, "atc": 0, "cpv": null}, {"n": "instagram_reels", "spend": 71.47, "pu": 0, "atc": 2, "cpv": null}, {"n": "instagram_stories", "spend": 135.25, "pu": 0, "atc": 2, "cpv": null}, {"n": "instream_video", "spend": 0.01, "pu": 0, "atc": 0, "cpv": null}]}}, "_raw_ga": [{"d": "23/05", "age": "18-24", "gen": "female", "sp": 0.19, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "23/05", "age": "18-24", "gen": "female", "sp": 0.04, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "23/05", "age": "18-24", "gen": "female", "sp": 0.01, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "23/05", "age": "18-24", "gen": "male", "sp": 0.15, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "23/05", "age": "18-24", "gen": "male", "sp": 0.02, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "23/05", "age": "18-24", "gen": "male", "sp": 0.03, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "23/05", "age": "18-24", "gen": "male", "sp": 0.01, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "23/05", "age": "25-34", "gen": "female", "sp": 0.26, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "23/05", "age": "25-34", "gen": "female", "sp": 0.4, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "23/05", "age": "25-34", "gen": "female", "sp": 0.23, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "23/05", "age": "25-34", "gen": "female", "sp": 0.14, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "23/05", "age": "25-34", "gen": "female", "sp": 0.78, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "23/05", "age": "25-34", "gen": "male", "sp": 0.26, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "23/05", "age": "25-34", "gen": "male", "sp": 0.32, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "23/05", "age": "25-34", "gen": "male", "sp": 0.05, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "23/05", "age": "25-34", "gen": "male", "sp": 0.08, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "23/05", "age": "25-34", "gen": "male", "sp": 0.07, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "23/05", "age": "35-44", "gen": "female", "sp": 0.23, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "23/05", "age": "35-44", "gen": "female", "sp": 0.59, "pu": 0, "atc": 4, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "23/05", "age": "35-44", "gen": "female", "sp": 0.69, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "23/05", "age": "35-44", "gen": "female", "sp": 0.15, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "23/05", "age": "35-44", "gen": "female", "sp": 1.53, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "23/05", "age": "35-44", "gen": "male", "sp": 0.17, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "23/05", "age": "35-44", "gen": "male", "sp": 0.52, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "23/05", "age": "35-44", "gen": "male", "sp": 0.04, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "23/05", "age": "35-44", "gen": "male", "sp": 0.45, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "23/05", "age": "35-44", "gen": "unknown", "sp": 0.03, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "23/05", "age": "45-54", "gen": "female", "sp": 0.66, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "23/05", "age": "45-54", "gen": "female", "sp": 1.1, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "23/05", "age": "45-54", "gen": "female", "sp": 0.23, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "23/05", "age": "45-54", "gen": "female", "sp": 0.08, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "23/05", "age": "45-54", "gen": "female", "sp": 0.86, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "23/05", "age": "45-54", "gen": "male", "sp": 0.17, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "23/05", "age": "45-54", "gen": "male", "sp": 0.49, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "23/05", "age": "45-54", "gen": "male", "sp": 0.03, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "23/05", "age": "45-54", "gen": "male", "sp": 0.07, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "23/05", "age": "55-64", "gen": "female", "sp": 0.8, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "23/05", "age": "55-64", "gen": "female", "sp": 0.27, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "23/05", "age": "55-64", "gen": "female", "sp": 0.08, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "23/05", "age": "55-64", "gen": "female", "sp": 0.08, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "23/05", "age": "55-64", "gen": "female", "sp": 0.09, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "23/05", "age": "55-64", "gen": "male", "sp": 0.07, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "23/05", "age": "55-64", "gen": "male", "sp": 0.89, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "23/05", "age": "55-64", "gen": "male", "sp": 0.04, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "23/05", "age": "55-64", "gen": "male", "sp": 0.14, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "23/05", "age": "65+", "gen": "female", "sp": 0.47, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "23/05", "age": "65+", "gen": "female", "sp": 0.81, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "23/05", "age": "65+", "gen": "female", "sp": 0.09, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "23/05", "age": "65+", "gen": "female", "sp": 0.05, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "23/05", "age": "65+", "gen": "male", "sp": 0.05, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "23/05", "age": "65+", "gen": "male", "sp": 0.09, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "23/05", "age": "65+", "gen": "male", "sp": 0.01, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "24/05", "age": "18-24", "gen": "female", "sp": 0.16, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "24/05", "age": "18-24", "gen": "female", "sp": 0.05, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "24/05", "age": "18-24", "gen": "female", "sp": 0.05, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "24/05", "age": "18-24", "gen": "female", "sp": 0.01, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "24/05", "age": "18-24", "gen": "male", "sp": 0.62, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "24/05", "age": "18-24", "gen": "unknown", "sp": 0.11, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "24/05", "age": "18-24", "gen": "unknown", "sp": 0.01, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "24/05", "age": "25-34", "gen": "female", "sp": 0.79, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "24/05", "age": "25-34", "gen": "female", "sp": 0.52, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "24/05", "age": "25-34", "gen": "female", "sp": 0.98, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "24/05", "age": "25-34", "gen": "female", "sp": 0.52, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "24/05", "age": "25-34", "gen": "female", "sp": 0.07, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "24/05", "age": "25-34", "gen": "male", "sp": 1.55, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "24/05", "age": "25-34", "gen": "male", "sp": 0.43, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "24/05", "age": "25-34", "gen": "male", "sp": 0.31, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "24/05", "age": "25-34", "gen": "male", "sp": 0.26, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "24/05", "age": "25-34", "gen": "unknown", "sp": 0.01, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "24/05", "age": "25-34", "gen": "unknown", "sp": 0.01, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "24/05", "age": "35-44", "gen": "female", "sp": 0.43, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "24/05", "age": "35-44", "gen": "female", "sp": 0.74, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "24/05", "age": "35-44", "gen": "female", "sp": 2.86, "pu": 0, "atc": 1, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "24/05", "age": "35-44", "gen": "female", "sp": 2.48, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "24/05", "age": "35-44", "gen": "female", "sp": 0.02, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "24/05", "age": "35-44", "gen": "male", "sp": 1.4, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "24/05", "age": "35-44", "gen": "male", "sp": 0.42, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "24/05", "age": "35-44", "gen": "male", "sp": 0.59, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "24/05", "age": "35-44", "gen": "male", "sp": 1.3, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "24/05", "age": "45-54", "gen": "female", "sp": 1.56, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "24/05", "age": "45-54", "gen": "female", "sp": 1.51, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "24/05", "age": "45-54", "gen": "female", "sp": 1.46, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "24/05", "age": "45-54", "gen": "female", "sp": 0.36, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "24/05", "age": "45-54", "gen": "male", "sp": 0.77, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "24/05", "age": "45-54", "gen": "male", "sp": 0.2, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "24/05", "age": "45-54", "gen": "male", "sp": 0.65, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "24/05", "age": "45-54", "gen": "male", "sp": 0.05, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "24/05", "age": "55-64", "gen": "female", "sp": 1.48, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "24/05", "age": "55-64", "gen": "female", "sp": 0.68, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "24/05", "age": "55-64", "gen": "female", "sp": 1.9, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "24/05", "age": "55-64", "gen": "female", "sp": 1.07, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "24/05", "age": "55-64", "gen": "male", "sp": 0.42, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "24/05", "age": "55-64", "gen": "male", "sp": 0.21, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "24/05", "age": "55-64", "gen": "male", "sp": 0.24, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "24/05", "age": "65+", "gen": "female", "sp": 1.73, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "24/05", "age": "65+", "gen": "female", "sp": 0.6, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "24/05", "age": "65+", "gen": "female", "sp": 0.45, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "24/05", "age": "65+", "gen": "female", "sp": 0.01, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "24/05", "age": "65+", "gen": "male", "sp": 0.25, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "24/05", "age": "65+", "gen": "male", "sp": 0.58, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "24/05", "age": "65+", "gen": "male", "sp": 0.77, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "24/05", "age": "65+", "gen": "male", "sp": 0.02, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "25/05", "age": "18-24", "gen": "female", "sp": 0.24, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "25/05", "age": "18-24", "gen": "female", "sp": 0.08, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "25/05", "age": "18-24", "gen": "male", "sp": 0.27, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "25/05", "age": "18-24", "gen": "male", "sp": 0.07, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "25/05", "age": "18-24", "gen": "unknown", "sp": 0.01, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "25/05", "age": "25-34", "gen": "female", "sp": 0.43, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "25/05", "age": "25-34", "gen": "female", "sp": 2.05, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "25/05", "age": "25-34", "gen": "female", "sp": 1.44, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "25/05", "age": "25-34", "gen": "male", "sp": 0.92, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "25/05", "age": "25-34", "gen": "male", "sp": 1.35, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "25/05", "age": "25-34", "gen": "male", "sp": 0.35, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "25/05", "age": "25-34", "gen": "unknown", "sp": 0.01, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "25/05", "age": "25-34", "gen": "unknown", "sp": 0.03, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "25/05", "age": "35-44", "gen": "female", "sp": 0.62, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "25/05", "age": "35-44", "gen": "female", "sp": 2.18, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "25/05", "age": "35-44", "gen": "female", "sp": 5.51, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "25/05", "age": "35-44", "gen": "male", "sp": 0.88, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "25/05", "age": "35-44", "gen": "male", "sp": 2.41, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "25/05", "age": "35-44", "gen": "male", "sp": 0.5, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "25/05", "age": "35-44", "gen": "unknown", "sp": 0.06, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "25/05", "age": "45-54", "gen": "female", "sp": 0.97, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "25/05", "age": "45-54", "gen": "female", "sp": 3.62, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "25/05", "age": "45-54", "gen": "female", "sp": 1.87, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "25/05", "age": "45-54", "gen": "male", "sp": 1.01, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "25/05", "age": "45-54", "gen": "male", "sp": 2.15, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "25/05", "age": "45-54", "gen": "male", "sp": 0.05, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "25/05", "age": "45-54", "gen": "unknown", "sp": 0.01, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "25/05", "age": "55-64", "gen": "female", "sp": 1.23, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "25/05", "age": "55-64", "gen": "female", "sp": 5.47, "pu": 0, "atc": 3, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "25/05", "age": "55-64", "gen": "female", "sp": 1.95, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "25/05", "age": "55-64", "gen": "male", "sp": 0.78, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "25/05", "age": "55-64", "gen": "male", "sp": 0.64, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "25/05", "age": "55-64", "gen": "male", "sp": 1.73, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "25/05", "age": "65+", "gen": "female", "sp": 1.94, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "25/05", "age": "65+", "gen": "female", "sp": 1.98, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "25/05", "age": "65+", "gen": "female", "sp": 0.25, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "25/05", "age": "65+", "gen": "male", "sp": 0.4, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "25/05", "age": "65+", "gen": "male", "sp": 0.2, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "25/05", "age": "65+", "gen": "male", "sp": 0.15, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "26/05", "age": "18-24", "gen": "female", "sp": 0.11, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "26/05", "age": "18-24", "gen": "female", "sp": 0.04, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "26/05", "age": "18-24", "gen": "female", "sp": 0.04, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "26/05", "age": "18-24", "gen": "male", "sp": 0.59, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "26/05", "age": "18-24", "gen": "male", "sp": 0.02, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "26/05", "age": "25-34", "gen": "female", "sp": 0.19, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "26/05", "age": "25-34", "gen": "female", "sp": 0.69, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "26/05", "age": "25-34", "gen": "female", "sp": 1.16, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "26/05", "age": "25-34", "gen": "male", "sp": 0.81, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "26/05", "age": "25-34", "gen": "male", "sp": 1.36, "pu": 0, "atc": 1, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "26/05", "age": "25-34", "gen": "male", "sp": 0.15, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "26/05", "age": "35-44", "gen": "female", "sp": 0.31, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "26/05", "age": "35-44", "gen": "female", "sp": 2.89, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "26/05", "age": "35-44", "gen": "female", "sp": 2.27, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "26/05", "age": "35-44", "gen": "male", "sp": 0.93, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "26/05", "age": "35-44", "gen": "male", "sp": 1.39, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "26/05", "age": "35-44", "gen": "male", "sp": 0.34, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "26/05", "age": "35-44", "gen": "unknown", "sp": 0.01, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "26/05", "age": "35-44", "gen": "unknown", "sp": 0.01, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "26/05", "age": "45-54", "gen": "female", "sp": 0.56, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "26/05", "age": "45-54", "gen": "female", "sp": 4.01, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "26/05", "age": "45-54", "gen": "female", "sp": 3.42, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "26/05", "age": "45-54", "gen": "male", "sp": 1.25, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "26/05", "age": "45-54", "gen": "male", "sp": 1.41, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "26/05", "age": "45-54", "gen": "male", "sp": 0.1, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "26/05", "age": "45-54", "gen": "unknown", "sp": 0.05, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "26/05", "age": "45-54", "gen": "unknown", "sp": 0.07, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "26/05", "age": "55-64", "gen": "female", "sp": 1.21, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "26/05", "age": "55-64", "gen": "female", "sp": 3.85, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "26/05", "age": "55-64", "gen": "female", "sp": 1.47, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "26/05", "age": "55-64", "gen": "male", "sp": 1.25, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "26/05", "age": "55-64", "gen": "male", "sp": 2.32, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "26/05", "age": "55-64", "gen": "male", "sp": 0.46, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "26/05", "age": "65+", "gen": "female", "sp": 2.07, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "26/05", "age": "65+", "gen": "female", "sp": 1.7, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "26/05", "age": "65+", "gen": "female", "sp": 0.4, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "26/05", "age": "65+", "gen": "male", "sp": 0.78, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "26/05", "age": "65+", "gen": "male", "sp": 0.21, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "26/05", "age": "65+", "gen": "male", "sp": 0.01, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "27/05", "age": "18-24", "gen": "female", "sp": 0.1, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "27/05", "age": "18-24", "gen": "female", "sp": 0.13, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "27/05", "age": "18-24", "gen": "female", "sp": 0.06, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "27/05", "age": "18-24", "gen": "male", "sp": 1.02, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "27/05", "age": "18-24", "gen": "male", "sp": 0.01, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "27/05", "age": "25-34", "gen": "female", "sp": 0.14, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "27/05", "age": "25-34", "gen": "female", "sp": 0.62, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "27/05", "age": "25-34", "gen": "female", "sp": 2.64, "pu": 0, "atc": 1, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "27/05", "age": "25-34", "gen": "male", "sp": 0.6, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "27/05", "age": "25-34", "gen": "male", "sp": 1.77, "pu": 0, "atc": 1, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "27/05", "age": "25-34", "gen": "male", "sp": 0.47, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "27/05", "age": "25-34", "gen": "unknown", "sp": 0.02, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "27/05", "age": "35-44", "gen": "female", "sp": 0.38, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "27/05", "age": "35-44", "gen": "female", "sp": 2.01, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "27/05", "age": "35-44", "gen": "female", "sp": 3.49, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "27/05", "age": "35-44", "gen": "male", "sp": 0.83, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "27/05", "age": "35-44", "gen": "male", "sp": 0.99, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "27/05", "age": "35-44", "gen": "male", "sp": 0.6, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "27/05", "age": "35-44", "gen": "unknown", "sp": 0.04, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "27/05", "age": "45-54", "gen": "female", "sp": 1.0, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "27/05", "age": "45-54", "gen": "female", "sp": 4.1, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "27/05", "age": "45-54", "gen": "female", "sp": 1.58, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "27/05", "age": "45-54", "gen": "male", "sp": 0.92, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "27/05", "age": "45-54", "gen": "male", "sp": 1.71, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "27/05", "age": "45-54", "gen": "male", "sp": 0.74, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "27/05", "age": "55-64", "gen": "female", "sp": 1.79, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "27/05", "age": "55-64", "gen": "female", "sp": 5.5, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "27/05", "age": "55-64", "gen": "female", "sp": 0.68, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "27/05", "age": "55-64", "gen": "male", "sp": 0.9, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "27/05", "age": "55-64", "gen": "male", "sp": 2.56, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "27/05", "age": "55-64", "gen": "male", "sp": 0.57, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "27/05", "age": "55-64", "gen": "unknown", "sp": 0.02, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "27/05", "age": "65+", "gen": "female", "sp": 2.01, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "27/05", "age": "65+", "gen": "female", "sp": 2.53, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "27/05", "age": "65+", "gen": "female", "sp": 0.71, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "27/05", "age": "65+", "gen": "male", "sp": 0.77, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "27/05", "age": "65+", "gen": "male", "sp": 0.31, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "28/05", "age": "18-24", "gen": "female", "sp": 0.14, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "28/05", "age": "18-24", "gen": "female", "sp": 0.01, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "28/05", "age": "18-24", "gen": "female", "sp": 0.11, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "28/05", "age": "18-24", "gen": "male", "sp": 0.24, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "28/05", "age": "18-24", "gen": "male", "sp": 0.01, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "28/05", "age": "18-24", "gen": "male", "sp": 0.04, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "28/05", "age": "25-34", "gen": "female", "sp": 0.43, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "28/05", "age": "25-34", "gen": "female", "sp": 1.95, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "28/05", "age": "25-34", "gen": "female", "sp": 0.65, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "28/05", "age": "25-34", "gen": "female", "sp": 0.15, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "28/05", "age": "25-34", "gen": "male", "sp": 0.65, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "28/05", "age": "25-34", "gen": "male", "sp": 1.4, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "28/05", "age": "25-34", "gen": "male", "sp": 0.2, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "28/05", "age": "25-34", "gen": "male", "sp": 0.11, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "28/05", "age": "25-34", "gen": "unknown", "sp": 0.03, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "28/05", "age": "35-44", "gen": "female", "sp": 0.72, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "28/05", "age": "35-44", "gen": "female", "sp": 1.36, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "28/05", "age": "35-44", "gen": "female", "sp": 2.55, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "28/05", "age": "35-44", "gen": "female", "sp": 0.91, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "28/05", "age": "35-44", "gen": "male", "sp": 0.84, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "28/05", "age": "35-44", "gen": "male", "sp": 1.19, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "28/05", "age": "35-44", "gen": "male", "sp": 0.29, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "28/05", "age": "35-44", "gen": "male", "sp": 0.35, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "28/05", "age": "35-44", "gen": "unknown", "sp": 0.04, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "28/05", "age": "45-54", "gen": "female", "sp": 1.18, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "28/05", "age": "45-54", "gen": "female", "sp": 3.3, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "28/05", "age": "45-54", "gen": "female", "sp": 1.17, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "28/05", "age": "45-54", "gen": "female", "sp": 0.81, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "28/05", "age": "45-54", "gen": "male", "sp": 0.7, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "28/05", "age": "45-54", "gen": "male", "sp": 0.93, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "28/05", "age": "45-54", "gen": "male", "sp": 0.6, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "28/05", "age": "45-54", "gen": "male", "sp": 0.31, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "28/05", "age": "55-64", "gen": "female", "sp": 2.02, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "28/05", "age": "55-64", "gen": "female", "sp": 5.93, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "28/05", "age": "55-64", "gen": "female", "sp": 0.27, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "28/05", "age": "55-64", "gen": "female", "sp": 0.15, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "28/05", "age": "55-64", "gen": "male", "sp": 0.71, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "28/05", "age": "55-64", "gen": "male", "sp": 5.94, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "28/05", "age": "55-64", "gen": "male", "sp": 0.88, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "28/05", "age": "55-64", "gen": "male", "sp": 0.01, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "28/05", "age": "55-64", "gen": "unknown", "sp": 0.09, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "28/05", "age": "65+", "gen": "female", "sp": 1.78, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "28/05", "age": "65+", "gen": "female", "sp": 0.9, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "28/05", "age": "65+", "gen": "female", "sp": 0.4, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "28/05", "age": "65+", "gen": "female", "sp": 0.08, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "28/05", "age": "65+", "gen": "male", "sp": 0.38, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "28/05", "age": "65+", "gen": "male", "sp": 0.3, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "29/05", "age": "18-24", "gen": "female", "sp": 0.12, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "29/05", "age": "18-24", "gen": "female", "sp": 0.02, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "29/05", "age": "18-24", "gen": "female", "sp": 0.04, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "29/05", "age": "18-24", "gen": "male", "sp": 0.34, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "29/05", "age": "18-24", "gen": "male", "sp": 0.02, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "29/05", "age": "25-34", "gen": "female", "sp": 0.71, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "29/05", "age": "25-34", "gen": "female", "sp": 0.93, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "29/05", "age": "25-34", "gen": "female", "sp": 0.83, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "29/05", "age": "25-34", "gen": "male", "sp": 0.67, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "29/05", "age": "25-34", "gen": "male", "sp": 1.25, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "29/05", "age": "25-34", "gen": "male", "sp": 0.45, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "29/05", "age": "25-34", "gen": "unknown", "sp": 0.01, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "29/05", "age": "25-34", "gen": "unknown", "sp": 0.01, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "29/05", "age": "35-44", "gen": "female", "sp": 0.67, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "29/05", "age": "35-44", "gen": "female", "sp": 2.97, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "29/05", "age": "35-44", "gen": "female", "sp": 3.09, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "29/05", "age": "35-44", "gen": "male", "sp": 1.08, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "29/05", "age": "35-44", "gen": "male", "sp": 2.23, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "29/05", "age": "35-44", "gen": "male", "sp": 0.57, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "29/05", "age": "35-44", "gen": "unknown", "sp": 0.05, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "29/05", "age": "35-44", "gen": "unknown", "sp": 0.02, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "29/05", "age": "45-54", "gen": "female", "sp": 1.09, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "29/05", "age": "45-54", "gen": "female", "sp": 5.23, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "29/05", "age": "45-54", "gen": "female", "sp": 1.66, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "29/05", "age": "45-54", "gen": "male", "sp": 0.79, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "29/05", "age": "45-54", "gen": "male", "sp": 0.88, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "29/05", "age": "45-54", "gen": "male", "sp": 0.16, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "29/05", "age": "55-64", "gen": "female", "sp": 1.59, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "29/05", "age": "55-64", "gen": "female", "sp": 2.9, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "29/05", "age": "55-64", "gen": "female", "sp": 1.38, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "29/05", "age": "55-64", "gen": "male", "sp": 0.86, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "29/05", "age": "55-64", "gen": "male", "sp": 1.65, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "29/05", "age": "55-64", "gen": "male", "sp": 0.64, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "29/05", "age": "65+", "gen": "female", "sp": 1.24, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "29/05", "age": "65+", "gen": "female", "sp": 1.84, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "29/05", "age": "65+", "gen": "female", "sp": 0.05, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "29/05", "age": "65+", "gen": "male", "sp": 0.66, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "29/05", "age": "65+", "gen": "male", "sp": 0.47, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "30/05", "age": "18-24", "gen": "female", "sp": 0.23, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "30/05", "age": "18-24", "gen": "female", "sp": 0.07, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "30/05", "age": "18-24", "gen": "female", "sp": 0.04, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "30/05", "age": "18-24", "gen": "male", "sp": 0.62, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "30/05", "age": "18-24", "gen": "unknown", "sp": 0.01, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "30/05", "age": "25-34", "gen": "female", "sp": 0.25, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "30/05", "age": "25-34", "gen": "female", "sp": 0.77, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "30/05", "age": "25-34", "gen": "female", "sp": 0.29, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "30/05", "age": "25-34", "gen": "female", "sp": 0.01, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "30/05", "age": "25-34", "gen": "male", "sp": 1.15, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "30/05", "age": "25-34", "gen": "male", "sp": 0.55, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "30/05", "age": "25-34", "gen": "male", "sp": 0.21, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "30/05", "age": "25-34", "gen": "male", "sp": 0.19, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "30/05", "age": "25-34", "gen": "unknown", "sp": 0.01, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "30/05", "age": "35-44", "gen": "female", "sp": 0.31, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "30/05", "age": "35-44", "gen": "female", "sp": 2.35, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "30/05", "age": "35-44", "gen": "female", "sp": 2.67, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "30/05", "age": "35-44", "gen": "female", "sp": 0.33, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "30/05", "age": "35-44", "gen": "male", "sp": 0.96, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "30/05", "age": "35-44", "gen": "male", "sp": 0.37, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "30/05", "age": "35-44", "gen": "male", "sp": 0.37, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "30/05", "age": "35-44", "gen": "unknown", "sp": 0.1, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "30/05", "age": "45-54", "gen": "female", "sp": 0.74, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "30/05", "age": "45-54", "gen": "female", "sp": 3.05, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "30/05", "age": "45-54", "gen": "female", "sp": 1.54, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "30/05", "age": "45-54", "gen": "female", "sp": 0.03, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "30/05", "age": "45-54", "gen": "male", "sp": 0.81, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "30/05", "age": "45-54", "gen": "male", "sp": 0.52, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "30/05", "age": "45-54", "gen": "male", "sp": 0.14, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "30/05", "age": "55-64", "gen": "female", "sp": 1.23, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "30/05", "age": "55-64", "gen": "female", "sp": 3.31, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "30/05", "age": "55-64", "gen": "female", "sp": 1.06, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "30/05", "age": "55-64", "gen": "female", "sp": 0.01, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "30/05", "age": "55-64", "gen": "male", "sp": 0.78, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "30/05", "age": "55-64", "gen": "male", "sp": 2.05, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "30/05", "age": "55-64", "gen": "male", "sp": 0.39, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "30/05", "age": "65+", "gen": "female", "sp": 1.15, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "30/05", "age": "65+", "gen": "female", "sp": 1.11, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "30/05", "age": "65+", "gen": "female", "sp": 1.63, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "30/05", "age": "65+", "gen": "female", "sp": 0.45, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "30/05", "age": "65+", "gen": "male", "sp": 0.33, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "30/05", "age": "65+", "gen": "male", "sp": 0.16, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "30/05", "age": "65+", "gen": "male", "sp": 0.06, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "31/05", "age": "18-24", "gen": "female", "sp": 0.15, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "31/05", "age": "18-24", "gen": "female", "sp": 0.04, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "31/05", "age": "18-24", "gen": "female", "sp": 0.02, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "31/05", "age": "18-24", "gen": "male", "sp": 0.39, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "31/05", "age": "18-24", "gen": "male", "sp": 0.04, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "31/05", "age": "18-24", "gen": "male", "sp": 0.01, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "31/05", "age": "18-24", "gen": "unknown", "sp": 0.01, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "31/05", "age": "25-34", "gen": "female", "sp": 0.62, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "31/05", "age": "25-34", "gen": "female", "sp": 0.63, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "31/05", "age": "25-34", "gen": "female", "sp": 0.6, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "31/05", "age": "25-34", "gen": "female", "sp": 0.19, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "31/05", "age": "25-34", "gen": "male", "sp": 1.02, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "31/05", "age": "25-34", "gen": "male", "sp": 0.33, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "31/05", "age": "25-34", "gen": "male", "sp": 0.22, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "31/05", "age": "25-34", "gen": "male", "sp": 0.01, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "31/05", "age": "25-34", "gen": "unknown", "sp": 0.06, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "31/05", "age": "35-44", "gen": "female", "sp": 0.48, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "31/05", "age": "35-44", "gen": "female", "sp": 7.69, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "31/05", "age": "35-44", "gen": "female", "sp": 3.66, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "31/05", "age": "35-44", "gen": "female", "sp": 0.54, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "31/05", "age": "35-44", "gen": "male", "sp": 1.29, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "31/05", "age": "35-44", "gen": "male", "sp": 0.92, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "31/05", "age": "35-44", "gen": "male", "sp": 0.17, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "31/05", "age": "35-44", "gen": "male", "sp": 0.13, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "31/05", "age": "35-44", "gen": "unknown", "sp": 0.02, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "31/05", "age": "45-54", "gen": "female", "sp": 1.25, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "31/05", "age": "45-54", "gen": "female", "sp": 3.53, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "31/05", "age": "45-54", "gen": "female", "sp": 0.76, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "31/05", "age": "45-54", "gen": "female", "sp": 0.05, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "31/05", "age": "45-54", "gen": "male", "sp": 1.17, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "31/05", "age": "45-54", "gen": "male", "sp": 1.15, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "31/05", "age": "45-54", "gen": "male", "sp": 0.07, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "31/05", "age": "45-54", "gen": "male", "sp": 0.17, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "31/05", "age": "45-54", "gen": "unknown", "sp": 0.02, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "31/05", "age": "55-64", "gen": "female", "sp": 1.94, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "31/05", "age": "55-64", "gen": "female", "sp": 9.84, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "31/05", "age": "55-64", "gen": "female", "sp": 1.58, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "31/05", "age": "55-64", "gen": "female", "sp": 0.05, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "31/05", "age": "55-64", "gen": "male", "sp": 0.73, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "31/05", "age": "55-64", "gen": "male", "sp": 1.87, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "31/05", "age": "55-64", "gen": "male", "sp": 0.06, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "31/05", "age": "55-64", "gen": "male", "sp": 0.1, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "31/05", "age": "65+", "gen": "female", "sp": 2.11, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "31/05", "age": "65+", "gen": "female", "sp": 0.1, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "31/05", "age": "65+", "gen": "female", "sp": 0.48, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "31/05", "age": "65+", "gen": "female", "sp": 0.02, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "31/05", "age": "65+", "gen": "male", "sp": 0.59, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "31/05", "age": "65+", "gen": "male", "sp": 0.28, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "31/05", "age": "65+", "gen": "male", "sp": 0.05, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}], "_raw_pt": [{"d": "23/05", "plat": "facebook_reels", "sp": 0.23, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "23/05", "plat": "feed", "sp": 0.45, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "23/05", "plat": "feed", "sp": 0.65, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "23/05", "plat": "feed", "sp": 1.2, "pu": 0, "atc": 4, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "23/05", "plat": "feed", "sp": 0.11, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "23/05", "plat": "feed", "sp": 1.11, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "23/05", "plat": "feed", "sp": 0.07, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "23/05", "plat": "feed", "sp": 0.11, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "23/05", "plat": "feed", "sp": 2.97, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "23/05", "plat": "instagram_reels", "sp": 0.34, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "23/05", "plat": "instagram_reels", "sp": 2.82, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "23/05", "plat": "instagram_reels", "sp": 0.26, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "23/05", "plat": "instagram_reels", "sp": 0.15, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "23/05", "plat": "instagram_stories", "sp": 2.69, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "23/05", "plat": "instagram_stories", "sp": 0.64, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "23/05", "plat": "instagram_stories", "sp": 0.31, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "23/05", "plat": "instagram_stories", "sp": 0.2, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "23/05", "plat": "instagram_stories", "sp": 0.85, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "24/05", "plat": "facebook_reels", "sp": 0.04, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "24/05", "plat": "feed", "sp": 2.12, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "24/05", "plat": "feed", "sp": 1.3, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "24/05", "plat": "feed", "sp": 2.0, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "24/05", "plat": "feed", "sp": 1.45, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "24/05", "plat": "feed", "sp": 4.05, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "24/05", "plat": "feed", "sp": 0.21, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "24/05", "plat": "feed", "sp": 2.72, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "24/05", "plat": "feed", "sp": 0.04, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "24/05", "plat": "instagram_reels", "sp": 2.54, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "24/05", "plat": "instagram_reels", "sp": 2.05, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "24/05", "plat": "instagram_reels", "sp": 0.92, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "24/05", "plat": "instagram_stories", "sp": 6.62, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "24/05", "plat": "instagram_stories", "sp": 0.57, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "24/05", "plat": "instagram_stories", "sp": 4.76, "pu": 0, "atc": 1, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "24/05", "plat": "instagram_stories", "sp": 2.23, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "24/05", "plat": "instagram_stories", "sp": 0.05, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "25/05", "plat": "facebook_reels", "sp": 0.29, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "25/05", "plat": "feed", "sp": 0.97, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "25/05", "plat": "feed", "sp": 0.85, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "25/05", "plat": "feed", "sp": 8.65, "pu": 0, "atc": 3, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "25/05", "plat": "feed", "sp": 1.22, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "25/05", "plat": "feed", "sp": 6.27, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "25/05", "plat": "instagram_explore_grid_home", "sp": 0.01, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "25/05", "plat": "instagram_reels", "sp": 0.98, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "25/05", "plat": "instagram_reels", "sp": 8.85, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "25/05", "plat": "instagram_reels", "sp": 1.82, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "25/05", "plat": "instagram_stories", "sp": 7.51, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "25/05", "plat": "instagram_stories", "sp": 3.76, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "25/05", "plat": "instagram_stories", "sp": 4.62, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "25/05", "plat": "instream_video", "sp": 0.01, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "26/05", "plat": "facebook_reels", "sp": 0.47, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "26/05", "plat": "feed", "sp": 0.86, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "26/05", "plat": "feed", "sp": 0.33, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "26/05", "plat": "feed", "sp": 8.48, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "26/05", "plat": "feed", "sp": 0.14, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "26/05", "plat": "feed", "sp": 4.77, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "26/05", "plat": "instagram_reels", "sp": 0.89, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "26/05", "plat": "instagram_reels", "sp": 7.45, "pu": 0, "atc": 1, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "26/05", "plat": "instagram_reels", "sp": 2.49, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "26/05", "plat": "instagram_stories", "sp": 8.37, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "26/05", "plat": "instagram_stories", "sp": 3.23, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "26/05", "plat": "instagram_stories", "sp": 2.43, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "27/05", "plat": "facebook_reels", "sp": 0.73, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "27/05", "plat": "feed", "sp": 0.62, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "27/05", "plat": "feed", "sp": 0.43, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "27/05", "plat": "feed", "sp": 8.18, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "27/05", "plat": "feed", "sp": 0.27, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "27/05", "plat": "feed", "sp": 5.71, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "27/05", "plat": "instagram_reels", "sp": 0.44, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "27/05", "plat": "instagram_reels", "sp": 9.88, "pu": 0, "atc": 1, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "27/05", "plat": "instagram_reels", "sp": 0.93, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "27/05", "plat": "instagram_stories", "sp": 9.44, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "27/05", "plat": "instagram_stories", "sp": 3.06, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "27/05", "plat": "instagram_stories", "sp": 4.63, "pu": 0, "atc": 1, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "28/05", "plat": "facebook_reels", "sp": 0.07, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "28/05", "plat": "feed", "sp": 0.89, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "28/05", "plat": "feed", "sp": 0.99, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "28/05", "plat": "feed", "sp": 8.93, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "28/05", "plat": "feed", "sp": 0.23, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "28/05", "plat": "feed", "sp": 3.13, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "28/05", "plat": "feed", "sp": 0.05, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "28/05", "plat": "feed", "sp": 2.01, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "28/05", "plat": "instagram_reels", "sp": 1.28, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "28/05", "plat": "instagram_reels", "sp": 7.44, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "28/05", "plat": "instagram_reels", "sp": 1.32, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "28/05", "plat": "instagram_stories", "sp": 7.62, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "28/05", "plat": "instagram_stories", "sp": 5.95, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "28/05", "plat": "instagram_stories", "sp": 2.44, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "28/05", "plat": "instagram_stories", "sp": 0.86, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "29/05", "plat": "facebook_reels", "sp": 0.13, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "29/05", "plat": "feed", "sp": 0.52, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "29/05", "plat": "feed", "sp": 1.17, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "29/05", "plat": "feed", "sp": 6.94, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "29/05", "plat": "feed", "sp": 0.71, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "29/05", "plat": "feed", "sp": 4.25, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "29/05", "plat": "instagram_reels", "sp": 0.9, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "29/05", "plat": "instagram_reels", "sp": 5.99, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "29/05", "plat": "instagram_reels", "sp": 0.62, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "29/05", "plat": "instagram_stories", "sp": 8.41, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "29/05", "plat": "instagram_stories", "sp": 6.21, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "29/05", "plat": "instagram_stories", "sp": 3.32, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "30/05", "plat": "facebook_reels", "sp": 0.07, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "30/05", "plat": "facebook_reels", "sp": 0.09, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "30/05", "plat": "feed", "sp": 0.51, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "30/05", "plat": "feed", "sp": 1.18, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "30/05", "plat": "feed", "sp": 5.21, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "30/05", "plat": "feed", "sp": 0.31, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "30/05", "plat": "feed", "sp": 4.08, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "30/05", "plat": "feed", "sp": 0.68, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "30/05", "plat": "instagram_reels", "sp": 0.44, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "30/05", "plat": "instagram_reels", "sp": 3.91, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "30/05", "plat": "instagram_reels", "sp": 1.01, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "30/05", "plat": "instagram_stories", "sp": 7.72, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "30/05", "plat": "instagram_stories", "sp": 3.94, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "30/05", "plat": "instagram_stories", "sp": 2.92, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "30/05", "plat": "instagram_stories", "sp": 0.34, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "31/05", "plat": "facebook_reels", "sp": 0.06, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "31/05", "plat": "facebook_reels", "sp": 0.08, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "31/05", "plat": "feed", "sp": 0.46, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "31/05", "plat": "feed", "sp": 1.3, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "31/05", "plat": "feed", "sp": 16.4, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "31/05", "plat": "feed", "sp": 0.16, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "31/05", "plat": "feed", "sp": 2.55, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "31/05", "plat": "feed", "sp": 0.09, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "31/05", "plat": "feed", "sp": 0.81, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "31/05", "plat": "instagram_reels", "sp": 0.77, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "31/05", "plat": "instagram_reels", "sp": 3.51, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "31/05", "plat": "instagram_reels", "sp": 1.47, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "31/05", "plat": "instagram_stories", "sp": 10.55, "pu": 0, "atc": 0, "lct": true, "camp": "GM-DISTRIBUICAO-SEGUIDORES"}, {"d": "31/05", "plat": "instagram_stories", "sp": 5.22, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-F"}, {"d": "31/05", "plat": "instagram_stories", "sp": 3.4, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}, {"d": "31/05", "plat": "instagram_stories", "sp": 0.38, "pu": 0, "atc": 0, "lct": true, "camp": "GM-TCHUCOO-VENDAS-Q"}]};
+const META_MONTHLY = {"lbl": ["Mai/26"], "totalS": [340.87], "totalP": [0], "cpvG": [null], "cpmG": [30.48], "ctrG": [4.08], "camps": [{"n": "GM-DISTRIBUICAO-SEGUIDORES", "spend": 84.91, "purchase": 0, "imp": 5854, "lc": 357, "atc": 0}, {"n": "GM-TCHUCOO-VENDAS-F", "spend": 172.56, "purchase": 0, "imp": 3395, "lc": 75, "atc": 10}, {"n": "GM-TCHUCOO-VENDAS-Q", "spend": 83.4, "purchase": 0, "imp": 1933, "lc": 24, "atc": 1}]};
+const DATA_GERACAO = "2026-06-01";
+
+// ═══ CONFIG (injetada pelo Python) ═══
+const NOME_CLIENTE='Tchucoo';
+const LOGO_LETRA='TC';
+const COR_ACENTO='#AD96DC';
+const LANCAMENTO_COD='';
+// Thresholds do funil e-commerce
+const CPV_BOM=50.0;   const CPV_MEDIO=80.0;
+const CTR_BOM=1.5;    const CTR_MEDIO=0.8;
+const CPM_BOM=5.0;    const CPM_MEDIO=12.0;
+const CR_BOM=60.0;   const CR_MEDIO=35.0;
+const VC_BOM=40.0;   const VC_MEDIO=20.0;
+const ATC_BOM=10.0;   const ATC_MEDIO=5.0;
+const IC_BOM=60.0;   const IC_MEDIO=35.0;
+const PURCH_BOM=40.0;   const PURCH_MEDIO=20.0;
+
+// ═══ ESTADO ═══
+let filtroLct=true, periodDays=30, dateI=null, dateF=null, showLabels=true, labelSize=8;
+let chartMode='vendas';
+let metaCampSel=new Set();
+let campFilterSel=new Set();
+
+// ═══ UTILS ═══
+const fR=v=>(v==null||isNaN(v))?'—':'R$'+Number(v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+const fN=v=>v==null?'—':Number(v).toLocaleString('pt-BR');
+const fP=v=>v==null?'—':Number(v).toFixed(2)+'%';
+const r2=v=>Math.round(v*100)/100;
+
+// CPV: menor = melhor
+function cpvCls(v){return !v?'cn':v<=CPV_BOM?'cg':v<=CPV_MEDIO?'cw2':'cr';}
+function cpmCls(v){return !v?'cn':v<=CPM_BOM?'cg':v<=CPM_MEDIO?'cw2':'cr';}
+function funnelCls(v,bom,medio,inverted=false){
+  if(v==null||isNaN(v)) return {cls:'cn',col:'var(--muted)'};
+  const good = inverted ? v<=bom : v>=bom;
+  const mid  = inverted ? v<=medio : v>=medio;
+  if(good)  return {cls:'cg',col:'#059669'};
+  if(mid)   return {cls:'cw2',col:'#d97706'};
+  return {cls:'cr',col:'#dc2626'};
+}
+
+const DARK=()=>document.documentElement.getAttribute('data-theme')==='dark';
+const TXT=()=>DARK()?'#8b95a9':'#6b7280';
+const GRID=()=>DARK()?'rgba(255,255,255,.05)':'rgba(0,0,0,.05)';
+const bf={family:"'DM Sans',sans-serif",size:10};
+
+// ═══ FILTROS DE DADOS ═══
+function getMK(){return filtroLct?META_KPIS?.lct:META_KPIS?.all;}
+function getMDraw(){return filtroLct?META_DAILY?.lct:META_DAILY?.all;}
+
+function getHoje(){
+  if(DATA_GERACAO&&DATA_GERACAO!=='null'){
+    const[y,m,d]=DATA_GERACAO.split('-');
+    return new Date(parseInt(y),parseInt(m)-1,parseInt(d));
+  }
+  return new Date();
+}
+
+function parseDayStr(s){
+  const[dd,mm]=s.split('/');
+  const hoje=getHoje(); let year=hoje.getFullYear();
+  const mesStr=parseInt(mm),mesHoje=hoje.getMonth()+1;
+  if(mesStr>mesHoje+1) year--;
+  return new Date(year,mesStr-1,parseInt(dd));
+}
+
+function applyPeriod(daily){
+  if(!daily) return null;
+  const days=daily.days; if(!days?.length) return daily;
+  const hoje=getHoje(); let idxs=days.map((_,i)=>i);
+  if(periodDays>0){
+    const fim=new Date(hoje);
+    if(periodDays===1) fim.setDate(fim.getDate()-1);
+    fim.setHours(23,59,59,999);
+    const inicio=new Date(fim);
+    inicio.setDate(inicio.getDate()-(periodDays===1?0:periodDays-1));
+    inicio.setHours(0,0,0,0);
+    idxs=idxs.filter(i=>{const dt=parseDayStr(days[i]);return dt>=inicio&&dt<=fim;});
+  }
+  if(dateI||dateF){
+    idxs=idxs.filter(i=>{
+      const dt=parseDayStr(days[i]);
+      return(!dateI||dt>=dateI)&&(!dateF||dt<=dateF);
+    });
+  }
+  const out={};
+  Object.keys(daily).forEach(k=>{out[k]=idxs.map(i=>daily[k][i]);});
+  return out;
+}
+
+function getMD(){return applyPeriod(getMDraw());}
+
+// ═══ CHARTS UTILS ═══
+const CH={};
+function dc(id){if(CH[id]){CH[id].destroy();delete CH[id];}}
+function bo(extra={}){
+  return{responsive:true,maintainAspectRatio:false,
+    interaction:{mode:'index',intersect:false},
+    plugins:{
+      legend:{labels:{color:TXT(),font:bf,boxWidth:9,padding:8}},
+      tooltip:{backgroundColor:DARK()?'#1a2236':'#0f1523',borderColor:'rgba(255,255,255,.08)',borderWidth:1,titleFont:{size:10},bodyFont:{size:10}},
+      datalabels:{display:false}
+    },
+    scales:{x:{ticks:{color:TXT(),font:bf,maxTicksLimit:14},grid:{color:GRID()}},
+            y:{ticks:{color:TXT(),font:bf},grid:{color:GRID()}}},
+    ...extra};
+}
+
+// ═══ FUNIL E-COMMERCE ═══
+function buildFunnel(kpis){
+  if(!kpis) return;
+  const steps=[
+    {lbl:'Impressões',    val:kpis.impressions,  color:'#1d4ed8'},
+    {lbl:'Link Clicks',   val:kpis.link_clicks,  color:'#2563eb'},
+    {lbl:'Page View',     val:kpis.page_view,    color:'#3b82f6'},
+    {lbl:'View Content',  val:kpis.view_content, color:'#6366f1'},
+    {lbl:'Add to Cart',   val:kpis.add_to_cart,  color:'#8b5cf6'},
+    {lbl:'Init Checkout', val:kpis.init_checkout,color:'#a855f7'},
+    {lbl:'Purchase 🛒',   val:kpis.purchase,     color:'#059669'},
+  ];
+  const rates=[
+    {lbl:'CTR',           val:kpis.ctr,          bom:CTR_BOM,   medio:CTR_MEDIO,  inv:false},
+    {lbl:'Connect Rate',  val:kpis.connect_rate,  bom:CR_BOM,    medio:CR_MEDIO,   inv:false},
+    {lbl:'View Content %',val:kpis.vc_rate,       bom:VC_BOM,    medio:VC_MEDIO,   inv:false},
+    {lbl:'Add to Cart %', val:kpis.atc_rate,      bom:ATC_BOM,   medio:ATC_MEDIO,  inv:false},
+    {lbl:'Checkout %',    val:kpis.ic_rate,       bom:IC_BOM,    medio:IC_MEDIO,   inv:false},
+    {lbl:'Conversão Venda',val:kpis.purch_rate,   bom:PURCH_BOM, medio:PURCH_MEDIO,inv:false},
+  ];
+  const maxOther=Math.max(kpis.link_clicks||1,kpis.page_view||1,kpis.view_content||1,kpis.add_to_cart||1,kpis.init_checkout||1,kpis.purchase||1,1);
+  const widths=[100];
+  for(let i=1;i<steps.length;i++){
+    widths.push(Math.max(8,Math.round((steps[i].val||0)/maxOther*85)));
+  }
+  // Garantir hierarquia visual
+  for(let i=widths.length-1;i>=1;i--){
+    if(widths[i]>=widths[i-1]) widths[i]=Math.max(8,widths[i-1]-6);
+  }
+  let html='';
+  steps.forEach((s,i)=>{
+    html+=`<div class="f-step">
+      <div class="f-bar${widths[i]<30?' narrow':''}" style="width:${widths[i]}%;background:${s.color}">
+        <span class="f-bar-lbl">${s.lbl}</span>
+        <span class="f-bar-val">${fN(s.val)}</span>
+      </div>`;
+    if(i<rates.length){
+      const r=rates[i];
+      const c=funnelCls(r.val,r.bom,r.medio,r.inv);
+      html+=`<div class="f-between">
+        <span class="f-arrow" style="color:${c.col}">↓</span>
+        <span class="f-rate-txt" style="background:${c.col}18;color:${c.col};border:1px solid ${c.col}44">
+          <strong>${fP(r.val)}</strong> ${r.lbl}
+        </span>
+      </div>`;
+    }
+    html+='</div>';
+  });
+  document.getElementById('funnelSteps').innerHTML=html;
+}
+
+// ═══ META ADS (aba principal) ═══
+function renderMeta(){
+  buildMetaCampFilter();
+  const md=getMDforMeta(); const mt=getMT();
+  if(!md) return;
+
+  const spMK=md?.spend?.reduce((a,b)=>a+(b||0),0)||0;
+  const puMK=md?.purchase?.reduce((a,b)=>a+(b||0),0)||0;
+  const atcMK=md?.add_to_cart?.reduce((a,b)=>a+(b||0),0)||0;
+  const cpvMK=spMK>0&&puMK>0?r2(spMK/puMK):null;
+  const cpvCor=cpvMK!=null?(cpvMK<=CPV_BOM?'#059669':cpvMK<=CPV_MEDIO?'#d97706':'#dc2626'):'var(--muted)';
+  const impMK=md?.impressions?.reduce((a,b)=>a+(b||0),0)||0;
+  const cpmMK=impMK>0?r2(spMK/impMK*1000):null;
+
+  document.getElementById('metaKpis').innerHTML=`
+    <div class="kpi" style="--kc:#334155"><div class="kpi-lbl">Investimento</div><div class="kpi-val" style="font-size:16px;color:var(--text)">${fR(spMK)}</div><div class="kpi-sub">Meta Ads</div></div>
+    <div class="kpi" style="--kc:#059669"><div class="kpi-lbl">Vendas (Purchases)</div><div class="kpi-val" style="color:var(--text)">${fN(puMK)}</div><div class="kpi-sub">Add to Cart: ${fN(atcMK)}</div></div>
+    <div class="kpi" style="--kc:${cpvCor}"><div class="kpi-lbl">Custo por Venda</div><div class="kpi-val" style="color:${cpvCor}">${fR(cpvMK)}</div><div class="kpi-sub">CPV no período</div></div>
+    <div class="kpi" style="--kc:${cpmCls(cpmMK)==='cg'?'#059669':cpmCls(cpmMK)==='cw2'?'#d97706':'#dc2626'}"><div class="kpi-lbl">CPM</div><div class="kpi-val ${cpmCls(cpmMK)}">${fR(cpmMK)}</div><div class="kpi-sub">Custo por mil impr.</div></div>`;
+
+  // Funil recalculado do período
+  const totals={};
+  ['impressions','link_clicks','page_view','view_content','add_to_cart','init_checkout','purchase','spend'].forEach(k=>{
+    totals[k]=(md[k]||[]).reduce((a,b)=>a+(b||0),0);
+  });
+  const {impressions:imp,link_clicks:lc,page_view:pv,view_content:vc,add_to_cart:atc,init_checkout:ic,purchase:pu,spend:sp}=totals;
+  const funnelKpis={...totals,
+    ctr:           imp>0?r2(lc/imp*100):null,
+    connect_rate:  lc>0?r2(pv/lc*100):null,
+    vc_rate:       pv>0?r2(vc/pv*100):null,
+    atc_rate:      vc>0?r2(atc/vc*100):null,
+    ic_rate:       atc>0?r2(ic/atc*100):null,
+    purch_rate:    ic>0?r2(pu/ic*100):null,
+    cpv:           pu>0?r2(sp/pu):null,
+  };
+  setTimeout(()=>buildFunnel(funnelKpis),30);
+
+  // Gráfico — 3 modos
+  dc('chMetaMain');
+  const MODES={
+    vendas:{
+      title:'Vendas Diárias & Investimento',
+      sub:'Compras · Invest. (linha verde) · CPV (linha preta tracejada)',
+      barLabel:'Vendas',    barData:md.purchase,    barColor:'rgba(5,150,105,.75)',
+      lineLabel:'CPV',      lineData:md.cpv,         lineFmt:v=>v!=null?'R$'+v.toFixed(2):null,
+      y1Color:'#059669',
+    },
+    carrinho:{
+      title:'Add to Cart & Investimento',
+      sub:'Add to Cart (barras roxas) · Invest. (linha verde)',
+      barLabel:'Add to Cart', barData:md.add_to_cart, barColor:'rgba(139,92,246,.75)',
+      lineLabel:'',           lineData:md.init_checkout, lineFmt:v=>v!=null?String(v):null,
+      y1Color:'#8b5cf6',
+    },
+    alcance:{
+      title:'Impressões & Investimento',
+      sub:'Impressões (barras azuis) · Invest. (linha verde) · CPM (linha preta tracejada)',
+      barLabel:'Impressões', barData:md.impressions, barColor:'rgba(59,130,246,.7)',
+      lineLabel:'CPM',       lineData:md.cpm,         lineFmt:v=>v!=null?'R$'+v.toFixed(2):null,
+      y1Color:'#3b82f6',
+    },
+  };
+  const M=MODES[chartMode]||MODES.vendas;
+  document.getElementById('chMainTitle').textContent=M.title;
+  document.getElementById('chMainSub').textContent=M.sub;
+  CH['chMetaMain']=new Chart(document.getElementById('chMetaMain'),{
+    data:{labels:md.days,datasets:[
+      {label:M.barLabel,data:M.barData,backgroundColor:M.barColor,borderRadius:3,type:'bar',yAxisID:'y1',
+       datalabels:{display:ctx=>showLabels,color:M.y1Color,font:{size:labelSize,weight:'bold'},formatter:(v)=>v!=null?fN(v):null,anchor:'end',align:'top',offset:2,clip:false}},
+      {label:'Invest.',data:md.spend,borderColor:'#059669',backgroundColor:'transparent',tension:.3,pointRadius:2,borderWidth:2,type:'line',spanGaps:true,datalabels:{display:false}},
+      {label:M.lineLabel,data:M.lineData,borderColor:DARK()?'#fff':'#111',borderDash:[5,3],backgroundColor:'transparent',tension:.3,pointRadius:2,borderWidth:1.5,type:'line',yAxisID:'y2',spanGaps:true,
+       datalabels:{display:ctx=>showLabels&&M.lineLabel!=='',color:DARK()?'#fff':'#111',font:{size:labelSize,weight:'bold'},formatter:M.lineFmt,anchor:'end',align:'top',offset:2,clip:false}},
+    ]},
+    options:{...bo(),scales:{
+      x:{ticks:{color:TXT(),font:bf,maxTicksLimit:14},grid:{color:GRID()}},
+      y:{ticks:{color:TXT(),font:bf,callback:v=>'R$'+v.toLocaleString()},grid:{color:GRID()},min:0},
+      y1:{position:'right',ticks:{color:M.y1Color,font:bf},grid:{display:false},grace:'20%'},
+      y2:{position:'right',ticks:{color:'#555',font:bf,callback:v=>typeof v==='number'&&v>100?fN(v):'R$'+v.toFixed(0)},grid:{display:false},offset:true,min:0},
+    }}
+  });
+
+  buildTable('tCamps',mt?.camps,'Campanha');
+  renderAds(mt?.ads);
+  renderSeg();
+}
+
+function setChartMode(mode,btn){
+  chartMode=mode;
+  document.querySelectorAll('#modeVendas,#modeCarrinho,#modeAlcance').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderMeta();
+}
+
+function getPeriodKey(){
+  if(dateI||dateF) return null;
+  if(periodDays===1)  return '1';
+  if(periodDays===7)  return '7';
+  if(periodDays===14) return '14';
+  if(periodDays===30) return '30';
+  return 'all';
+}
+
+function calcTableFromRaw(){
+  if(!META_RAW_CAMP?.length) return null;
+  const hoje=getHoje();
+  const fimRaw=new Date(hoje);
+  if(periodDays===1) fimRaw.setDate(fimRaw.getDate()-1);
+  fimRaw.setHours(23,59,59,999);
+  const filtered=META_RAW_CAMP.filter(r=>{
+    if(filtroLct&&!r.lct) return false;
+    const dt=parseDayStr(r.d);
+    if(periodDays>0){
+      const ini=new Date(fimRaw); ini.setDate(ini.getDate()-(periodDays===1?0:periodDays-1)); ini.setHours(0,0,0,0);
+      if(dt<ini||dt>fimRaw) return false;
+    }
+    if(dateI&&dt<dateI) return false;
+    if(dateF&&dt>dateF) return false;
+    return true;
+  });
+  if(!filtered.length) return {camps:[],adsets:[],ads:[]};
+  const campMap={}, adsetMap={};
+  filtered.forEach(r=>{
+    const ck=r.c;
+    if(!campMap[ck]) campMap[ck]={n:r.c,spend:0,imp:0,lc:0,cl:0,pv:0,vc:0,atc:0,ic:0,pu:0};
+    campMap[ck].spend+=r.sp; campMap[ck].imp+=r.imp; campMap[ck].lc+=r.lc;
+    campMap[ck].pv+=r.pv; campMap[ck].vc+=r.vc; campMap[ck].atc+=r.atc;
+    campMap[ck].ic+=r.ic; campMap[ck].pu+=r.pu;
+    const ak=r.c+'|||'+r.a;
+    if(!adsetMap[ak]) adsetMap[ak]={n:r.a,camp:r.c,spend:0,imp:0,lc:0,cl:0,pv:0,vc:0,atc:0,ic:0,pu:0};
+    adsetMap[ak].spend+=r.sp; adsetMap[ak].imp+=r.imp; adsetMap[ak].lc+=r.lc;
+    adsetMap[ak].pv+=r.pv; adsetMap[ak].vc+=r.vc; adsetMap[ak].atc+=r.atc;
+    adsetMap[ak].ic+=r.ic; adsetMap[ak].pu+=r.pu;
+  });
+  function calcRow(o){
+    const {spend:sp,imp,lc,pv,vc,atc,ic,pu}=o;
+    return{...o,spend:r2(sp),
+      ctr:           imp>0?r2(lc/imp*100):null,
+      connect_rate:  lc>0?r2(pv/lc*100):null,
+      vc_rate:       pv>0?r2(vc/pv*100):null,
+      atc_rate:      vc>0?r2(atc/vc*100):null,
+      ic_rate:       atc>0?r2(ic/atc*100):null,
+      purch_rate:    ic>0?r2(pu/ic*100):null,
+      cpv:           pu>0?r2(sp/pu):null,
+      cpm:           imp>0?r2(sp/imp*1000):null,
+    };
+  }
+  const camps=Object.values(campMap).map(calcRow).sort((a,b)=>b.pu-a.pu);
+  const adsets=Object.values(adsetMap).map(calcRow).sort((a,b)=>b.pu-a.pu);
+  const allAds=((filtroLct?META_TABLES?.lct:META_TABLES?.all)||{})['all']?.ads||[];
+  const campNames=new Set(camps.map(c=>c.n));
+  const ads=allAds.filter(a=>campNames.has(a.camp));
+  return{camps,adsets,ads};
+}
+
+let _calcRawRunning=false;
+function getMT(){
+  const key=getPeriodKey();
+  let base_mt;
+  if(key&&key!=='1'){
+    const base=filtroLct?META_TABLES?.lct:META_TABLES?.all;
+    if(!base) return null;
+    base_mt=base[key]||base['all']||null;
+  } else {
+    if(_calcRawRunning) return ((filtroLct?META_TABLES?.lct:META_TABLES?.all)||{})['all']||null;
+    _calcRawRunning=true;
+    const result=calcTableFromRaw();
+    _calcRawRunning=false;
+    base_mt=result||((filtroLct?META_TABLES?.lct:META_TABLES?.all)||{})['all']||null;
+  }
+  if(metaCampSel?.size>0&&base_mt){
+    return{
+      camps:  (base_mt.camps||[]).filter(c=>metaCampSel.has(c.n)),
+      adsets: (base_mt.adsets||[]).filter(a=>metaCampSel.has(a.camp)),
+      ads:    (base_mt.ads||[]).filter(a=>metaCampSel.has(a.camp)),
+    };
+  }
+  return base_mt;
+}
+
+function filterBdRaw(rawArr,keyFn){
+  const hoje=getHoje();
+  const filtered=(rawArr||[]).filter(r=>{
+    if(filtroLct&&!r.lct) return false;
+    if(metaCampSel?.size>0&&r.camp&&!metaCampSel.has(r.camp)) return false;
+    const dt=parseDayStr(r.d);
+    if(periodDays>0){
+      const fimBD=new Date(hoje);if(periodDays===1)fimBD.setDate(fimBD.getDate()-1);fimBD.setHours(23,59,59);
+      const ini=new Date(fimBD);ini.setDate(ini.getDate()-(periodDays===1?0:periodDays-1));ini.setHours(0,0,0,0);
+      if(dt<ini||dt>fimBD) return false;
+    }
+    if(dateI&&dt<dateI) return false;
+    if(dateF&&dt>dateF) return false;
+    return true;
+  });
+  const map={};
+  filtered.forEach(r=>{
+    const k=keyFn(r);
+    if(!map[k]) map[k]={n:k,spend:0,pu:0,atc:0};
+    map[k].spend+=r.sp; map[k].pu+=r.pu; map[k].atc+=r.atc;
+  });
+  return Object.values(map)
+    .filter(v=>v.spend>0)
+    .map(v=>({...v,spend:r2(v.spend),cpv:v.pu>0?r2(v.spend/v.pu):null}))
+    .sort((a,b)=>b.pu-a.pu);
+}
+
+function getMBD(){
+  if(!META_BD) return null;
+  const rawGa=META_BD._raw_ga, rawPt=META_BD._raw_pt;
+  const AGE_ORDER=["18-24","25-34","35-44","45-54","55-64","65+"];
+  if(rawGa||rawPt){
+    const age=filterBdRaw(rawGa,r=>r.age).filter(v=>AGE_ORDER.includes(v.n))
+      .sort((a,b)=>AGE_ORDER.indexOf(a.n)-AGE_ORDER.indexOf(b.n));
+    const gender=filterBdRaw(rawGa,r=>r.gen).filter(v=>['female','male'].includes(v.n));
+    const platform=filterBdRaw(rawPt,r=>r.plat).slice(0,8);
+    return{age,gender,platform};
+  }
+  const key=getPeriodKey();
+  const base=filtroLct?META_BD?.lct:META_BD?.all;
+  return base?.[key||'all']||null;
+}
+
+// ═══ TABELA DE CAMPANHAS ═══
+function buildTable(elId,data,mainCol){
+  if(!data?.length){document.getElementById(elId).innerHTML='<div style="padding:12px;color:var(--muted);font-size:12px">Sem dados no período</div>';return;}
+  const mt=getMT();
+  const COLS=[
+    {k:'spend',l:'Invest.',f:fR},
+    {k:'imp',l:'Impr.',cls:'cn'},{k:'lc',l:'Cliques Link',cls:'cn'},{k:'pv',l:'Page View',cls:'cn'},
+    {k:'vc',l:'View Content',cls:'cn'},{k:'atc',l:'Add Cart',cls:'cn'},{k:'ic',l:'Init Checkout',cls:'cn'},
+    {k:'pu',l:'Vendas',f:fN},
+    {k:'ctr',l:'CTR',f:fP,cls2:v=>funnelCls(v,CTR_BOM,CTR_MEDIO).cls},
+    {k:'atc_rate',l:'ATC%',f:fP,cls2:v=>funnelCls(v,ATC_BOM,ATC_MEDIO).cls},
+    {k:'purch_rate',l:'Conv.Venda',f:fP,cls2:v=>funnelCls(v,PURCH_BOM,PURCH_MEDIO).cls},
+    {k:'cpv',l:'CPV',f:fR,cls2:cpvCls},
+    {k:'cpm',l:'CPM',f:fR},
+  ];
+  const head='<tr><th></th><th>'+mainCol+'</th>'+COLS.map(c=>'<th class="num">'+c.l+'</th>').join('')+'</tr>';
+  let rows='';
+  data.forEach((r,i)=>{
+    const cid='camp_'+elId+'_'+i;
+    const tds=COLS.map(c=>{
+      const v=r[c.k];
+      const cls2=c.cls2?c.cls2(v):'';
+      const cls=c.cls||'';
+      const fmt=c.f?c.f(v):fN(v);
+      return`<td class="num ${cls} ${cls2}" style="${cls==='cn'?'color:var(--muted2)':''}">${fmt}</td>`;
+    }).join('');
+    rows+=`<tr style="cursor:pointer" onclick="toggleCampRow('${cid}',this)">
+      <td style="width:20px;text-align:center;color:var(--muted2);font-size:11px" id="arrow_${cid}">▶</td>
+      <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px;font-weight:600" title="${r.n}">${r.n}</td>
+      ${tds}</tr>`;
+    rows+=`<tr id="${cid}" style="display:none"><td colspan="${COLS.length+2}" style="padding:0">
+      <div style="background:var(--surface2);border-top:1px solid var(--border);padding:8px 24px">
+        <div style="font-size:10px;color:var(--muted2);font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px">Conjuntos — ${r.n}</div>
+        <table style="width:100%;border-collapse:collapse" id="sub_${cid}"></table>
+      </div></td></tr>`;
+  });
+  // Totais
+  const tot={spend:0,imp:0,lc:0,pv:0,vc:0,atc:0,ic:0,pu:0};
+  data.forEach(r=>{tot.spend+=r.spend||0;tot.imp+=r.imp||0;tot.lc+=r.lc||0;tot.pv+=r.pv||0;tot.vc+=r.vc||0;tot.atc+=r.atc||0;tot.ic+=r.ic||0;tot.pu+=r.pu||0;});
+  const tctr=tot.imp>0?r2(tot.lc/tot.imp*100):null;
+  const tatc=tot.vc>0?r2(tot.atc/tot.vc*100):null;
+  const tpurch=tot.ic>0?r2(tot.pu/tot.ic*100):null;
+  const tcpv=tot.pu>0?r2(tot.spend/tot.pu):null;
+  const tcpm=tot.imp>0?r2(tot.spend/tot.imp*1000):null;
+  document.getElementById(elId).innerHTML=`<table style="min-width:900px">
+    <thead>${head}</thead><tbody>${rows}</tbody>
+    <tfoot><tr style="background:var(--surface2);font-weight:700;border-top:2px solid var(--border)">
+      <td></td><td style="font-size:10px;padding:6px 10px;font-weight:700;color:var(--muted2);text-transform:uppercase;letter-spacing:.5px">Total</td>
+      <td class="num" style="padding:8px 10px">${fR(tot.spend)}</td>
+      <td class="num" style="padding:8px 10px;color:var(--muted2)">${fN(tot.imp)}</td>
+      <td class="num" style="padding:8px 10px;color:var(--muted2)">${fN(tot.lc)}</td>
+      <td class="num" style="padding:8px 10px;color:var(--muted2)">${fN(tot.pv)}</td>
+      <td class="num" style="padding:8px 10px;color:var(--muted2)">${fN(tot.vc)}</td>
+      <td class="num" style="padding:8px 10px;color:var(--muted2)">${fN(tot.atc)}</td>
+      <td class="num" style="padding:8px 10px;color:var(--muted2)">${fN(tot.ic)}</td>
+      <td class="num" style="padding:8px 10px;font-weight:700">${fN(tot.pu)}</td>
+      <td class="num ${funnelCls(tctr,CTR_BOM,CTR_MEDIO).cls}" style="padding:8px 10px">${fP(tctr)}</td>
+      <td class="num ${funnelCls(tatc,ATC_BOM,ATC_MEDIO).cls}" style="padding:8px 10px">${fP(tatc)}</td>
+      <td class="num ${funnelCls(tpurch,PURCH_BOM,PURCH_MEDIO).cls}" style="padding:8px 10px">${fP(tpurch)}</td>
+      <td class="num ${cpvCls(tcpv)}" style="padding:8px 10px">${fR(tcpv)}</td>
+      <td class="num" style="padding:8px 10px">${fR(tcpm)}</td>
+    </tr></tfoot></table>`;
+}
+
+function toggleCampRow(id,rowEl){
+  const sub=document.getElementById(id); const arrow=document.getElementById('arrow_'+id);
+  const open=sub.style.display==='none';
+  sub.style.display=open?'table-row':'none';
+  if(arrow) arrow.textContent=open?'▼':'▶';
+  if(open){
+    const campName=rowEl.querySelector('td:nth-child(2)').title;
+    const mt=getMT();
+    const adsets=(mt?.adsets||[]).filter(a=>a.camp===campName);
+    const tbl=document.getElementById('sub_'+id);
+    if(!tbl) return;
+    if(!adsets.length){tbl.innerHTML='<tbody><tr><td style="padding:8px;color:var(--muted);font-size:11px">Sem conjuntos</td></tr></tbody>';return;}
+    tbl.innerHTML='<thead><tr>'+
+      '<th style="font-size:9px;padding:4px 8px;text-align:left;color:var(--muted2)">Conjunto</th>'+
+      '<th class="num" style="font-size:9px;padding:4px 8px;color:var(--muted2)">Invest.</th>'+
+      '<th class="num" style="font-size:9px;padding:4px 8px;color:var(--muted2)">Vendas</th>'+
+      '<th class="num" style="font-size:9px;padding:4px 8px;color:var(--muted2)">Add Cart</th>'+
+      '<th class="num" style="font-size:9px;padding:4px 8px;color:var(--muted2)">CTR</th>'+
+      '<th class="num" style="font-size:9px;padding:4px 8px;color:var(--muted2)">ATC%</th>'+
+      '<th class="num" style="font-size:9px;padding:4px 8px;color:var(--muted2)">Conv.Venda</th>'+
+      '<th class="num" style="font-size:9px;padding:4px 8px;color:var(--muted2)">CPV</th>'+
+      '</tr></thead><tbody>'+
+      adsets.map(a=>`<tr>
+        <td style="font-size:10px;padding:5px 8px;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${a.n}">${a.n}</td>
+        <td class="num" style="font-size:10px;padding:5px 8px">${fR(a.spend)}</td>
+        <td class="num" style="font-size:10px;padding:5px 8px;font-weight:700">${fN(a.pu)}</td>
+        <td class="num" style="font-size:10px;padding:5px 8px;color:var(--muted2)">${fN(a.atc)}</td>
+        <td class="num ${funnelCls(a.ctr,CTR_BOM,CTR_MEDIO).cls}" style="font-size:10px;padding:5px 8px">${fP(a.ctr)}</td>
+        <td class="num ${funnelCls(a.atc_rate,ATC_BOM,ATC_MEDIO).cls}" style="font-size:10px;padding:5px 8px">${fP(a.atc_rate)}</td>
+        <td class="num ${funnelCls(a.purch_rate,PURCH_BOM,PURCH_MEDIO).cls}" style="font-size:10px;padding:5px 8px">${fP(a.purch_rate)}</td>
+        <td class="num ${cpvCls(a.cpv)}" style="font-size:10px;padding:5px 8px">${fR(a.cpv)}</td>
+      </tr>`).join('')+'</tbody>';
+  }
+}
+
+function renderAds(ads){
+  const el=document.getElementById('adsGrid');
+  if(!ads?.length){el.innerHTML='<div style="color:var(--muted);font-size:12px;padding:8px">Sem criativos</div>';return;}
+  el.innerHTML=ads.slice(0,24).map(ad=>{
+    const img=ad.thumb?`<img src="${ad.thumb}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ad-img-ph>🖼️</div>'">`:'<div class="ad-img-ph">🖼️</div>';
+    return`<div class="ad-card"><div class="ad-img">${img}</div>
+      <div class="ad-info"><div class="ad-name">${ad.n}</div>
+        <div style="font-size:9px;color:var(--muted2);margin-bottom:5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${ad.camp||''}">${ad.camp?'📁 '+ad.camp.split('-').slice(-2).join('-'):''}</div>
+        <div class="ad-stats">
+          <div><div class="as-l">Vendas</div><div class="as-v">${fN(ad.pu)}</div></div>
+          <div><div class="as-l">CPV</div><div class="as-v ${cpvCls(ad.cpv)}">${fR(ad.cpv)}</div></div>
+          <div><div class="as-l">Add Cart</div><div class="as-v">${fN(ad.atc)}</div></div>
+          <div><div class="as-l">CTR</div><div class="as-v">${fP(ad.ctr)}</div></div>
+          <div><div class="as-l">Invest.</div><div class="as-v">${fR(ad.spend)}</div></div>
+        </div>
+      </div></div>`;
+  }).join('');
+}
+
+function renderSeg(){
+  const bd=getMBD(); if(!bd) return;
+  function segTable(elId,data,lbl){
+    const el=document.getElementById(elId);
+    if(!data?.length){el.innerHTML='<div style="padding:8px;font-size:11px;color:var(--muted)">Sem dados</div>';return;}
+    el.innerHTML=`<table>
+      <thead><tr><th>${lbl}</th><th class="num">Invest.</th><th class="num">Vendas</th><th class="num">CPV</th></tr></thead>
+      <tbody>${data.map(r=>`<tr>
+        <td style="font-size:11px">${r.n}</td>
+        <td class="num">${fR(r.spend)}</td>
+        <td class="num">${fN(r.pu)}</td>
+        <td class="num ${cpvCls(r.cpv)}">${fR(r.cpv)}</td>
+      </tr>`).join('')}</tbody></table>`;
+  }
+  segTable('tGender',  bd.gender,  'Gênero');
+  segTable('tAge',     bd.age,     'Faixa Etária');
+  segTable('tPlatform',bd.platform,'Posicionamento');
+}
+
+// ═══ FILTRO CAMPANHA META ═══
+function buildMetaCampFilter(){
+  const el=document.getElementById('metaCampFilter'); if(!el) return;
+  const dcBase=filtroLct?META_DAILY_CAMPS?.lct:META_DAILY_CAMPS?.all;
+  let camps=[];
+  if(dcBase){
+    camps=Object.keys(dcBase).filter(camp=>{
+      const cd=applyPeriod(dcBase[camp]);
+      return cd?.spend?.some(v=>v>0);
+    });
+  } else {
+    camps=getMT()?.camps?.map(c=>c.n)||[];
+  }
+  if(!camps.length) return;
+  const newKey=camps.sort().join('|');
+  if(el.dataset.campsKey===newKey) return;
+  el.dataset.campsKey=newKey;
+  el.innerHTML='<div style="display:flex;flex-direction:column;gap:3px;">'
+    +'<label style="display:flex;align-items:center;gap:7px;padding:5px 8px;border-radius:6px;cursor:pointer;font-size:11px;font-weight:600;background:var(--surface2);border:1px solid var(--border)">'
+    +'<input type="checkbox" id="meta_cb_todas" onchange="toggleMetaTodas(this)" checked style="accent-color:var(--accent)"> Todas</label>'
+    +camps.map(c=>`<label style="display:flex;align-items:center;gap:7px;padding:4px 8px;border-radius:6px;cursor:pointer;font-size:10px;background:var(--surface);border:1px solid var(--border)" title="${c}">
+      <input type="checkbox" class="meta-camp-cb" value="${c.replace(/"/g,'&quot;')}" onchange="onMetaCampCheck()" checked style="accent-color:var(--accent);flex-shrink:0"> <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${c}</span>
+    </label>`).join('')+'</div>';
+  metaCampSel=new Set();
+  const cnt=document.getElementById('metaCampFilterCount');
+  if(cnt) cnt.textContent=camps.length?`(${camps.length} campanhas)`:'';
+}
+function toggleMetaTodas(cb){
+  document.querySelectorAll('.meta-camp-cb').forEach(c=>{c.checked=cb.checked;});
+  metaCampSel=new Set(); renderMeta();
+}
+function onMetaCampCheck(){
+  const checked=[...document.querySelectorAll('.meta-camp-cb:checked')].map(c=>c.value);
+  const all=[...document.querySelectorAll('.meta-camp-cb')].map(c=>c.value);
+  const todasCb=document.getElementById('meta_cb_todas');
+  if(todasCb) todasCb.checked=(checked.length===all.length);
+  metaCampSel=checked.length===all.length?new Set():new Set(checked);
+  renderMeta();
+}
+
+function getMDforMeta(){
+  const md=getMD(); if(!md) return md;
+  if(!META_DAILY_CAMPS||metaCampSel.size===0) return md;
+  const base=filtroLct?META_DAILY_CAMPS?.lct:META_DAILY_CAMPS?.all;
+  if(!base) return md;
+  const selected=[...metaCampSel].map(c=>applyPeriod(base[c])).filter(Boolean);
+  if(!selected.length) return md;
+  if(selected.length===1) return selected[0];
+  const ref=applyPeriod(md);
+  const out={days:ref.days};
+  ['spend','impressions','link_clicks','clicks','page_view','view_content','add_to_cart','init_checkout','purchase','engagement'].forEach(k=>{
+    out[k]=ref.days.map(day=>selected.reduce((sum,s)=>{const i=s.days?.indexOf(day);return sum+(i>=0?(s[k]?.[i]||0):0);},0));
+  });
+  const sum=(arr,k)=>arr.reduce((a,b)=>a+(b||0),0);
+  out.ctr=out.days.map((_,i)=>out.impressions[i]>0?r2(out.link_clicks[i]/out.impressions[i]*100):null);
+  out.connect_rate=out.days.map((_,i)=>out.link_clicks[i]>0?r2(out.page_view[i]/out.link_clicks[i]*100):null);
+  out.vc_rate=out.days.map((_,i)=>out.page_view[i]>0?r2(out.view_content[i]/out.page_view[i]*100):null);
+  out.atc_rate=out.days.map((_,i)=>out.view_content[i]>0?r2(out.add_to_cart[i]/out.view_content[i]*100):null);
+  out.ic_rate=out.days.map((_,i)=>out.add_to_cart[i]>0?r2(out.init_checkout[i]/out.add_to_cart[i]*100):null);
+  out.purch_rate=out.days.map((_,i)=>out.init_checkout[i]>0?r2(out.purchase[i]/out.init_checkout[i]*100):null);
+  out.cpv=out.days.map((_,i)=>out.purchase[i]>0?r2(out.spend[i]/out.purchase[i]):null);
+  out.cpm=out.days.map((_,i)=>out.impressions[i]>0?r2(out.spend[i]/out.impressions[i]*1000):null);
+  return out;
+}
+
+// ═══ MÉTRICAS DIÁRIAS ═══
+function buildCampFilter(){
+  const el=document.getElementById('campFilter'); if(!el) return;
+  const dcBase=filtroLct?META_DAILY_CAMPS?.lct:META_DAILY_CAMPS?.all;
+  let camps=dcBase?Object.keys(dcBase).filter(c=>{const cd=applyPeriod(dcBase[c]);return cd?.spend?.some(v=>v>0);}):[];
+  if(!camps.length) return;
+  el.innerHTML='<div style="display:flex;flex-direction:column;gap:3px;">'
+    +'<label style="display:flex;align-items:center;gap:7px;padding:5px 8px;border-radius:6px;cursor:pointer;font-size:11px;font-weight:600;background:var(--surface2);border:1px solid var(--border)">'
+    +'<input type="checkbox" id="cb_todas" onchange="toggleTodas(this)" checked style="accent-color:var(--accent)"> Todas</label>'
+    +camps.map(c=>`<label style="display:flex;align-items:center;gap:7px;padding:4px 8px;border-radius:6px;cursor:pointer;font-size:10px;background:var(--surface);border:1px solid var(--border)" title="${c}">
+      <input type="checkbox" class="camp-cb" value="${c.replace(/"/g,'&quot;')}" onchange="onCampCheck()" checked style="accent-color:var(--accent);flex-shrink:0"> <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${c}</span>
+    </label>`).join('')+'</div>';
+  campFilterSel=new Set();
+  const cnt=document.getElementById('campFilterCount');
+  if(cnt) cnt.textContent=camps.length?`(${camps.length} campanhas)`:'';
+}
+function toggleTodas(cb){document.querySelectorAll('.camp-cb').forEach(c=>{c.checked=cb.checked;});campFilterSel=new Set();renderDiarioCharts();}
+function onCampCheck(){
+  const checked=[...document.querySelectorAll('.camp-cb:checked')].map(c=>c.value);
+  const all=[...document.querySelectorAll('.camp-cb')].map(c=>c.value);
+  const todasCb=document.getElementById('cb_todas');
+  if(todasCb) todasCb.checked=(checked.length===all.length);
+  campFilterSel=checked.length===all.length?new Set():new Set(checked);
+  renderDiarioCharts();
+}
+
+function getDailyForCamp(){
+  const md=getMD(); if(!md) return md;
+  if(!META_DAILY_CAMPS||campFilterSel.size===0) return md;
+  const base=filtroLct?META_DAILY_CAMPS?.lct:META_DAILY_CAMPS?.all;
+  if(!base) return md;
+  const selected=[...campFilterSel].map(c=>applyPeriod(base[c])).filter(Boolean);
+  if(!selected.length) return md;
+  if(selected.length===1) return selected[0];
+  const ref=applyPeriod(md);
+  const out={days:ref.days};
+  const numKeys=['spend','impressions','link_clicks','clicks','page_view','view_content','add_to_cart','init_checkout','purchase'];
+  numKeys.forEach(k=>{
+    out[k]=ref.days.map(day=>selected.reduce((sum,s)=>{const i=s.days?.indexOf(day);return sum+(i>=0?(s[k]?.[i]||0):0);},0));
+  });
+  out.ctr=out.days.map((_,i)=>out.impressions[i]>0?r2(out.link_clicks[i]/out.impressions[i]*100):null);
+  out.vc_rate=out.days.map((_,i)=>out.page_view[i]>0?r2(out.view_content[i]/out.page_view[i]*100):null);
+  out.atc_rate=out.days.map((_,i)=>out.view_content[i]>0?r2(out.add_to_cart[i]/out.view_content[i]*100):null);
+  out.ic_rate=out.days.map((_,i)=>out.add_to_cart[i]>0?r2(out.init_checkout[i]/out.add_to_cart[i]*100):null);
+  out.purch_rate=out.days.map((_,i)=>out.init_checkout[i]>0?r2(out.purchase[i]/out.init_checkout[i]*100):null);
+  out.cpv=out.days.map((_,i)=>out.purchase[i]>0?r2(out.spend[i]/out.purchase[i]):null);
+  out.cpm=out.days.map((_,i)=>out.impressions[i]>0?r2(out.spend[i]/out.impressions[i]*1000):null);
+  return out;
+}
+
+function renderDiario(){buildCampFilter();renderDiarioCharts();}
+function renderDiarioCharts(){
+  const md=getDailyForCamp()||getMD(); if(!md) return;
+  const totImp=(md.impressions||[]).reduce((a,b)=>a+(b||0),0);
+  const totLc=(md.link_clicks||[]).reduce((a,b)=>a+(b||0),0);
+  const totPv=(md.page_view||[]).reduce((a,b)=>a+(b||0),0);
+  const totVc=(md.view_content||[]).reduce((a,b)=>a+(b||0),0);
+  const totAtc=(md.add_to_cart||[]).reduce((a,b)=>a+(b||0),0);
+  const totIc=(md.init_checkout||[]).reduce((a,b)=>a+(b||0),0);
+  const totPu=(md.purchase||[]).reduce((a,b)=>a+(b||0),0);
+  const totSp=(md.spend||[]).reduce((a,b)=>a+(b||0),0);
+  const avgCTR=totImp>0?r2(totLc/totImp*100):null;
+  const avgVCRate=totPv>0?r2(totVc/totPv*100):null;
+  const avgATCRate=totVc>0?r2(totAtc/totVc*100):null;
+  const avgICRate=totAtc>0?r2(totIc/totAtc*100):null;
+  const avgPurchRate=totIc>0?r2(totPu/totIc*100):null;
+  const avgCPV=totPu>0?r2(totSp/totPu):null;
+  const avgCPM=totImp>0?r2(totSp/totImp*1000):null;
+
+  const METRICS=[
+    {id:'ctr',     ttl:'CTR Link (%)',            suffix:'%', data:()=>md.ctr,       avgVal:avgCTR,     bom:CTR_BOM,   medio:CTR_MEDIO,   inv:false},
+    {id:'vc_rate', ttl:'View Content Rate (%)',    suffix:'%', data:()=>md.vc_rate,   avgVal:avgVCRate,  bom:VC_BOM,    medio:VC_MEDIO,    inv:false},
+    {id:'atc_rate',ttl:'Add to Cart Rate (%)',     suffix:'%', data:()=>md.atc_rate,  avgVal:avgATCRate, bom:ATC_BOM,   medio:ATC_MEDIO,   inv:false},
+    {id:'ic_rate', ttl:'Init Checkout Rate (%)',   suffix:'%', data:()=>md.ic_rate,   avgVal:avgICRate,  bom:IC_BOM,    medio:IC_MEDIO,    inv:false},
+    {id:'purch_rate',ttl:'Taxa de Venda (%)',      suffix:'%', data:()=>md.purch_rate,avgVal:avgPurchRate,bom:PURCH_BOM,medio:PURCH_MEDIO, inv:false},
+    {id:'cpv',     ttl:'Custo por Venda (R$)',     suffix:'',  data:()=>md.cpv,       avgVal:avgCPV,     bom:CPV_BOM,   medio:CPV_MEDIO,   inv:true,  fmt:v=>v!=null?'R$'+v.toFixed(2):null},
+    {id:'cpm',     ttl:'CPM (R$)',                 suffix:'',  data:()=>md.cpm,       avgVal:avgCPM,     bom:CPM_BOM,   medio:CPM_MEDIO,   inv:true,  fmt:v=>v!=null?'R$'+v.toFixed(2):null},
+  ];
+
+  function getColor(m,val){
+    if(val==null) return '#3b82f6';
+    if(m.bom==null) return '#3b82f6';
+    return m.inv
+      ?(val<=m.bom?'#059669':val<=m.medio?'#d97706':'#dc2626')
+      :(val>=m.bom?'#059669':val>=m.medio?'#d97706':'#dc2626');
+  }
+
+  const el=document.getElementById('dailyCharts');
+  el.innerHTML=METRICS.map(m=>{
+    const col=getColor(m,m.avgVal);
+    return`<div class="daily-row">
+      <div class="daily-side">
+        <div class="ds-lbl">Período</div>
+        <div class="ds-val" id="avg_${m.id}" style="color:${col}">—</div>
+      </div>
+      <div class="daily-main">
+        <div class="daily-ttl">${m.ttl}</div>
+        <div class="cw" style="height:140px"><canvas id="ch_${m.id}"></canvas></div>
+      </div>
+    </div>`;
+  }).join('');
+
+  METRICS.forEach(m=>{
+    const data=m.data(); const COLOR=getColor(m,m.avgVal);
+    const fmtAvg=m.fmt?m.fmt(m.avgVal):(m.avgVal!=null?m.avgVal.toFixed(2)+m.suffix:'—');
+    const avgEl=document.getElementById(`avg_${m.id}`);
+    if(avgEl){avgEl.textContent=fmtAvg;avgEl.style.color=COLOR;}
+    const id=`ch_${m.id}`;
+    if(CH[id]){CH[id].destroy();delete CH[id];}
+    CH[id]=new Chart(document.getElementById(id),{type:'line',
+      data:{labels:md.days,datasets:[
+        {label:m.ttl,data,borderColor:COLOR,backgroundColor:COLOR+'18',fill:true,tension:.3,pointRadius:2,borderWidth:2,spanGaps:true,
+         datalabels:{display:ctx=>showLabels,color:COLOR,font:{size:labelSize,weight:'bold'},
+           formatter:(v)=>v==null?null:m.fmt?m.fmt(v):v.toFixed(1)+m.suffix,
+           anchor:'top',align:'top',offset:2,clip:false}},
+        {label:'Média',data:data?.map(()=>m.avgVal),borderColor:DARK()?'#fff':'#111',borderDash:[4,4],backgroundColor:'transparent',pointRadius:0,borderWidth:1.5,spanGaps:true,datalabels:{display:false}},
+      ]},
+      options:{...bo(),scales:{
+        x:{ticks:{color:TXT(),font:bf,maxTicksLimit:14},grid:{color:GRID()}},
+        y:{ticks:{color:TXT(),font:bf,callback:v=>m.fmt?('R$'+v.toFixed(0)):v+m.suffix},grid:{color:GRID()},min:0}
+      }}
+    });
+  });
+}
+
+// ═══ META HISTÓRICO ═══
+function renderMetaHist(){
+  if(!META_MONTHLY) return;
+  const{lbl,totalS,totalP,cpvG,cpmG,ctrG}=META_MONTHLY;
+  const tS=totalS.reduce((a,b)=>a+b,0), tP=totalP.reduce((a,b)=>a+b,0);
+  const avgCPM=cpmG.filter(v=>v>0).reduce((a,b)=>a+b,0)/(cpmG.filter(v=>v>0).length||1);
+  const avgCTR=ctrG.filter(v=>v>0).reduce((a,b)=>a+b,0)/(ctrG.filter(v=>v>0).length||1);
+  document.getElementById('mHistKpis').innerHTML=`
+    <div class="kpi" style="--kc:#334155"><div class="kpi-lbl">Invest. Total</div><div class="kpi-val" style="font-size:18px">${fR(tS)}</div></div>
+    <div class="kpi" style="--kc:#059669"><div class="kpi-lbl">Total Vendas</div><div class="kpi-val">${fN(tP)}</div></div>
+    <div class="kpi" style="--kc:${cpvCls(tP>0?r2(tS/tP):null)==='cg'?'#059669':cpvCls(tP>0?r2(tS/tP):null)==='cw2'?'#d97706':'#dc2626'}"><div class="kpi-lbl">CPV Geral</div><div class="kpi-val ${cpvCls(tP>0?r2(tS/tP):null)}">${fR(tP>0?r2(tS/tP):null)}</div></div>
+    <div class="kpi" style="--kc:#334155"><div class="kpi-lbl">CPM Médio</div><div class="kpi-val">${fR(r2(avgCPM))}</div></div>
+    <div class="kpi" style="--kc:#334155"><div class="kpi-lbl">CTR Médio</div><div class="kpi-val">${avgCTR?avgCTR.toFixed(2)+'%':'—'}</div></div>`;
+
+  dc('chMHistMain');
+  CH['chMHistMain']=new Chart(document.getElementById('chMHistMain'),{
+    data:{labels:lbl,datasets:[
+      {label:'Vendas',data:totalP,backgroundColor:'rgba(5,150,105,.75)',borderRadius:4,type:'bar',datalabels:{display:false}},
+      {label:'Invest.',data:totalS,borderColor:'#3b82f6',backgroundColor:'transparent',tension:.35,pointRadius:4,borderWidth:2,type:'line',yAxisID:'y1',spanGaps:false,datalabels:{display:false}},
+      {label:'CPV',data:cpvG,borderColor:DARK()?'#e5e7eb':'#111827',borderDash:[5,3],backgroundColor:'transparent',pointRadius:3,borderWidth:1.5,tension:.35,type:'line',yAxisID:'y2',spanGaps:false,
+       datalabels:{display:showLabels,font:{size:labelSize,weight:'bold'},anchor:'end',align:'bottom',offset:2,formatter:v=>v!=null?'R$'+v.toFixed(1):null,color:DARK()?'#f9fafb':'#111827',clip:false}},
+    ]},
+    options:{...bo(),scales:{
+      x:{ticks:{color:TXT(),font:bf},grid:{color:GRID()}},
+      y:{ticks:{color:TXT(),font:bf},grid:{color:GRID()}},
+      y1:{position:'right',ticks:{color:'#3b82f6',font:bf,callback:v=>'R$'+v.toLocaleString()},grid:{display:false}},
+      y2:{position:'right',ticks:{color:DARK()?'#9ca3af':'#374151',font:bf,callback:v=>'R$'+v.toFixed(1)},grid:{display:false},offset:true},
+    }}
+  });
+
+  dc('chMHistCPM');
+  CH['chMHistCPM']=new Chart(document.getElementById('chMHistCPM'),{type:'line',
+    data:{labels:lbl,datasets:[{label:'CPM',data:cpmG,borderColor:'#2563eb',backgroundColor:'rgba(37,99,235,.08)',fill:true,tension:.35,pointRadius:4,borderWidth:2,datalabels:{display:false}}]},
+    options:{...bo(),scales:{x:{ticks:{color:TXT(),font:bf},grid:{color:GRID()}},y:{ticks:{color:TXT(),font:bf,callback:v=>'R$'+v.toFixed(2)},grid:{color:GRID()},min:0}}}
+  });
+
+  dc('chMHistCTR');
+  CH['chMHistCTR']=new Chart(document.getElementById('chMHistCTR'),{type:'line',
+    data:{labels:lbl,datasets:[{label:'CTR',data:ctrG,borderColor:'#7c3aed',backgroundColor:'rgba(124,58,237,.08)',fill:true,tension:.35,pointRadius:4,borderWidth:2,datalabels:{display:false}}]},
+    options:{...bo(),scales:{x:{ticks:{color:TXT(),font:bf},grid:{color:GRID()}},y:{ticks:{color:TXT(),font:bf,callback:v=>v+'%'},grid:{color:GRID()},min:0}}}
+  });
+
+  // Rankings
+  const wd=lbl.map((l,i)=>({l,cpv:cpvG[i],vendas:totalP[i]})).filter(m=>m.cpv!=null&&m.vendas>0);
+  const bCPV=[...wd].sort((a,b)=>a.cpv-b.cpv).slice(0,6);
+  const bVendas=[...wd].sort((a,b)=>b.vendas-a.vendas).slice(0,6);
+  const mxV=Math.max(...bVendas.map(m=>m.vendas),1);
+  const mnC=Math.min(...bCPV.map(m=>m.cpv),0),mxC=Math.max(...bCPV.map(m=>m.cpv),1);
+  document.getElementById('mHistRankCPV').innerHTML=bCPV.map((m,i)=>`
+    <div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid var(--border)">
+      <div style="width:18px;font-size:10px;color:var(--muted2);text-align:right">${i+1}</div>
+      <div style="flex:1;font-size:12px;font-weight:600">${m.l}</div>
+      <div style="width:80px;background:var(--bg);border-radius:3px;height:4px;overflow:hidden"><div style="width:${Math.round((1-(m.cpv-mnC)/(mxC-mnC||1))*100)}%;height:100%;background:#059669;border-radius:3px"></div></div>
+      <div class="${cpvCls(m.cpv)}" style="font-size:11px;font-weight:700;font-family:monospace;width:56px;text-align:right">${fR(m.cpv)}</div>
+    </div>`).join('');
+  document.getElementById('mHistRankVendas').innerHTML=bVendas.map((m,i)=>`
+    <div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid var(--border)">
+      <div style="width:18px;font-size:10px;color:var(--muted2);text-align:right">${i+1}</div>
+      <div style="flex:1;font-size:12px;font-weight:600">${m.l}</div>
+      <div style="width:80px;background:var(--bg);border-radius:3px;height:4px;overflow:hidden"><div style="width:${Math.round(m.vendas/mxV*100)}%;height:100%;background:#059669;border-radius:3px"></div></div>
+      <div style="font-size:11px;font-weight:700;font-family:monospace;color:#059669;width:40px;text-align:right">${fN(m.vendas)}</div>
+    </div>`).join('');
+
+  if(META_MONTHLY.camps){
+    const map={};
+    META_MONTHLY.camps.forEach(c=>{
+      if(!map[c.n]) map[c.n]={n:c.n,spend:0,purchase:0,atc:0,imp:0,lc:0};
+      map[c.n].spend+=c.spend||0; map[c.n].purchase+=c.purchase||0;
+      map[c.n].atc+=c.atc||0; map[c.n].imp+=c.imp||0; map[c.n].lc+=c.lc||0;
+    });
+    const all=Object.values(map).map(c=>({...c,cpv:c.purchase>0?r2(c.spend/c.purchase):null,ctr:c.imp>0?r2(c.lc/c.imp*100):null,cpm:c.imp>0?r2(c.spend/c.imp*1000):null})).sort((a,b)=>b.purchase-a.purchase);
+    document.getElementById('mHistCamps').innerHTML=`<table style="min-width:700px;width:100%;border-collapse:collapse">
+      <thead><tr style="background:var(--surface2)">
+        <th style="font-size:9px;padding:6px 10px;text-align:left;color:var(--muted);text-transform:uppercase">#</th>
+        <th style="font-size:9px;padding:6px 10px;text-align:left;color:var(--muted);text-transform:uppercase">Campanha</th>
+        <th class="num" style="font-size:9px;padding:6px 10px;color:var(--muted);text-transform:uppercase">Invest.</th>
+        <th class="num" style="font-size:9px;padding:6px 10px;color:var(--muted);text-transform:uppercase">Vendas</th>
+        <th class="num" style="font-size:9px;padding:6px 10px;color:var(--muted);text-transform:uppercase">Add Cart</th>
+        <th class="num" style="font-size:9px;padding:6px 10px;color:var(--muted);text-transform:uppercase">CPV</th>
+        <th class="num" style="font-size:9px;padding:6px 10px;color:var(--muted);text-transform:uppercase">CTR</th>
+        <th class="num" style="font-size:9px;padding:6px 10px;color:var(--muted);text-transform:uppercase">CPM</th>
+      </tr></thead>
+      <tbody>${all.map((c,i)=>`<tr>
+        <td style="font-size:10px;padding:6px 10px;color:var(--muted2)">${i+1}</td>
+        <td style="font-size:11px;padding:6px 10px;font-weight:600;max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${c.n}</td>
+        <td class="num" style="font-size:11px;padding:6px 10px">${fR(c.spend)}</td>
+        <td class="num" style="font-size:11px;padding:6px 10px;font-weight:700">${fN(c.purchase)}</td>
+        <td class="num" style="font-size:11px;padding:6px 10px;color:var(--muted2)">${fN(c.atc)}</td>
+        <td class="num ${cpvCls(c.cpv)}" style="font-size:11px;padding:6px 10px">${fR(c.cpv)}</td>
+        <td class="num" style="font-size:11px;padding:6px 10px">${c.ctr!=null?c.ctr.toFixed(2)+'%':'—'}</td>
+        <td class="num" style="font-size:11px;padding:6px 10px">${fR(c.cpm)}</td>
+      </tr>`).join('')}</tbody></table>`;
+  }
+}
+
+// ═══ CONTROLES ═══
+function setPeriod(days,btn){
+  periodDays=days; dateI=null; dateF=null;
+  document.getElementById('dtI').value=''; document.getElementById('dtF').value='';
+  document.querySelectorAll('.period-bar .pb').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const mf=document.getElementById('metaCampFilter'); if(mf) delete mf.dataset.campsKey;
+  metaCampSel=new Set();
+  rerenderActive();
+}
+document.getElementById('dtI').addEventListener('change',e=>{
+  if(e.target.value){const[y,m,d]=e.target.value.split('-').map(Number);dateI=new Date(y,m-1,d,0,0,0);}else dateI=null;
+  periodDays=0; document.querySelectorAll('.period-bar .pb').forEach(b=>b.classList.remove('active'));
+  rerenderActive();
+});
+document.getElementById('dtF').addEventListener('change',e=>{
+  if(e.target.value){const[y,m,d]=e.target.value.split('-').map(Number);dateF=new Date(y,m-1,d,23,59,59);}else dateF=null;
+  periodDays=0; document.querySelectorAll('.period-bar .pb').forEach(b=>b.classList.remove('active'));
+  rerenderActive();
+});
+function clearDates(){dateI=null;dateF=null;document.getElementById('dtI').value='';document.getElementById('dtF').value='';rerenderActive();}
+function setLct(on,btn){
+  filtroLct=on;
+  document.querySelectorAll('#lctBar .pb').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active'); rerenderActive();
+}
+function onLabelSize(v){labelSize=parseInt(v);rerenderActive();}
+function toggleLabels(el){showLabels=!showLabels;el.classList.toggle('on',showLabels);rerenderActive();}
+
+function rerenderActive(){
+  const p=document.querySelector('.page-section.active')?.id?.replace('page-','');
+  if(p==='meta')      renderMeta();
+  if(p==='diario')    renderDiario();
+  if(p==='meta-hist') renderMetaHist();
+  setTimeout(()=>{Object.values(CH).forEach(c=>{try{c.resize();}catch(e){}});},60);
+}
+
+// ═══ NAVEGAÇÃO ═══
+function goPage(p,btn){
+  document.querySelectorAll('.page-section').forEach(e=>e.classList.remove('active'));
+  document.querySelectorAll('.sb-item').forEach(e=>e.classList.remove('active'));
+  document.getElementById('page-'+p)?.classList.add('active');
+  if(btn) btn.classList.add('active');
+  const titles={'meta':'Meta Ads — Geral','diario':'Métricas Diárias','meta-hist':'Meta Ads — Histórico'};
+  document.getElementById('pageTitle').textContent=titles[p]||p;
+  if(p==='meta')      renderMeta();
+  if(p==='diario')    renderDiario();
+  if(p==='meta-hist') renderMetaHist();
+  setTimeout(()=>{Object.values(CH).forEach(c=>{try{c.resize();}catch(e){}});},80);
+  if(window.innerWidth<=768) closeSb();
+}
+
+// ═══ TEMA ═══
+function toggleTheme(){
+  const dark=DARK();
+  document.documentElement.setAttribute('data-theme',dark?'light':'dark');
+  document.getElementById('themeIcon').textContent=dark?'🌙':'☀️';
+  document.getElementById('themeLabel').textContent=dark?'Escuro':'Claro';
+  localStorage.setItem('ecomm-theme',dark?'light':'dark');
+  rerenderActive();
+}
+(function(){const s=localStorage.getItem('ecomm-theme');if(s)document.documentElement.setAttribute('data-theme',s);})();
+
+// ═══ SIDEBAR MOB ═══
+function toggleSb(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('overlay').classList.toggle('open');}
+function closeSb(){document.getElementById('sidebar').classList.remove('open');document.getElementById('overlay').classList.remove('open');}
+
+// ═══ TOPBAR OFFSET ═══
+function ajustarPaddingContent(){
+  const tb=document.querySelector('.topbar'); const ct=document.querySelector('.content');
+  if(tb&&ct){const h=tb.getBoundingClientRect().height;if(h>0)ct.style.paddingTop=(h+10)+'px';}
+}
+ajustarPaddingContent();
+document.addEventListener('DOMContentLoaded',ajustarPaddingContent);
+window.addEventListener('load',ajustarPaddingContent);
+window.addEventListener('resize',ajustarPaddingContent);
+
+// ═══ INIT ═══
+(function(){
+  // Logo fallback
+  const lb=document.getElementById('logoBoxSb'); if(lb) lb.textContent=LOGO_LETRA;
+  const ln=document.getElementById('logoNameSb'); if(ln) ln.textContent=NOME_CLIENTE;
+  // Título da aba
+  const pt=document.getElementById('pageTab'); if(pt) pt.textContent=`${NOME_CLIENTE} — E-commerce`;
+  // Cor de acento
+  document.documentElement.style.setProperty('--accent',COR_ACENTO);
+  // Badge ao vivo
+  const badge=document.getElementById('liveBadge');
+  if(badge) badge.style.cssText=`background:${COR_ACENTO}15;border:1px solid ${COR_ACENTO}44;color:${COR_ACENTO};`;
+  const lp=document.getElementById('livePulse'); if(lp) lp.style.background=COR_ACENTO;
+  // Data dos dados
+  if(META_DAILY?.lct?.days?.length||META_DAILY?.all?.days?.length){
+    const days=(META_DAILY.lct?.days||META_DAILY.all?.days)||[];
+    const liveTxt=document.getElementById('liveTxt'); if(liveTxt&&days.length) liveTxt.textContent='Dados até '+days[days.length-1];
+    const sfEl=document.getElementById('sbAtual'); if(sfEl&&days.length) sfEl.textContent='Atualizado '+days[days.length-1];
+  }
+  // Filtro LCT
+  if(LANCAMENTO_COD){
+    const lb2=document.getElementById('lctBar'); if(lb2) lb2.style.display='flex';
+    const btnOn=document.getElementById('btnLctOn'); if(btnOn) btnOn.textContent=LANCAMENTO_COD;
+  }
+  renderMeta();
+  ajustarPaddingContent();
+})();
+</script>
+</body>
+</html>
