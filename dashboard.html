@@ -250,18 +250,18 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
       </div>
       <!-- Gráfico principal -->
       <div class="cc mb14">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;flex-wrap:wrap;gap:6px;">
-          <div>
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:6px;flex-wrap:wrap;gap:6px;">
+          <div style="min-width:0">
             <div class="cc-t" id="chMainTitle">Vendas Diárias & Investimento</div>
             <div class="cc-s" id="chMainSub">Compras · Invest. (linha verde) · Custo/Venda (linha preta tracejada)</div>
           </div>
-          <div style="display:flex;gap:3px;background:var(--bg);padding:3px;border-radius:8px;border:1px solid var(--border);flex-shrink:0;flex-wrap:wrap;">
-            <button id="modeVendas"   class="pb active" onclick="setChartMode('vendas',this)"      style="font-size:10px;padding:3px 9px">🛒 Vendas</button>
-            <button id="modeCarrinho" class="pb"         onclick="setChartMode('carrinho',this)"   style="font-size:10px;padding:3px 9px">🛍️ Carrinho</button>
-            <button id="modeVC"       class="pb"         onclick="setChartMode('viewcontent',this)" style="font-size:10px;padding:3px 9px">👁️ View Content</button>
-            <button id="modeIC"       class="pb"         onclick="setChartMode('initcheckout',this)"style="font-size:10px;padding:3px 9px">💳 Init Checkout</button>
-            <button id="modeEng"      class="pb"         onclick="setChartMode('engajamento',this)" style="font-size:10px;padding:3px 9px">💬 Engajamento</button>
-            <button id="modeAlcance"  class="pb"         onclick="setChartMode('alcance',this)"    style="font-size:10px;padding:3px 9px">📢 Alcance</button>
+          <div style="display:flex;flex-wrap:wrap;gap:3px;background:var(--bg);padding:3px;border-radius:8px;border:1px solid var(--border);max-width:100%;">
+            <button id="modeVendas"   class="pb active" onclick="setChartMode('vendas',this)"       style="font-size:10px;padding:3px 8px;flex:1;min-width:80px;text-align:center">🛒 Vendas</button>
+            <button id="modeCarrinho" class="pb"         onclick="setChartMode('carrinho',this)"    style="font-size:10px;padding:3px 8px;flex:1;min-width:80px;text-align:center">🛍️ Carrinho</button>
+            <button id="modeVC"       class="pb"         onclick="setChartMode('viewcontent',this)" style="font-size:10px;padding:3px 8px;flex:1;min-width:80px;text-align:center">👁️ View Content</button>
+            <button id="modeIC"       class="pb"         onclick="setChartMode('initcheckout',this)"style="font-size:10px;padding:3px 8px;flex:1;min-width:80px;text-align:center">💳 Init Checkout</button>
+            <button id="modeEng"      class="pb"         onclick="setChartMode('engajamento',this)" style="font-size:10px;padding:3px 8px;flex:1;min-width:80px;text-align:center">💬 Engajamento</button>
+            <button id="modeAlcance"  class="pb"         onclick="setChartMode('alcance',this)"     style="font-size:10px;padding:3px 8px;flex:1;min-width:80px;text-align:center">📢 Alcance</button>
           </div>
         </div>
         <div class="cw" style="height:210px"><canvas id="chMetaMain"></canvas></div>
@@ -452,20 +452,20 @@ function bo(extra={}){
 function buildFunnel(kpis){
   if(!kpis) return;
   const steps=[
-    {lbl:'Impressões',    val:kpis.impressions,  color:'#1d4ed8'},
-    {lbl:'Link Clicks',   val:kpis.link_clicks,  color:'#2563eb'},
-    {lbl:'View Content',  val:kpis.view_content, color:'#6366f1'},
-    {lbl:'Add to Cart',   val:kpis.add_to_cart,  color:'#8b5cf6'},
-    {lbl:'Init Checkout', val:kpis.init_checkout,color:'#a855f7'},
-    {lbl:'Purchase',      val:kpis.purchase,     color:'#059669'},
+    {lbl:'Impressões',    val:kpis.impressions,  color:'#93c5fd'},
+    {lbl:'Link Clicks',   val:kpis.link_clicks,  color:'#60a5fa'},
+    {lbl:'View Content',  val:kpis.view_content, color:'#34d399'},
+    {lbl:'Add to Cart',   val:kpis.add_to_cart,  color:'#10b981'},
+    {lbl:'Init Checkout', val:kpis.init_checkout,color:'#059669'},
+    {lbl:'Purchase',      val:kpis.purchase,     color:'#065f46'},
   ];
+  // Taxas entre etapas: cada uma divide pelo step anterior
   const rates=[
-    {lbl:'CTR',            val:kpis.ctr,         bom:CTR_BOM,   medio:CTR_MEDIO,  inv:false},
-    {lbl:'Connect Rate',   val:kpis.connect_rate, bom:CR_BOM,    medio:CR_MEDIO,   inv:false},
-    {lbl:'View Content %', val:kpis.vc_rate,      bom:VC_BOM,    medio:VC_MEDIO,   inv:false},
-    {lbl:'Add to Cart %',  val:kpis.atc_rate,     bom:ATC_BOM,   medio:ATC_MEDIO,  inv:false},
-    {lbl:'Checkout %',     val:kpis.ic_rate,      bom:IC_BOM,    medio:IC_MEDIO,   inv:false},
-    {lbl:'Conversão Venda',val:kpis.purch_rate,   bom:PURCH_BOM, medio:PURCH_MEDIO,inv:false},
+    {lbl:'CTR (LC/Imp)',        val:kpis.ctr,         bom:CTR_BOM,   medio:CTR_MEDIO,  inv:false},
+    {lbl:'Connect Rate (VC/LC)',val:kpis.connect_rate, bom:CR_BOM,    medio:CR_MEDIO,   inv:false},
+    {lbl:'Tx Carrinho (ATC/VC)',val:kpis.atc_rate,     bom:ATC_BOM,   medio:ATC_MEDIO,  inv:false},
+    {lbl:'Tx Checkout (IC/ATC)',val:kpis.ic_rate,      bom:IC_BOM,    medio:IC_MEDIO,   inv:false},
+    {lbl:'Tx Compra (Pu/IC)',   val:kpis.purch_rate,   bom:PURCH_BOM, medio:PURCH_MEDIO,inv:false},
   ];
   const maxOther=Math.max(kpis.link_clicks||1,kpis.view_content||1,kpis.add_to_cart||1,kpis.init_checkout||1,kpis.purchase||1,1);
   const widths=[100];
@@ -495,6 +495,15 @@ function buildFunnel(kpis){
     }
     html+='</div>';
   });
+  // Taxa de conversão geral: Purchase / View Content
+  const txConv=kpis.view_content>0?r2(kpis.purchase/kpis.view_content*100):null;
+  const cConv=funnelCls(txConv,1.5,0.5,false);
+  html+=`<div class="f-between" style="margin-top:10px;padding-left:0">
+    <span style="font-size:11px;color:var(--muted);font-weight:600">Taxa de Conversão Geral (Purchase / View Content):</span>
+    <span class="f-rate-txt" style="background:${cConv.col}18;color:${cConv.col};border:1px solid ${cConv.col}44;font-size:14px">
+      <strong>${fP(txConv)}</strong>
+    </span>
+  </div>`;
   document.getElementById('funnelSteps').innerHTML=html;
 }
 
@@ -525,13 +534,12 @@ function renderMeta(){
   });
   const {impressions:imp,link_clicks:lc,page_view:pv,view_content:vc,add_to_cart:atc,init_checkout:ic,purchase:pu,spend:sp}=totals;
   const funnelKpis={...totals,
-    ctr:           imp>0?r2(lc/imp*100):null,
-    connect_rate:  lc>0?r2(pv/lc*100):null,
-    vc_rate:       pv>0?r2(vc/pv*100):null,
-    atc_rate:      vc>0?r2(atc/vc*100):null,
-    ic_rate:       atc>0?r2(ic/atc*100):null,
-    purch_rate:    ic>0?r2(pu/ic*100):null,
-    cpv:           pu>0?r2(sp/pu):null,
+    ctr:          imp>0?r2(lc/imp*100):null,
+    connect_rate: lc>0?r2(vc/lc*100):null,   // VC/LC
+    atc_rate:     vc>0?r2(atc/vc*100):null,  // ATC/VC
+    ic_rate:      atc>0?r2(ic/atc*100):null, // IC/ATC
+    purch_rate:   ic>0?r2(pu/ic*100):null,   // Pu/IC
+    cpv:          pu>0?r2(sp/pu):null,
   };
   setTimeout(()=>buildFunnel(funnelKpis),30);
 
@@ -716,8 +724,8 @@ function filterBdRaw(rawArr,keyFn){
   const map={};
   filtered.forEach(r=>{
     const k=keyFn(r);
-    if(!map[k]) map[k]={n:k,spend:0,pu:0,atc:0};
-    map[k].spend+=r.sp; map[k].pu+=r.pu; map[k].atc+=r.atc;
+    if(!map[k]) map[k]={n:k,spend:0,pu:0,atc:0,vc:0};
+    map[k].spend+=r.sp; map[k].pu+=r.pu; map[k].atc+=r.atc; map[k].vc+=(r.vc||0);
   });
   return Object.values(map)
     .filter(v=>v.spend>0)
@@ -865,14 +873,18 @@ function renderSeg(){
     const el=document.getElementById(elId);
     if(!data?.length){el.innerHTML='<div style="padding:8px;font-size:11px;color:var(--muted)">Sem dados</div>';return;}
     el.innerHTML=`<table>
-      <thead><tr><th>${lbl}</th><th class="num">Invest.</th><th class="num">Add Cart</th><th class="num">Vendas</th><th class="num">CPV</th></tr></thead>
-      <tbody>${data.map(r=>`<tr>
-        <td style="font-size:11px">${r.n}</td>
-        <td class="num">${fR(r.spend)}</td>
-        <td class="num" style="color:var(--muted2)">${fN(r.atc)}</td>
-        <td class="num">${fN(r.pu)}</td>
-        <td class="num ${cpvCls(r.cpv)}">${fR(r.cpv)}</td>
-      </tr>`).join('')}</tbody></table>`;
+      <thead><tr><th>${lbl}</th><th class="num">Invest.</th><th class="num">Add Cart</th><th class="num">Tx Cart %</th><th class="num">Vendas</th><th class="num">CPV</th></tr></thead>
+      <tbody>${data.map(r=>{
+        const txCart=r.vc>0?r2(r.atc/r.vc*100):null;
+        return`<tr>
+          <td style="font-size:11px">${r.n}</td>
+          <td class="num">${fR(r.spend)}</td>
+          <td class="num" style="color:var(--muted2)">${fN(r.atc)}</td>
+          <td class="num ${funnelCls(txCart,ATC_BOM,ATC_MEDIO).cls}">${fP(txCart)}</td>
+          <td class="num">${fN(r.pu)}</td>
+          <td class="num ${cpvCls(r.cpv)}">${fR(r.cpv)}</td>
+        </tr>`;
+      }).join('')}</tbody></table>`;
   }
   segTable('tGender',  bd.gender,  'Gênero');
   segTable('tAge',     bd.age,     'Faixa Etária');
@@ -934,11 +946,10 @@ function getMDforMeta(){
   });
   const sum=(arr,k)=>arr.reduce((a,b)=>a+(b||0),0);
   out.ctr=out.days.map((_,i)=>out.impressions[i]>0?r2(out.link_clicks[i]/out.impressions[i]*100):null);
-  out.connect_rate=out.days.map((_,i)=>out.link_clicks[i]>0?r2(out.page_view[i]/out.link_clicks[i]*100):null);
-  out.vc_rate=out.days.map((_,i)=>out.page_view[i]>0?r2(out.view_content[i]/out.page_view[i]*100):null);
-  out.atc_rate=out.days.map((_,i)=>out.view_content[i]>0?r2(out.add_to_cart[i]/out.view_content[i]*100):null);
-  out.ic_rate=out.days.map((_,i)=>out.add_to_cart[i]>0?r2(out.init_checkout[i]/out.add_to_cart[i]*100):null);
-  out.purch_rate=out.days.map((_,i)=>out.init_checkout[i]>0?r2(out.purchase[i]/out.init_checkout[i]*100):null);
+  out.connect_rate=out.days.map((_,i)=>out.link_clicks[i]>0?r2(out.view_content[i]/out.link_clicks[i]*100):null); // VC/LC
+  out.atc_rate=out.days.map((_,i)=>out.view_content[i]>0?r2(out.add_to_cart[i]/out.view_content[i]*100):null);    // ATC/VC
+  out.ic_rate=out.days.map((_,i)=>out.view_content[i]>0?r2(out.init_checkout[i]/out.view_content[i]*100):null);   // IC/VC
+  out.purch_rate=out.days.map((_,i)=>out.init_checkout[i]>0?r2(out.purchase[i]/out.init_checkout[i]*100):null);   // Pu/IC
   out.cpv=out.days.map((_,i)=>out.purchase[i]>0?r2(out.spend[i]/out.purchase[i]):null);
   out.cpm=out.days.map((_,i)=>out.impressions[i]>0?r2(out.spend[i]/out.impressions[i]*1000):null);
   return out;
@@ -985,10 +996,10 @@ function getDailyForCamp(){
     out[k]=ref.days.map(day=>selected.reduce((sum,s)=>{const i=s.days?.indexOf(day);return sum+(i>=0?(s[k]?.[i]||0):0);},0));
   });
   out.ctr=out.days.map((_,i)=>out.impressions[i]>0?r2(out.link_clicks[i]/out.impressions[i]*100):null);
-  out.vc_rate=out.days.map((_,i)=>out.page_view[i]>0?r2(out.view_content[i]/out.page_view[i]*100):null);
-  out.atc_rate=out.days.map((_,i)=>out.view_content[i]>0?r2(out.add_to_cart[i]/out.view_content[i]*100):null);
-  out.ic_rate=out.days.map((_,i)=>out.add_to_cart[i]>0?r2(out.init_checkout[i]/out.add_to_cart[i]*100):null);
-  out.purch_rate=out.days.map((_,i)=>out.init_checkout[i]>0?r2(out.purchase[i]/out.init_checkout[i]*100):null);
+  out.connect_rate=out.days.map((_,i)=>out.link_clicks[i]>0?r2(out.view_content[i]/out.link_clicks[i]*100):null); // VC/LC
+  out.atc_rate=out.days.map((_,i)=>out.view_content[i]>0?r2(out.add_to_cart[i]/out.view_content[i]*100):null);    // ATC/VC
+  out.ic_rate=out.days.map((_,i)=>out.view_content[i]>0?r2(out.init_checkout[i]/out.view_content[i]*100):null);   // IC/VC
+  out.purch_rate=out.days.map((_,i)=>out.init_checkout[i]>0?r2(out.purchase[i]/out.init_checkout[i]*100):null);   // Pu/IC
   out.cpv=out.days.map((_,i)=>out.purchase[i]>0?r2(out.spend[i]/out.purchase[i]):null);
   out.cpm=out.days.map((_,i)=>out.impressions[i]>0?r2(out.spend[i]/out.impressions[i]*1000):null);
   return out;
@@ -1006,21 +1017,21 @@ function renderDiarioCharts(){
   const totPu=(md.purchase||[]).reduce((a,b)=>a+(b||0),0);
   const totSp=(md.spend||[]).reduce((a,b)=>a+(b||0),0);
   const avgCTR=totImp>0?r2(totLc/totImp*100):null;
-  const avgCR=totLc>0?r2(totPv/totLc*100):null;
-  const avgATCRate=totVc>0?r2(totAtc/totVc*100):null;
-  const avgICRate=totAtc>0?r2(totIc/totAtc*100):null;
-  const avgPurchRate=totIc>0?r2(totPu/totIc*100):null;
+  const avgCR=totLc>0?r2(totVc/totLc*100):null;          // CR = VC/LC
+  const avgATCRate=totVc>0?r2(totAtc/totVc*100):null;    // ATC% = ATC/VC
+  const avgICRate=totVc>0?r2(totIc/totVc*100):null;      // IC%  = IC/VC
+  const avgPurchRate=totIc>0?r2(totPu/totIc*100):null;   // Taxa de Venda = Pu/IC
   const avgCPV=totPu>0?r2(totSp/totPu):null;
   const avgCPM=totImp>0?r2(totSp/totImp*1000):null;
 
   const METRICS=[
-    {id:'ctr',        ttl:'CTR Link (%)',          suffix:'%', data:()=>md.ctr,          avgVal:avgCTR,      bom:CTR_BOM,   medio:CTR_MEDIO,   inv:false},
-    {id:'cr',         ttl:'Connect Rate (%)',       suffix:'%', data:()=>md.connect_rate, avgVal:avgCR,       bom:CR_BOM,    medio:CR_MEDIO,    inv:false},
-    {id:'add_to_cart',ttl:'Add to Cart (volume)',   suffix:'',  data:()=>md.add_to_cart,  avgVal:totAtc||null,bom:null,      medio:null,        inv:false, fmt:v=>v!=null?fN(v):null},
-    {id:'init_chk',   ttl:'Init Checkout (volume)', suffix:'',  data:()=>md.init_checkout,avgVal:totIc||null, bom:null,      medio:null,        inv:false, fmt:v=>v!=null?fN(v):null},
-    {id:'purch_rate',  ttl:'Taxa de Venda (%)',      suffix:'%', data:()=>md.purch_rate,   avgVal:avgPurchRate,bom:PURCH_BOM, medio:PURCH_MEDIO, inv:false},
-    {id:'cpv',        ttl:'Custo por Venda (R$)',   suffix:'',  data:()=>md.cpv,          avgVal:avgCPV,      bom:CPV_BOM,   medio:CPV_MEDIO,   inv:true,  fmt:v=>v!=null?'R$'+v.toFixed(2):null},
-    {id:'cpm',        ttl:'CPM (R$)',               suffix:'',  data:()=>md.cpm,          avgVal:avgCPM,      bom:CPM_BOM,   medio:CPM_MEDIO,   inv:true,  fmt:v=>v!=null?'R$'+v.toFixed(2):null},
+    {id:'ctr',      ttl:'CTR Link (%)',         suffix:'%', data:()=>md.ctr,          avgVal:avgCTR,      bom:CTR_BOM,   medio:CTR_MEDIO,   inv:false},
+    {id:'cr',       ttl:'Connect Rate — VC/LC (%)', suffix:'%', data:()=>md.connect_rate, avgVal:avgCR,   bom:CR_BOM,    medio:CR_MEDIO,    inv:false},
+    {id:'atc_rate', ttl:'Add to Cart % — ATC/VC',  suffix:'%', data:()=>md.atc_rate,  avgVal:avgATCRate,  bom:ATC_BOM,   medio:ATC_MEDIO,   inv:false},
+    {id:'ic_rate',  ttl:'Init Checkout % — IC/VC',  suffix:'%', data:()=>md.ic_rate,   avgVal:avgICRate,   bom:IC_BOM,    medio:IC_MEDIO,    inv:false},
+    {id:'purch_rate',ttl:'Taxa de Venda % — Pu/IC', suffix:'%', data:()=>md.purch_rate,avgVal:avgPurchRate,bom:PURCH_BOM, medio:PURCH_MEDIO, inv:false},
+    {id:'cpv',      ttl:'Custo por Venda (R$)',  suffix:'',  data:()=>md.cpv,          avgVal:avgCPV,      bom:CPV_BOM,   medio:CPV_MEDIO,   inv:true, fmt:v=>v!=null?'R$'+v.toFixed(2):null},
+    {id:'cpm',      ttl:'CPM (R$)',              suffix:'',  data:()=>md.cpm,          avgVal:avgCPM,      bom:CPM_BOM,   medio:CPM_MEDIO,   inv:true, fmt:v=>v!=null?'R$'+v.toFixed(2):null},
   ];
 
   function getColor(m,val){
