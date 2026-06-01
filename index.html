@@ -818,33 +818,105 @@ function toggleCampRow(id,rowEl){
   const open=sub.style.display==='none';
   sub.style.display=open?'table-row':'none';
   if(arrow) arrow.textContent=open?'▼':'▶';
-  if(open){
-    const campName=rowEl.querySelector('td:nth-child(2)').title;
-    const mt=getMT();
-    const adsets=(mt?.adsets||[]).filter(a=>a.camp===campName);
-    const tbl=document.getElementById('sub_'+id);
-    if(!tbl) return;
-    if(!adsets.length){tbl.innerHTML='<tbody><tr><td style="padding:8px;color:var(--muted);font-size:11px">Sem conjuntos</td></tr></tbody>';return;}
-    tbl.innerHTML='<thead><tr>'+
-      '<th style="font-size:9px;padding:4px 8px;text-align:left;color:var(--muted2)">Conjunto</th>'+
+  if(!open) return;
+  const campName=rowEl.querySelector('td:nth-child(2)').title;
+  const mt=getMT();
+  const adsets=(mt?.adsets||[]).filter(a=>a.camp===campName);
+  const tbl=document.getElementById('sub_'+id);
+  if(!tbl) return;
+  if(!adsets.length){tbl.innerHTML='<tbody><tr><td style="padding:8px;color:var(--muted);font-size:11px">Sem conjuntos</td></tr></tbody>';return;}
+  // Cabeçalho
+  tbl.innerHTML='<thead><tr>'+
+    '<th style="font-size:9px;padding:4px 8px;text-align:left;color:var(--muted2)" colspan="2">Conjunto</th>'+
+    '<th class="num" style="font-size:9px;padding:4px 8px;color:var(--muted2)">Invest.</th>'+
+    '<th class="num" style="font-size:9px;padding:4px 8px;color:var(--muted2)">Vendas</th>'+
+    '<th class="num" style="font-size:9px;padding:4px 8px;color:var(--muted2)">Add Cart</th>'+
+    '<th class="num" style="font-size:9px;padding:4px 8px;color:var(--muted2)">CTR</th>'+
+    '<th class="num" style="font-size:9px;padding:4px 8px;color:var(--muted2)">ATC%</th>'+
+    '<th class="num" style="font-size:9px;padding:4px 8px;color:var(--muted2)">Conv.Venda</th>'+
+    '<th class="num" style="font-size:9px;padding:4px 8px;color:var(--muted2)">CPV</th>'+
+    '</tr></thead><tbody id="tbody_'+id+'"></tbody>';
+  const tbody=document.getElementById('tbody_'+id);
+  adsets.forEach((a,ai)=>{
+    const adsetKey=id+'_as'+ai;
+    // Linha do conjunto — clicável
+    const tr=document.createElement('tr');
+    tr.style.cursor='pointer';
+    tr.onclick=()=>toggleAdsetRow(adsetKey,a,campName,tr);
+    tr.innerHTML=`
+      <td style="width:18px;text-align:center;color:var(--muted2);font-size:11px" id="arr_${adsetKey}">▶</td>
+      <td style="font-size:10px;padding:5px 8px;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${a.n}">${a.n}</td>
+      <td class="num" style="font-size:10px;padding:5px 8px">${fR(a.spend)}</td>
+      <td class="num" style="font-size:10px;padding:5px 8px;font-weight:700">${fN(a.pu)}</td>
+      <td class="num" style="font-size:10px;padding:5px 8px;color:var(--muted2)">${fN(a.atc)}</td>
+      <td class="num ${funnelCls(a.ctr,CTR_BOM,CTR_MEDIO).cls}" style="font-size:10px;padding:5px 8px">${fP(a.ctr)}</td>
+      <td class="num ${funnelCls(a.atc_rate,ATC_BOM,ATC_MEDIO).cls}" style="font-size:10px;padding:5px 8px">${fP(a.atc_rate)}</td>
+      <td class="num ${funnelCls(a.purch_rate,PURCH_BOM,PURCH_MEDIO).cls}" style="font-size:10px;padding:5px 8px">${fP(a.purch_rate)}</td>
+      <td class="num ${cpvCls(a.cpv)}" style="font-size:10px;padding:5px 8px">${fR(a.cpv)}</td>`;
+    tbody.appendChild(tr);
+    // Linha expandível para os anúncios
+    const trAds=document.createElement('tr');
+    trAds.id='adrow_'+adsetKey;
+    trAds.style.display='none';
+    trAds.innerHTML=`<td colspan="9" style="padding:0;background:var(--bg)">
+      <div id="adinner_${adsetKey}" style="padding:10px 10px 10px 28px"></div>
+    </td>`;
+    tbody.appendChild(trAds);
+  });
+}
+
+function toggleAdsetRow(adsetKey,adset,campName,rowEl){
+  const trAds=document.getElementById('adrow_'+adsetKey);
+  const arr=document.getElementById('arr_'+adsetKey);
+  const open=trAds.style.display==='none';
+  trAds.style.display=open?'table-row':'none';
+  if(arr) arr.textContent=open?'▼':'▶';
+  if(!open) return;
+  const mt=getMT();
+  const ads=(mt?.ads||[]).filter(a=>a.adset===adset.n&&a.camp===campName);
+  const inner=document.getElementById('adinner_'+adsetKey);
+  if(!inner) return;
+  if(!ads.length){inner.innerHTML='<div style="font-size:10px;color:var(--muted);padding:4px">Sem anúncios</div>';return;}
+  const isMob=window.innerWidth<=768;
+  if(isMob){
+    inner.innerHTML='<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;min-width:360px">'+
+      '<thead><tr style="background:var(--surface2)">'+
+      '<th style="font-size:9px;padding:4px 8px;text-align:left;color:var(--muted2)">Anúncio</th>'+
       '<th class="num" style="font-size:9px;padding:4px 8px;color:var(--muted2)">Invest.</th>'+
       '<th class="num" style="font-size:9px;padding:4px 8px;color:var(--muted2)">Vendas</th>'+
-      '<th class="num" style="font-size:9px;padding:4px 8px;color:var(--muted2)">Add Cart</th>'+
+      '<th class="num" style="font-size:9px;padding:4px 8px;color:var(--muted2)">ATC</th>'+
       '<th class="num" style="font-size:9px;padding:4px 8px;color:var(--muted2)">CTR</th>'+
-      '<th class="num" style="font-size:9px;padding:4px 8px;color:var(--muted2)">ATC%</th>'+
-      '<th class="num" style="font-size:9px;padding:4px 8px;color:var(--muted2)">Conv.Venda</th>'+
       '<th class="num" style="font-size:9px;padding:4px 8px;color:var(--muted2)">CPV</th>'+
       '</tr></thead><tbody>'+
-      adsets.map(a=>`<tr>
-        <td style="font-size:10px;padding:5px 8px;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${a.n}">${a.n}</td>
-        <td class="num" style="font-size:10px;padding:5px 8px">${fR(a.spend)}</td>
-        <td class="num" style="font-size:10px;padding:5px 8px;font-weight:700">${fN(a.pu)}</td>
-        <td class="num" style="font-size:10px;padding:5px 8px;color:var(--muted2)">${fN(a.atc)}</td>
-        <td class="num ${funnelCls(a.ctr,CTR_BOM,CTR_MEDIO).cls}" style="font-size:10px;padding:5px 8px">${fP(a.ctr)}</td>
-        <td class="num ${funnelCls(a.atc_rate,ATC_BOM,ATC_MEDIO).cls}" style="font-size:10px;padding:5px 8px">${fP(a.atc_rate)}</td>
-        <td class="num ${funnelCls(a.purch_rate,PURCH_BOM,PURCH_MEDIO).cls}" style="font-size:10px;padding:5px 8px">${fP(a.purch_rate)}</td>
-        <td class="num ${cpvCls(a.cpv)}" style="font-size:10px;padding:5px 8px">${fR(a.cpv)}</td>
-      </tr>`).join('')+'</tbody>';
+      ads.map(ad=>`<tr>
+        <td style="font-size:10px;padding:4px 8px;max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${ad.n}">${ad.n}</td>
+        <td class="num" style="font-size:10px;padding:4px 8px">${fR(ad.spend)}</td>
+        <td class="num" style="font-size:10px;padding:4px 8px;font-weight:700">${fN(ad.pu)}</td>
+        <td class="num" style="font-size:10px;padding:4px 8px;color:var(--muted2)">${fN(ad.atc)}</td>
+        <td class="num" style="font-size:10px;padding:4px 8px">${fP(ad.ctr)}</td>
+        <td class="num ${cpvCls(ad.cpv)}" style="font-size:10px;padding:4px 8px">${fR(ad.cpv)}</td>
+      </tr>`).join('')+
+      '</tbody></table></div>';
+  } else {
+    inner.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;">'+
+      ads.map(ad=>{
+        const img=ad.thumb
+          ?`<img src="${ad.thumb}" style="width:100%;height:100%;object-fit:cover" loading="lazy" onerror="this.parentElement.innerHTML='<div style=display:flex;align-items:center;justify-content:center;height:100%;font-size:22px;color:var(--muted2)>🖼️</div>'">`
+          :'<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:22px;color:var(--muted2)">🖼️</div>';
+        return`<div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden;box-shadow:var(--sh)">
+          <div style="width:100%;aspect-ratio:4/5;background:var(--surface2);overflow:hidden">${img}</div>
+          <div style="padding:6px 8px">
+            <div style="font-size:9px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-bottom:4px" title="${ad.n}">${ad.n}</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px">
+              <div><div style="font-size:7px;color:var(--muted2);text-transform:uppercase">Vendas</div><div style="font-size:10px;font-weight:700;font-family:monospace">${fN(ad.pu)}</div></div>
+              <div><div style="font-size:7px;color:var(--muted2);text-transform:uppercase">CPV</div><div class="${cpvCls(ad.cpv)}" style="font-size:10px;font-weight:700;font-family:monospace">${fR(ad.cpv)}</div></div>
+              <div><div style="font-size:7px;color:var(--muted2);text-transform:uppercase">Add Cart</div><div style="font-size:10px;font-weight:700;font-family:monospace">${fN(ad.atc)}</div></div>
+              <div><div style="font-size:7px;color:var(--muted2);text-transform:uppercase">CTR</div><div style="font-size:10px;font-weight:700;font-family:monospace">${fP(ad.ctr)}</div></div>
+              <div><div style="font-size:7px;color:var(--muted2);text-transform:uppercase">Invest.</div><div style="font-size:10px;font-weight:700;font-family:monospace">${fR(ad.spend)}</div></div>
+            </div>
+          </div>
+        </div>`;
+      }).join('')+'</div>';
   }
 }
 
