@@ -293,6 +293,7 @@ def meta_breakdowns(df):
         agg["cpv"]=(agg["spend"]/agg[metric]).where(agg[metric]>0).round(2)
         return [{"n":str(r[dim]),"spend":round(float(r["spend"]),2),
                  "pu":int(r.get("purchase",0)),"atc":int(r.get("add_to_cart",0)),
+                 "vc":int(r.get("view_content",0)),
                  "cpv":safe(r["cpv"])} for _,r in agg.iterrows()]
 
     try:
@@ -301,6 +302,7 @@ def meta_breakdowns(df):
         df_ga["spend"]=to_num(df_ga["Spend (Cost, Amount Spent)"])
         df_ga["purchase"]=to_num(df_ga["Action Omni Purchase"]) if "Action Omni Purchase" in df_ga.columns else 0
         df_ga["add_to_cart"]=to_num(df_ga["Action Omni Add To Cart"]) if "Action Omni Add To Cart" in df_ga.columns else 0
+        df_ga["view_content"]=to_num(df_ga["Action Omni View Content"]) if "Action Omni View Content" in df_ga.columns else 0
         df_ga["age"]=df_ga["Age (Breakdown)"].astype(str)
         df_ga["gender"]=df_ga["Gender (Breakdown)"].astype(str)
         if "Campaign Name" in df_ga.columns and LANCAMENTO_COD:
@@ -316,6 +318,7 @@ def meta_breakdowns(df):
         df_pt["spend"]=to_num(df_pt["Spend (Cost, Amount Spent)"])
         df_pt["purchase"]=to_num(df_pt["Action Omni Purchase"]) if "Action Omni Purchase" in df_pt.columns else 0
         df_pt["add_to_cart"]=to_num(df_pt["Action Omni Add To Cart"]) if "Action Omni Add To Cart" in df_pt.columns else 0
+        df_pt["view_content"]=to_num(df_pt["Action Omni View Content"]) if "Action Omni View Content" in df_pt.columns else 0
         df_pt["platform"]=df_pt["Platform Position (Breakdown)"].astype(str)
         if "Campaign Name" in df_pt.columns and LANCAMENTO_COD:
             df_pt["is_lct"]=df_pt["Campaign Name"].str.contains(LANCAMENTO_COD,na=False,case=False)
@@ -338,13 +341,13 @@ def meta_breakdowns(df):
             else: ppt=df_pt
             age_d=[]; gen_d=[]; plat_d=[]
             if len(pga)>0:
-                ag_age=pga[pga["age"].isin(AGE_ORDER)].groupby("age").agg(spend=("spend","sum"),purchase=("purchase","sum"),add_to_cart=("add_to_cart","sum")).reset_index()
+                ag_age=pga[pga["age"].isin(AGE_ORDER)].groupby("age").agg(spend=("spend","sum"),purchase=("purchase","sum"),add_to_cart=("add_to_cart","sum"),view_content=("view_content","sum")).reset_index()
                 ag_age["_o"]=ag_age["age"].apply(lambda x:AGE_ORDER.index(x) if x in AGE_ORDER else 99)
                 age_d=seg(ag_age.sort_values("_o"),"age")
-                ag_gen=pga[pga["gender"].isin(["female","male"])].groupby("gender").agg(spend=("spend","sum"),purchase=("purchase","sum"),add_to_cart=("add_to_cart","sum")).reset_index().sort_values("purchase",ascending=False)
+                ag_gen=pga[pga["gender"].isin(["female","male"])].groupby("gender").agg(spend=("spend","sum"),purchase=("purchase","sum"),add_to_cart=("add_to_cart","sum"),view_content=("view_content","sum")).reset_index().sort_values("purchase",ascending=False)
                 gen_d=seg(ag_gen,"gender")
             if len(ppt)>0:
-                ag_pt=ppt.groupby("platform").agg(spend=("spend","sum"),purchase=("purchase","sum"),add_to_cart=("add_to_cart","sum")).reset_index().sort_values("purchase",ascending=False).head(8)
+                ag_pt=ppt.groupby("platform").agg(spend=("spend","sum"),purchase=("purchase","sum"),add_to_cart=("add_to_cart","sum"),view_content=("view_content","sum")).reset_index().sort_values("purchase",ascending=False).head(8)
                 plat_d=seg(ag_pt,"platform")
             if lname not in result: result[lname]={}
             result[lname][pname]={"age":age_d,"gender":gen_d,"platform":plat_d}
@@ -356,6 +359,7 @@ def meta_breakdowns(df):
             if pd.isna(r['date']): continue
             raw_ga.append({'d':r['date'].strftime('%d/%m'),'age':str(r['age']),'gen':str(r['gender']),
                            'sp':round(float(r['spend']),2),'pu':int(r['purchase']),'atc':int(r['add_to_cart']),
+                           'vc':int(r.get('view_content',0)),
                            'lct':bool(r['is_lct']),'camp':str(r['Campaign Name']) if 'Campaign Name' in r.index else ''})
     raw_pt=[]
     if len(df_pt)>0:
@@ -363,6 +367,7 @@ def meta_breakdowns(df):
             if pd.isna(r['date']): continue
             raw_pt.append({'d':r['date'].strftime('%d/%m'),'plat':str(r['platform']),
                            'sp':round(float(r['spend']),2),'pu':int(r['purchase']),'atc':int(r['add_to_cart']),
+                           'vc':int(r.get('view_content',0)),
                            'lct':bool(r['is_lct']),'camp':str(r['Campaign Name']) if 'Campaign Name' in r.index else ''})
     result['_raw_ga']=raw_ga; result['_raw_pt']=raw_pt
     return result
