@@ -255,10 +255,13 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
             <div class="cc-t" id="chMainTitle">Vendas Diárias & Investimento</div>
             <div class="cc-s" id="chMainSub">Compras · Invest. (linha verde) · Custo/Venda (linha preta tracejada)</div>
           </div>
-          <div style="display:flex;gap:3px;background:var(--bg);padding:3px;border-radius:8px;border:1px solid var(--border);flex-shrink:0;">
-            <button id="modeVendas"  class="pb active" onclick="setChartMode('vendas',this)"  style="font-size:10px;padding:3px 9px">🛒 Vendas</button>
-            <button id="modeCarrinho" class="pb" onclick="setChartMode('carrinho',this)" style="font-size:10px;padding:3px 9px">🛍️ Carrinho</button>
-            <button id="modeAlcance" class="pb" onclick="setChartMode('alcance',this)"  style="font-size:10px;padding:3px 9px">📢 Alcance</button>
+          <div style="display:flex;gap:3px;background:var(--bg);padding:3px;border-radius:8px;border:1px solid var(--border);flex-shrink:0;flex-wrap:wrap;">
+            <button id="modeVendas"   class="pb active" onclick="setChartMode('vendas',this)"      style="font-size:10px;padding:3px 9px">🛒 Vendas</button>
+            <button id="modeCarrinho" class="pb"         onclick="setChartMode('carrinho',this)"   style="font-size:10px;padding:3px 9px">🛍️ Carrinho</button>
+            <button id="modeVC"       class="pb"         onclick="setChartMode('viewcontent',this)" style="font-size:10px;padding:3px 9px">👁️ View Content</button>
+            <button id="modeIC"       class="pb"         onclick="setChartMode('initcheckout',this)"style="font-size:10px;padding:3px 9px">💳 Init Checkout</button>
+            <button id="modeEng"      class="pb"         onclick="setChartMode('engajamento',this)" style="font-size:10px;padding:3px 9px">💬 Engajamento</button>
+            <button id="modeAlcance"  class="pb"         onclick="setChartMode('alcance',this)"    style="font-size:10px;padding:3px 9px">📢 Alcance</button>
           </div>
         </div>
         <div class="cw" style="height:210px"><canvas id="chMetaMain"></canvas></div>
@@ -451,21 +454,20 @@ function buildFunnel(kpis){
   const steps=[
     {lbl:'Impressões',    val:kpis.impressions,  color:'#1d4ed8'},
     {lbl:'Link Clicks',   val:kpis.link_clicks,  color:'#2563eb'},
-    {lbl:'Page View',     val:kpis.page_view,    color:'#3b82f6'},
     {lbl:'View Content',  val:kpis.view_content, color:'#6366f1'},
     {lbl:'Add to Cart',   val:kpis.add_to_cart,  color:'#8b5cf6'},
     {lbl:'Init Checkout', val:kpis.init_checkout,color:'#a855f7'},
-    {lbl:'Purchase 🛒',   val:kpis.purchase,     color:'#059669'},
+    {lbl:'Purchase',      val:kpis.purchase,     color:'#059669'},
   ];
   const rates=[
-    {lbl:'CTR',           val:kpis.ctr,          bom:CTR_BOM,   medio:CTR_MEDIO,  inv:false},
-    {lbl:'Connect Rate',  val:kpis.connect_rate,  bom:CR_BOM,    medio:CR_MEDIO,   inv:false},
-    {lbl:'View Content %',val:kpis.vc_rate,       bom:VC_BOM,    medio:VC_MEDIO,   inv:false},
-    {lbl:'Add to Cart %', val:kpis.atc_rate,      bom:ATC_BOM,   medio:ATC_MEDIO,  inv:false},
-    {lbl:'Checkout %',    val:kpis.ic_rate,       bom:IC_BOM,    medio:IC_MEDIO,   inv:false},
+    {lbl:'CTR',            val:kpis.ctr,         bom:CTR_BOM,   medio:CTR_MEDIO,  inv:false},
+    {lbl:'Connect Rate',   val:kpis.connect_rate, bom:CR_BOM,    medio:CR_MEDIO,   inv:false},
+    {lbl:'View Content %', val:kpis.vc_rate,      bom:VC_BOM,    medio:VC_MEDIO,   inv:false},
+    {lbl:'Add to Cart %',  val:kpis.atc_rate,     bom:ATC_BOM,   medio:ATC_MEDIO,  inv:false},
+    {lbl:'Checkout %',     val:kpis.ic_rate,      bom:IC_BOM,    medio:IC_MEDIO,   inv:false},
     {lbl:'Conversão Venda',val:kpis.purch_rate,   bom:PURCH_BOM, medio:PURCH_MEDIO,inv:false},
   ];
-  const maxOther=Math.max(kpis.link_clicks||1,kpis.page_view||1,kpis.view_content||1,kpis.add_to_cart||1,kpis.init_checkout||1,kpis.purchase||1,1);
+  const maxOther=Math.max(kpis.link_clicks||1,kpis.view_content||1,kpis.add_to_cart||1,kpis.init_checkout||1,kpis.purchase||1,1);
   const widths=[100];
   for(let i=1;i<steps.length;i++){
     widths.push(Math.max(8,Math.round((steps[i].val||0)/maxOther*85)));
@@ -539,22 +541,43 @@ function renderMeta(){
     vendas:{
       title:'Vendas Diárias & Investimento',
       sub:'Compras · Invest. (linha verde) · CPV (linha preta tracejada)',
-      barLabel:'Vendas',    barData:md.purchase,    barColor:'rgba(5,150,105,.75)',
-      lineLabel:'CPV',      lineData:md.cpv,         lineFmt:v=>v!=null?'R$'+v.toFixed(2):null,
+      barLabel:'Vendas',       barData:md.purchase,      barColor:'rgba(5,150,105,.75)',
+      lineLabel:'CPV',         lineData:md.cpv,           lineFmt:v=>v!=null?'R$'+v.toFixed(2):null,
       y1Color:'#059669',
     },
     carrinho:{
-      title:'Add to Cart & Investimento',
-      sub:'Add to Cart (barras roxas) · Invest. (linha verde)',
-      barLabel:'Add to Cart', barData:md.add_to_cart, barColor:'rgba(139,92,246,.75)',
-      lineLabel:'',           lineData:md.init_checkout, lineFmt:v=>v!=null?String(v):null,
+      title:'Add to Cart & Init Checkout',
+      sub:'Add to Cart (barras roxas) · Init Checkout (linha tracejada) · Invest. (linha verde)',
+      barLabel:'Add to Cart',  barData:md.add_to_cart,   barColor:'rgba(139,92,246,.75)',
+      lineLabel:'Init Checkout',lineData:md.init_checkout,lineFmt:v=>v!=null?fN(v):null,
       y1Color:'#8b5cf6',
+    },
+    viewcontent:{
+      title:'View Content & Investimento',
+      sub:'View Content (barras índigo) · Invest. (linha verde)',
+      barLabel:'View Content', barData:md.view_content,  barColor:'rgba(99,102,241,.75)',
+      lineLabel:'',            lineData:md.view_content,  lineFmt:v=>null,
+      y1Color:'#6366f1',
+    },
+    initcheckout:{
+      title:'Init Checkout & Investimento',
+      sub:'Init Checkout (barras roxas) · Invest. (linha verde)',
+      barLabel:'Init Checkout',barData:md.init_checkout, barColor:'rgba(168,85,247,.75)',
+      lineLabel:'',            lineData:md.init_checkout, lineFmt:v=>null,
+      y1Color:'#a855f7',
+    },
+    engajamento:{
+      title:'Engajamento & Investimento',
+      sub:'Engajamentos (barras laranja) · Invest. (linha verde)',
+      barLabel:'Engajamentos', barData:md.engagement,    barColor:'rgba(249,115,22,.75)',
+      lineLabel:'',            lineData:md.engagement,    lineFmt:v=>null,
+      y1Color:'#f97316',
     },
     alcance:{
       title:'Impressões & Investimento',
       sub:'Impressões (barras azuis) · Invest. (linha verde) · CPM (linha preta tracejada)',
-      barLabel:'Impressões', barData:md.impressions, barColor:'rgba(59,130,246,.7)',
-      lineLabel:'CPM',       lineData:md.cpm,         lineFmt:v=>v!=null?'R$'+v.toFixed(2):null,
+      barLabel:'Impressões',   barData:md.impressions,   barColor:'rgba(59,130,246,.7)',
+      lineLabel:'CPM',         lineData:md.cpm,           lineFmt:v=>v!=null?'R$'+v.toFixed(2):null,
       y1Color:'#3b82f6',
     },
   };
@@ -584,7 +607,7 @@ function renderMeta(){
 
 function setChartMode(mode,btn){
   chartMode=mode;
-  document.querySelectorAll('#modeVendas,#modeCarrinho,#modeAlcance').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('#modeVendas,#modeCarrinho,#modeVC,#modeIC,#modeEng,#modeAlcance').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
   renderMeta();
 }
@@ -842,10 +865,11 @@ function renderSeg(){
     const el=document.getElementById(elId);
     if(!data?.length){el.innerHTML='<div style="padding:8px;font-size:11px;color:var(--muted)">Sem dados</div>';return;}
     el.innerHTML=`<table>
-      <thead><tr><th>${lbl}</th><th class="num">Invest.</th><th class="num">Vendas</th><th class="num">CPV</th></tr></thead>
+      <thead><tr><th>${lbl}</th><th class="num">Invest.</th><th class="num">Add Cart</th><th class="num">Vendas</th><th class="num">CPV</th></tr></thead>
       <tbody>${data.map(r=>`<tr>
         <td style="font-size:11px">${r.n}</td>
         <td class="num">${fR(r.spend)}</td>
+        <td class="num" style="color:var(--muted2)">${fN(r.atc)}</td>
         <td class="num">${fN(r.pu)}</td>
         <td class="num ${cpvCls(r.cpv)}">${fR(r.cpv)}</td>
       </tr>`).join('')}</tbody></table>`;
@@ -982,7 +1006,7 @@ function renderDiarioCharts(){
   const totPu=(md.purchase||[]).reduce((a,b)=>a+(b||0),0);
   const totSp=(md.spend||[]).reduce((a,b)=>a+(b||0),0);
   const avgCTR=totImp>0?r2(totLc/totImp*100):null;
-  const avgVCRate=totPv>0?r2(totVc/totPv*100):null;
+  const avgCR=totLc>0?r2(totPv/totLc*100):null;
   const avgATCRate=totVc>0?r2(totAtc/totVc*100):null;
   const avgICRate=totAtc>0?r2(totIc/totAtc*100):null;
   const avgPurchRate=totIc>0?r2(totPu/totIc*100):null;
@@ -990,18 +1014,17 @@ function renderDiarioCharts(){
   const avgCPM=totImp>0?r2(totSp/totImp*1000):null;
 
   const METRICS=[
-    {id:'ctr',     ttl:'CTR Link (%)',            suffix:'%', data:()=>md.ctr,       avgVal:avgCTR,     bom:CTR_BOM,   medio:CTR_MEDIO,   inv:false},
-    {id:'vc_rate', ttl:'View Content Rate (%)',    suffix:'%', data:()=>md.vc_rate,   avgVal:avgVCRate,  bom:VC_BOM,    medio:VC_MEDIO,    inv:false},
-    {id:'atc_rate',ttl:'Add to Cart Rate (%)',     suffix:'%', data:()=>md.atc_rate,  avgVal:avgATCRate, bom:ATC_BOM,   medio:ATC_MEDIO,   inv:false},
-    {id:'ic_rate', ttl:'Init Checkout Rate (%)',   suffix:'%', data:()=>md.ic_rate,   avgVal:avgICRate,  bom:IC_BOM,    medio:IC_MEDIO,    inv:false},
-    {id:'purch_rate',ttl:'Taxa de Venda (%)',      suffix:'%', data:()=>md.purch_rate,avgVal:avgPurchRate,bom:PURCH_BOM,medio:PURCH_MEDIO, inv:false},
-    {id:'cpv',     ttl:'Custo por Venda (R$)',     suffix:'',  data:()=>md.cpv,       avgVal:avgCPV,     bom:CPV_BOM,   medio:CPV_MEDIO,   inv:true,  fmt:v=>v!=null?'R$'+v.toFixed(2):null},
-    {id:'cpm',     ttl:'CPM (R$)',                 suffix:'',  data:()=>md.cpm,       avgVal:avgCPM,     bom:CPM_BOM,   medio:CPM_MEDIO,   inv:true,  fmt:v=>v!=null?'R$'+v.toFixed(2):null},
+    {id:'ctr',        ttl:'CTR Link (%)',          suffix:'%', data:()=>md.ctr,          avgVal:avgCTR,      bom:CTR_BOM,   medio:CTR_MEDIO,   inv:false},
+    {id:'cr',         ttl:'Connect Rate (%)',       suffix:'%', data:()=>md.connect_rate, avgVal:avgCR,       bom:CR_BOM,    medio:CR_MEDIO,    inv:false},
+    {id:'add_to_cart',ttl:'Add to Cart (volume)',   suffix:'',  data:()=>md.add_to_cart,  avgVal:totAtc||null,bom:null,      medio:null,        inv:false, fmt:v=>v!=null?fN(v):null},
+    {id:'init_chk',   ttl:'Init Checkout (volume)', suffix:'',  data:()=>md.init_checkout,avgVal:totIc||null, bom:null,      medio:null,        inv:false, fmt:v=>v!=null?fN(v):null},
+    {id:'purch_rate',  ttl:'Taxa de Venda (%)',      suffix:'%', data:()=>md.purch_rate,   avgVal:avgPurchRate,bom:PURCH_BOM, medio:PURCH_MEDIO, inv:false},
+    {id:'cpv',        ttl:'Custo por Venda (R$)',   suffix:'',  data:()=>md.cpv,          avgVal:avgCPV,      bom:CPV_BOM,   medio:CPV_MEDIO,   inv:true,  fmt:v=>v!=null?'R$'+v.toFixed(2):null},
+    {id:'cpm',        ttl:'CPM (R$)',               suffix:'',  data:()=>md.cpm,          avgVal:avgCPM,      bom:CPM_BOM,   medio:CPM_MEDIO,   inv:true,  fmt:v=>v!=null?'R$'+v.toFixed(2):null},
   ];
 
   function getColor(m,val){
-    if(val==null) return '#3b82f6';
-    if(m.bom==null) return '#3b82f6';
+    if(val==null||m.bom==null) return '#3b82f6';
     return m.inv
       ?(val<=m.bom?'#059669':val<=m.medio?'#d97706':'#dc2626')
       :(val>=m.bom?'#059669':val>=m.medio?'#d97706':'#dc2626');
