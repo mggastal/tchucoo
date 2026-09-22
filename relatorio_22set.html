@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>tchucoo &middot; Relatório de Migração Wix &rarr; Nuvemshop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<style>
+:root{
+  --bg:#FDFBF8;
+  --paper:#FFFFFF;
+  --ink:#241612;
+  --ink-soft:#7A6B5E;
+  --line:#EAE0D2;
+  --teal:#AB8458;
+  --teal-soft:#F2E9DC;
+  --coral:#5B1318;
+  --coral-soft:#F3E2E1;
+  --gold:#AB8458;
+  --gold-soft:#F2E9DC;
+  --plum:#7A2E32;
+  --shadow:0 1px 2px rgba(36,22,18,.04), 0 8px 24px -12px rgba(36,22,18,.12);
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Inter',sans-serif;
+  -webkit-font-smoothing:antialiased;
+  background-image:radial-gradient(circle at 1px 1px, rgba(36,22,18,.045) 1px, transparent 0);
+  background-size:22px 22px;
+}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px 80px;}
+.mono{font-family:'Baloo 2',sans-serif;}
+.hd{
+  padding:56px 0 32px;
+  display:flex;justify-content:space-between;align-items:flex-end;gap:24px;
+  flex-wrap:wrap;
+}
+.brand{display:flex;align-items:center;}
+.brand-logo{height:42px;width:auto;display:block;}
+h1{
+  font-family:'Baloo 2',sans-serif;
+  font-size:clamp(30px,4.2vw,46px);
+  line-height:1.02;font-weight:700;margin:18px 0 10px;letter-spacing:-0.01em;
+}
+.sub{color:var(--ink-soft);font-size:15px;max-width:600px;line-height:1.5;}
+.migra-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--gold-soft);color:#8A5E12;
+  border:1px solid #EFCE8F;padding:7px 14px;border-radius:99px;
+  font-size:12.5px;font-weight:600;white-space:nowrap;
+}
+.migra-badge svg{width:14px;height:14px;}
+.period{font-family:'Baloo 2',sans-serif;font-weight:500;font-size:12.5px;color:var(--ink-soft);text-align:right;}
+.period b{color:var(--ink);font-weight:500;}
+
+.video-section{margin-bottom:24px;}
+.video-section .section-lead{
+  font-family:'Baloo 2',sans-serif;font-weight:700;font-size:16px;color:var(--gold);
+  margin-bottom:14px;
+}
+.video-frame{
+  position:relative;width:100%;padding-top:56.25%;
+  border-radius:16px;overflow:hidden;background:var(--ink);
+  box-shadow:var(--shadow);border:1px solid var(--line);
+}
+.video-frame iframe{
+  position:absolute;top:0;left:0;width:100%;height:100%;border:0;
+}
+.video-fallback{
+  display:inline-block;margin-top:10px;font-size:12.5px;font-weight:600;
+  color:var(--gold);text-decoration:none;
+}
+.video-fallback:hover{text-decoration:underline;}
+
+.roas-band{
+  display:flex;gap:28px;flex-wrap:wrap;
+  background:var(--paper);border:1px solid var(--line);border-radius:16px;
+  padding:22px 28px;margin-bottom:32px;box-shadow:var(--shadow);
+}
+.roas-item{display:flex;align-items:center;gap:14px;}
+.roas-icon{
+  width:42px;height:42px;border-radius:11px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+}
+.roas-icon svg{width:20px;height:20px;}
+.roas-label{font-size:12px;color:var(--ink-soft);font-weight:500;margin-bottom:2px;}
+.roas-val{font-family:'Baloo 2',sans-serif;font-weight:700;font-size:22px;color:var(--ink);}
+
+/* Tabs */
+.tabs{
+  display:flex;gap:6px;border-bottom:2px solid var(--ink);margin-bottom:36px;
+}
+.tab-btn{
+  font-family:'Baloo 2',sans-serif;font-weight:600;font-size:14.5px;
+  background:none;border:none;cursor:pointer;color:var(--ink-soft);
+  padding:12px 18px;border-radius:10px 10px 0 0;position:relative;top:2px;
+  display:flex;align-items:center;gap:8px;
+}
+.tab-btn svg{width:16px;height:16px;}
+.tab-btn.active{color:var(--ink);background:var(--paper);border:2px solid var(--ink);border-bottom:2px solid var(--paper);}
+.tab-btn:not(.active):hover{color:var(--ink);}
+.tab-count{
+  font-family:'Baloo 2',sans-serif;font-weight:600;font-size:11px;background:var(--teal-soft);color:var(--teal);
+  padding:2px 6px;border-radius:99px;
+}
+.tab-btn.active .tab-count{background:var(--ink);color:#fff;}
+
+.panel{display:none;}
+.panel.active{display:block;}
+
+/* KPI grid */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:40px;}
+
+.comp-subtitle{
+  font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;color:var(--ink-soft);
+  margin-bottom:14px;
+}
+
+.source-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:'Baloo 2',sans-serif;font-weight:700;font-size:12.5px;letter-spacing:.04em;
+  padding:8px 16px;border-radius:99px;margin:34px 0 18px;
+}
+.source-badge:first-child{margin-top:0;}
+.source-badge .dot{width:7px;height:7px;border-radius:50%;}
+.source-badge.wix{background:var(--teal-soft);color:var(--teal);}
+.source-badge.wix .dot{background:var(--teal);}
+.source-badge.nuvemshop{background:#E3ECFB;color:#2E5AAC;}
+.source-badge.nuvemshop .dot{background:#3D6FD1;}
+#kpiGridBase{grid-template-columns:repeat(5,1fr);}
+.kpi{
+  background:var(--paper);border:1px solid var(--line);border-radius:14px;
+  padding:20px 20px 18px;box-shadow:var(--shadow);position:relative;overflow:hidden;
+}
+.kpi::before{content:"";position:absolute;top:0;left:0;width:4px;height:100%;background:var(--accent,var(--teal));}
+.kpi-label{font-size:11.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-soft);font-weight:600;margin-bottom:10px;}
+.kpi-val{font-family:'Baloo 2',sans-serif;font-size:27px;font-weight:700;letter-spacing:-0.01em;}
+.kpi-sub{font-size:12px;color:var(--ink-soft);margin-top:6px;}
+
+.periodo-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.periodo-kpi{
+  background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:16px 18px;
+}
+.periodo-kpi .p-label{font-size:12px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;}
+.periodo-kpi .p-row{display:flex;justify-content:space-between;align-items:baseline;padding:4px 0;font-size:13px;}
+.periodo-kpi .p-row span:first-child{color:var(--ink-soft);}
+.periodo-kpi .p-row span:last-child{font-family:'Baloo 2',sans-serif;font-weight:600;}
+.periodo-kpi .p-highlight{font-family:'Baloo 2',sans-serif;font-size:23px;font-weight:700;margin:2px 0 10px;}
+
+.section-title{font-family:'Baloo 2',sans-serif;font-weight:700;font-size:20px;margin:0 0 4px;display:flex;align-items:center;gap:10px;}
+.section-title .n{
+  font-family:'Baloo 2',sans-serif;font-weight:700;font-size:12px;color:var(--paper);
+  background:var(--ink);width:22px;height:22px;border-radius:6px;
+  display:inline-flex;align-items:center;justify-content:center;font-weight:500;
+}
+.section-desc{color:var(--ink-soft);font-size:13.5px;margin:0 0 18px;}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:24px;box-shadow:var(--shadow);margin-bottom:22px;}
+.grid-2{display:grid;grid-template-columns:1.3fr 1fr;gap:20px;}
+.grid-2b{display:grid;grid-template-columns:1.4fr 1fr;gap:20px;}
+.chart-box{position:relative;}
+
+.alert{
+  display:flex;gap:10px;align-items:flex-start;
+  background:var(--coral-soft);border:1px solid #F3C1C8;color:#8A2C3B;
+  padding:12px 14px;border-radius:10px;font-size:12.5px;line-height:1.5;margin-bottom:18px;
+}
+.alert svg{flex-shrink:0;margin-top:1px;}
+.alert b{font-weight:700;}
+
+table{width:100%;border-collapse:collapse;font-size:13.5px;}
+thead th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft);font-weight:600;padding:0 10px 10px;border-bottom:1px solid var(--line);}
+tbody td{padding:9px 10px;border-bottom:1px solid #F3ECDD;vertical-align:middle;}
+tbody tr:hover{background:#FBF6EE;}
+.num{font-family:'Baloo 2',sans-serif;font-weight:600;text-align:right;white-space:nowrap;}
+.tag{display:inline-block;font-size:10.5px;font-weight:600;padding:3px 8px;border-radius:6px;background:var(--teal-soft);color:var(--teal);white-space:nowrap;}
+.prod-name{font-weight:500;}
+.prod-linha{color:var(--ink-soft);font-size:12px;display:block;margin-top:1px;}
+.rank{font-family:'Baloo 2',sans-serif;color:var(--ink-soft);font-size:12px;width:26px;}
+tfoot td{padding:12px 10px 4px;font-weight:600;border-top:2px solid var(--ink);font-size:13px;}
+.barcell{position:relative;}
+.barcell .bar{position:absolute;left:0;top:50%;transform:translateY(-50%);height:16px;background:var(--teal-soft);border-radius:4px;z-index:0;}
+.barcell span{position:relative;z-index:1;}
+
+.search-bar{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap;}
+.search-bar input, .search-bar select{
+  font-family:'Inter',sans-serif;font-size:13px;
+  border:1px solid var(--line);border-radius:8px;padding:9px 12px;background:#FBF6EE;color:var(--ink);
+}
+.search-bar input{flex:1;min-width:180px;}
+.search-bar input:focus, .search-bar select:focus{outline:2px solid var(--teal);outline-offset:-1px;}
+
+.foot{
+  margin-top:50px;padding-top:22px;border-top:1px solid var(--line);
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;
+  font-size:12px;color:var(--ink-soft);
+}
+
+@media (max-width:860px){
+  .kpis{grid-template-columns:repeat(2,1fr);}
+  #kpiGridBase{grid-template-columns:repeat(2,1fr);}
+  .grid-2, .grid-2b{grid-template-columns:1fr;}
+  .periodo-kpis{grid-template-columns:1fr;}
+  .roas-band{flex-direction:column;gap:16px;}
+  .hd{flex-direction:column;align-items:flex-start;}
+  .period{text-align:left;}
+  .tabs{overflow-x:auto;}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hd">
+    <div>
+      <div class="brand">
+        <img src="data:image/png;base64,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" alt="tchucoo" class="brand-logo">
+      </div>
+      <h1>Relatório de<br>Migração Wix &rarr; Nuvemshop</h1>
+      <p class="sub">Consolidado de vendas e base de contatos extraído do Wix &mdash; referência única para conferir o que precisa ser recriado na Nuvemshop.</p>
+      <span class="migra-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        Wix &rarr; Nuvemshop
+      </span>
+    </div>
+    <div class="period">
+      Exportações nativas do Wix<br>
+      <b>Vendas: 29/08/2025 &ndash; 28/08/2026</b><br>
+      <b>Contatos: 2019 &ndash; 2026 (789 registros)</b>
+    </div>
+  </div>
+
+  <div class="video-section">
+    <div class="section-lead">Apresentação</div>
+    <div class="video-frame">
+      <iframe src="https://drive.google.com/file/d/1ttrhvu5hGlYlHNAME_FKUQ6HhnrnMpCn/preview" allow="autoplay" allowfullscreen loading="lazy"></iframe>
+    </div>
+    <a class="video-fallback" href="https://drive.google.com/file/d/1ttrhvu5hGlYlHNAME_FKUQ6HhnrnMpCn/view?usp=sharing" target="_blank" rel="noopener">Abrir no Google Drive &rarr;</a>
+  </div>
+
+  <div class="roas-band">
+    <div class="roas-item">
+      <div class="roas-icon" style="background:var(--coral-soft);color:var(--coral);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      </div>
+      <div>
+        <div class="roas-label">Investimento (mai&ndash;ago)</div>
+        <div class="roas-val">R$ 2.994,41</div>
+      </div>
+    </div>
+    <div class="roas-item">
+      <div class="roas-icon" style="background:var(--gold-soft);color:var(--gold);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18M7 15l4-5 3 3 5-7"/></svg>
+      </div>
+      <div>
+        <div class="roas-label">Vendas geradas</div>
+        <div class="roas-val">R$ 4.739,00</div>
+      </div>
+    </div>
+    <div class="roas-item">
+      <div class="roas-icon" style="background:var(--teal-soft);color:var(--teal);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+      </div>
+      <div>
+        <div class="roas-label">ROAS</div>
+        <div class="roas-val">1,58x</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="vendas">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18M7 15l4-5 3 3 5-7"/></svg>
+      Vendas por Item <span class="tab-count">66 SKUs</span>
+    </button>
+    <button class="tab-btn" data-tab="base">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Base de Contatos <span class="tab-count">789</span>
+    </button>
+  </div>
+
+  <!-- ===================== PAINEL: VENDAS ===================== -->
+  <div class="panel active" id="panel-vendas">
+
+    <div class="source-badge wix"><span class="dot"></span>WIX &mdash; histórico completo (29/08/2025 &ndash; 28/08/2026)</div>
+
+    <div class="kpis" id="kpiGridVendas"></div>
+
+    <div class="section-title"><span class="n">1</span> Vendas por categoria</div>
+    <p class="section-desc">Receita líquida distribuída entre as famílias de produto do catálogo tchucoo.</p>
+    <div class="card grid-2">
+      <div class="chart-box" style="height:300px;"><canvas id="chartCategoria"></canvas></div>
+      <div class="chart-box" style="height:300px;"><canvas id="chartCategoriaDonut"></canvas></div>
+    </div>
+
+    <div class="section-title"><span class="n">2</span> Top produtos por receita</div>
+    <p class="section-desc">Os 15 itens que mais faturaram no período &mdash; prioridade de reposição na nova loja.</p>
+    <div class="card">
+      <div class="chart-box" style="height:460px;"><canvas id="chartTop"></canvas></div>
+    </div>
+
+    <div class="section-title"><span class="n">3</span> Vendas por linha / estampa</div>
+    <p class="section-desc">Desempenho consolidado por linha de estampa, somando todos os produtos daquela linha (coleira, peitoral, guia, conjunto).</p>
+    <div class="card">
+      <div class="chart-box" style="height:340px;"><canvas id="chartLinha"></canvas></div>
+    </div>
+
+    <div class="section-title"><span class="n">4</span> Catálogo completo &mdash; todos os itens vendidos</div>
+    <p class="section-desc">66 SKUs distintos com pelo menos 1 venda no período. Use a busca para conferir a migração item a item.</p>
+    <div class="card">
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Buscar produto...">
+        <select id="catFilter"><option value="">Todas categorias</option></select>
+      </div>
+      <table id="prodTable">
+        <thead>
+          <tr>
+            <th style="width:26px;">#</th>
+            <th>Produto</th>
+            <th>Categoria</th>
+            <th class="num">Pedidos</th>
+            <th class="num">Qtd.</th>
+            <th class="num">Receita líquida</th>
+            <th class="num">Desconto</th>
+          </tr>
+        </thead>
+        <tbody id="prodBody"></tbody>
+        <tfoot>
+          <tr>
+            <td colspan="3">Total (66 SKUs)</td>
+            <td class="num" id="fPedidos"></td>
+            <td class="num" id="fQtd"></td>
+            <td class="num" id="fReceita"></td>
+            <td class="num" id="fDesconto"></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <div class="section-title"><span class="n">5</span> Vendas recentes &mdash; ritmo por período (Wix)</div>
+    <p class="section-desc">Comparativo dos últimos 30, 90 e 365 dias (a partir de 28/08/2026) &mdash; mostra se as vendas estão acelerando ou desacelerando.</p>
+    <div class="card">
+      <div class="periodo-kpis" id="periodoKpis"></div>
+      <div class="chart-box" style="height:280px; margin-top:22px;"><canvas id="chartPeriodos"></canvas></div>
+    </div>
+
+    <div class="source-badge nuvemshop"><span class="dot"></span>NUVEMSHOP &mdash; últimos 30 dias (23/08 &ndash; 21/09/2026)</div>
+
+    <div class="section-title"><span class="n">6</span> Nuvemshop &mdash; últimos 30 dias</div>
+    <p class="section-desc" id="nuvemshopDesc">Primeiros pedidos registrados na Nuvemshop.</p>
+
+    <div class="roas-band" style="margin-bottom:22px;">
+      <div class="roas-item">
+        <div class="roas-icon" style="background:var(--coral-soft);color:var(--coral);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </div>
+        <div>
+          <div class="roas-label">Investimento (campanhas de vendas)</div>
+          <div class="roas-val" id="nuvemshopInvVal">R$ 898,14</div>
+        </div>
+      </div>
+      <div class="roas-item">
+        <div class="roas-icon" style="background:var(--gold-soft);color:var(--gold);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18M7 15l4-5 3 3 5-7"/></svg>
+        </div>
+        <div>
+          <div class="roas-label">Vendas geradas</div>
+          <div class="roas-val" id="nuvemshopVendasVal"></div>
+        </div>
+      </div>
+      <div class="roas-item">
+        <div class="roas-icon" style="background:#E3ECFB;color:#3D6FD1;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+        </div>
+        <div>
+          <div class="roas-label">ROAS</div>
+          <div class="roas-val" id="nuvemshopRoasVal"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="kpis" id="kpiGridNuvemshop" style="margin-bottom:22px;"></div>
+      <div class="chart-box" style="height:260px;"><canvas id="chartNuvemshopDiario"></canvas></div>
+    </div>
+    <div class="card">
+      <table id="nuvemshopTable">
+        <thead>
+          <tr>
+            <th style="width:60px;">Pedido</th>
+            <th>Data</th>
+            <th>Cliente</th>
+            <th class="num">Qtd.</th>
+            <th class="num">Total</th>
+          </tr>
+        </thead>
+        <tbody id="nuvemshopBody"></tbody>
+      </table>
+    </div>
+
+    <div class="section-title"><span class="n">7</span> Comparativo &mdash; Wix &times; Nuvemshop</div>
+    <p class="section-desc">Faturamento total por período (Wix: últimos 30, 90 e 365 dias &mdash; Nuvemshop: últimos 30 dias) e o ritmo diário de vendas de cada plataforma.</p>
+    <div class="card">
+      <div class="comp-subtitle">Faturamento total por período</div>
+      <div class="chart-box" style="height:280px;"><canvas id="chartFaturamentoComparativo"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="comp-subtitle">Ritmo diário (média de receita por dia)</div>
+      <div class="chart-box" style="height:280px;"><canvas id="chartComparativo"></canvas></div>
+    </div>
+
+  </div>
+
+  <!-- ===================== PAINEL: BASE ===================== -->
+  <div class="panel" id="panel-base">
+
+    <div class="kpis" id="kpiGridBase"></div>
+
+    <div class="section-title"><span class="n">1</span> Completude dos dados para migração</div>
+    <p class="section-desc">Nem todo contato tem os dados mínimos para reimportar como cliente completo na Nuvemshop &mdash; email é universal, telefone e endereço não.</p>
+    <div id="dupAlert"></div>
+    <div class="card grid-2b">
+      <div class="chart-box" style="height:260px;"><canvas id="chartCompletude"></canvas></div>
+      <div class="chart-box" style="height:260px;"><canvas id="chartStatusEmail"></canvas></div>
+    </div>
+
+    <div class="section-title"><span class="n">2</span> Evolução da base ao longo do tempo</div>
+    <p class="section-desc">Novos contatos criados por mês, últimos 15 meses com movimento &mdash; mostra a aceleração recente da base.</p>
+    <div class="card">
+      <div class="chart-box" style="height:280px;"><canvas id="chartTempo"></canvas></div>
+    </div>
+
+    <div class="section-title"><span class="n">3</span> Origem dos contatos</div>
+    <p class="section-desc">De onde vieram os 789 contatos dentro do ecossistema Wix.</p>
+    <div class="card">
+      <div class="chart-box" style="height:220px;"><canvas id="chartFonte"></canvas></div>
+    </div>
+
+    <div class="section-title"><span class="n">4</span> Distribuição geográfica</div>
+    <p class="section-desc">Estados e cidades com endereço cadastrado (<span id="pComEnd"></span> de <span id="pTotal"></span> contatos, <span id="pPct"></span>%).</p>
+    <div class="card grid-2">
+      <div>
+        <div class="chart-box" style="height:340px;"><canvas id="chartEstados"></canvas></div>
+      </div>
+      <div>
+        <table>
+          <thead><tr><th>Cidade</th><th class="num">Contatos</th></tr></thead>
+          <tbody id="cidadesBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="foot">
+    <div>Relatório gerado a partir das exportações nativas do Wix (Vendas por Item e Contacts), previamente à migração para Nuvemshop.</div>
+    <div>Grigoletti Mídias</div>
+  </div>
+
+</div>
+
+<script>
+const DATA_VENDAS = {"kpis": {"receita_liquida": 7097.18, "vendas_brutas": 7515.54, "desconto_total": 418.36, "qtd_total": 119, "pedidos_total": 112, "skus": 66, "ticket_medio_unid": 59.64, "ticket_medio_pedido": 63.37}, "categorias": [{"categoria": "Conjunto Peitoral+Guia", "qtd": 22, "receita": 2044.28, "pedidos": 21}, {"categoria": "Peitoral", "qtd": 21, "receita": 1414.56, "pedidos": 21}, {"categoria": "Coleira de Gato", "qtd": 31, "receita": 1158.85, "pedidos": 30}, {"categoria": "Coleira", "qtd": 22, "receita": 947.02, "pedidos": 19}, {"categoria": "Guia", "qtd": 14, "receita": 862.15, "pedidos": 14}, {"categoria": "Cinto de Seguran\u00e7a", "qtd": 9, "receita": 670.32, "pedidos": 7}], "linhas": [{"linha": "FLORECER", "qtd": 38, "receita": 1996.57}, {"linha": "CIRCUS", "qtd": 10, "receita": 815.07}, {"linha": "SUNNY", "qtd": 10, "receita": 647.17}, {"linha": "CALIF\u00d3RNIA", "qtd": 9, "receita": 528.55}, {"linha": "CORRIDA DE LISTRAS", "qtd": 5, "receita": 359.95}, {"linha": "PARADISE", "qtd": 6, "receita": 331.13}, {"linha": "OCEAN", "qtd": 4, "receita": 265.91}, {"linha": "ECO", "qtd": 4, "receita": 264.29}, {"linha": "TATTOO MARINHEIRO", "qtd": 3, "receita": 239.9}, {"linha": "TECHNO", "qtd": 3, "receita": 233.78}, {"linha": "TATTOO LOVE", "qtd": 3, "receita": 171.98}, {"linha": "HAHAHA", "qtd": 3, "receita": 167.5}, {"linha": "LOVERS", "qtd": 2, "receita": 154.76}, {"linha": "BABY", "qtd": 2, "receita": 123.9}, {"linha": "BLACK", "qtd": 2, "receita": 104.98}, {"linha": "AMARELINDO", "qtd": 2, "receita": 100.78}, {"linha": "Gen\u00e9rica", "qtd": 3, "receita": 96.0}, {"linha": "LAGOON", "qtd": 2, "receita": 93.44}, {"linha": "LOLLA", "qtd": 2, "receita": 90.49}, {"linha": "POA POA", "qtd": 1, "receita": 85.99}, {"linha": "WOODSMAN", "qtd": 2, "receita": 79.98}, {"linha": "LEMON", "qtd": 1, "receita": 59.27}, {"linha": "RUBI", "qtd": 1, "receita": 49.0}, {"linha": "HAPPY", "qtd": 1, "receita": 36.79}], "produtos": [{"nome": "COLEIRA FLORECER", "categoria": "Coleira", "linha": "FLORECER", "pedidos": 12, "qtd": 15, "receita": 635.63, "bruto": 663.56, "desconto": 27.93}, {"nome": "CONJUNTO PEITORAL+ GUIA NEOPRENE CIRCUS", "categoria": "Conjunto Peitoral+Guia", "linha": "CIRCUS", "pedidos": 4, "qtd": 5, "receita": 567.62, "bruto": 615.58, "desconto": 47.96}, {"nome": "PEITORAL H FLORECER", "categoria": "Peitoral", "linha": "FLORECER", "pedidos": 7, "qtd": 7, "receita": 419.89, "bruto": 436.78, "desconto": 16.89}, {"nome": "CINTO DE SEGURAN\u00c7A CORRIDA DE LISTRAS", "categoria": "Cinto de Seguran\u00e7a", "linha": "CORRIDA DE LISTRAS", "pedidos": 2, "qtd": 4, "receita": 319.96, "bruto": 319.96, "desconto": 0.0}, {"nome": "GUIA  FLORECER", "categoria": "Guia", "linha": "FLORECER", "pedidos": 5, "qtd": 5, "receita": 302.45, "bruto": 322.2, "desconto": 19.75}, {"nome": "Peitoral Aerado e Guia Sunny Cat Tchucco \u00danico", "categoria": "Peitoral", "linha": "SUNNY", "pedidos": 2, "qtd": 2, "receita": 215.86, "bruto": 215.86, "desconto": 0.0}, {"nome": "CONJUNTO PEITORAL+ GUIA NEOPRENE CALIF\u00d3RNIA", "categoria": "Conjunto Peitoral+Guia", "linha": "CALIF\u00d3RNIA", "pedidos": 2, "qtd": 2, "receita": 191.88, "bruto": 239.84, "desconto": 47.96}, {"nome": "ADAPTADOR DE CINTO DE SEGURAN\u00c7A FLORECER", "categoria": "Cinto de Seguran\u00e7a", "linha": "FLORECER", "pedidos": 3, "qtd": 3, "receita": 190.38, "bruto": 207.97, "desconto": 17.59}, {"nome": "COLEIRA DE GATO FLORECER", "categoria": "Coleira de Gato", "linha": "FLORECER", "pedidos": 5, "qtd": 5, "receita": 175.98, "bruto": 183.97, "desconto": 7.99}, {"nome": "COLEIRA DE GATO CALIF\u00d3RNIA", "categoria": "Coleira de Gato", "linha": "CALIF\u00d3RNIA", "pedidos": 4, "qtd": 4, "receita": 143.98, "bruto": 159.96, "desconto": 15.98}, {"nome": "CONJUNTO PEITORAL+ GUIA NEOPRENE FLORECER", "categoria": "Conjunto Peitoral+Guia", "linha": "FLORECER", "pedidos": 1, "qtd": 1, "receita": 139.9, "bruto": 139.9, "desconto": 0.0}, {"nome": "GUIA SUNNY", "categoria": "Guia", "linha": "SUNNY", "pedidos": 2, "qtd": 2, "receita": 136.78, "bruto": 136.78, "desconto": 0.0}, {"nome": "CONJUNTO PEITORAL+ GUIA FLORECER", "categoria": "Conjunto Peitoral+Guia", "linha": "FLORECER", "pedidos": 2, "qtd": 2, "receita": 132.34, "bruto": 147.04, "desconto": 14.7}, {"nome": "GUIA  CIRCUS", "categoria": "Guia", "linha": "CIRCUS", "pedidos": 2, "qtd": 2, "receita": 124.63, "bruto": 136.78, "desconto": 12.15}, {"nome": "COLEIRA SUNNY", "categoria": "Coleira", "linha": "SUNNY", "pedidos": 3, "qtd": 3, "receita": 120.22, "bruto": 120.22, "desconto": 0.0}, {"nome": "CONJUNTO PEITORAL+ GUIA NEOPRENE TATTOO MARINHEIRO", "categoria": "Conjunto Peitoral+Guia", "linha": "TATTOO MARINHEIRO", "pedidos": 1, "qtd": 1, "receita": 119.92, "bruto": 119.92, "desconto": 0.0}, {"nome": "CONJUNTO PEITORAL+ GUIA NEOPRENE TECHNO", "categoria": "Conjunto Peitoral+Guia", "linha": "TECHNO", "pedidos": 1, "qtd": 1, "receita": 119.92, "bruto": 119.92, "desconto": 0.0}, {"nome": "COLEIRA DE GATO OCEAN", "categoria": "Coleira de Gato", "linha": "OCEAN", "pedidos": 2, "qtd": 2, "receita": 99.98, "bruto": 99.98, "desconto": 0.0}, {"nome": "COLEIRA DE GATO AZUL", "categoria": "Coleira de Gato", "linha": "Gen\u00e9rica", "pedidos": 3, "qtd": 3, "receita": 96.0, "bruto": 111.98, "desconto": 15.98}, {"nome": "Peitoral Aerado e Guia Lovers Cat Tchucco \u00danico", "categoria": "Peitoral", "linha": "LOVERS", "pedidos": 1, "qtd": 1, "receita": 95.94, "bruto": 119.92, "desconto": 23.98}, {"nome": "CONJUNTO PEITORAL+ GUIA NEOPRENE PARADISE", "categoria": "Conjunto Peitoral+Guia", "linha": "PARADISE", "pedidos": 1, "qtd": 1, "receita": 95.94, "bruto": 119.92, "desconto": 23.98}, {"nome": "CONJUNTO PEITORAL+ GUIA NEOPRENE OCEAN", "categoria": "Conjunto Peitoral+Guia", "linha": "OCEAN", "pedidos": 1, "qtd": 1, "receita": 95.94, "bruto": 95.94, "desconto": 0.0}, {"nome": "CONJUNTO PEITORAL+BABY GIRL", "categoria": "Conjunto Peitoral+Guia", "linha": "BABY", "pedidos": 1, "qtd": 1, "receita": 91.9, "bruto": 91.9, "desconto": 0.0}, {"nome": "CONJUNTO PEITORAL+ GUIA FITA CALIF\u00d3RNIA", "categoria": "Conjunto Peitoral+Guia", "linha": "CALIF\u00d3RNIA", "pedidos": 1, "qtd": 1, "receita": 91.9, "bruto": 91.9, "desconto": 0.0}, {"nome": "PEITORAL H POA POA", "categoria": "Peitoral", "linha": "POA POA", "pedidos": 1, "qtd": 1, "receita": 85.99, "bruto": 85.99, "desconto": 0.0}, {"nome": "CINTO DE SEGURAN\u00c7A TATTOO LOVE", "categoria": "Cinto de Seguran\u00e7a", "linha": "TATTOO LOVE", "pedidos": 1, "qtd": 1, "receita": 79.99, "bruto": 79.99, "desconto": 0.0}, {"nome": "CINTO DE SEGURAN\u00c7A TATTOO MARINHEIRO", "categoria": "Cinto de Seguran\u00e7a", "linha": "TATTOO MARINHEIRO", "pedidos": 1, "qtd": 1, "receita": 79.99, "bruto": 79.99, "desconto": 0.0}, {"nome": "COLEIRA DE GATO WOODSMAN", "categoria": "Coleira de Gato", "linha": "WOODSMAN", "pedidos": 1, "qtd": 2, "receita": 79.98, "bruto": 79.98, "desconto": 0.0}, {"nome": "CONJUNTO PEITORAL+ GUIA FITA HAHAHA", "categoria": "Conjunto Peitoral+Guia", "linha": "HAHAHA", "pedidos": 1, "qtd": 1, "receita": 73.52, "bruto": 73.52, "desconto": 0.0}, {"nome": "CONJUNTO PEITORAL+ GUIA FITA ECO", "categoria": "Conjunto Peitoral+Guia", "linha": "ECO", "pedidos": 1, "qtd": 1, "receita": 73.52, "bruto": 73.52, "desconto": 0.0}, {"nome": "CONJUNTO PEITORAL+ GUIA FITA SUNNY", "categoria": "Conjunto Peitoral+Guia", "linha": "SUNNY", "pedidos": 1, "qtd": 1, "receita": 73.52, "bruto": 73.52, "desconto": 0.0}, {"nome": "COLEIRA DE GATO PARADISE", "categoria": "Coleira de Gato", "linha": "PARADISE", "pedidos": 2, "qtd": 2, "receita": 71.99, "bruto": 79.98, "desconto": 7.99}, {"nome": "GUIA ECO", "categoria": "Guia", "linha": "ECO", "pedidos": 1, "qtd": 1, "receita": 71.99, "bruto": 71.99, "desconto": 0.0}, {"nome": "PEITORAL H OCEAN", "categoria": "Peitoral", "linha": "OCEAN", "pedidos": 1, "qtd": 1, "receita": 69.99, "bruto": 69.99, "desconto": 0.0}, {"nome": "PEITORAL H ECO", "categoria": "Peitoral", "linha": "ECO", "pedidos": 1, "qtd": 1, "receita": 68.79, "bruto": 68.79, "desconto": 0.0}, {"nome": "PEITORAL H SUNNY", "categoria": "Peitoral", "linha": "SUNNY", "pedidos": 1, "qtd": 1, "receita": 68.79, "bruto": 68.79, "desconto": 0.0}, {"nome": "PEITORAL MOLETOM AERADO PARADISE", "categoria": "Peitoral", "linha": "PARADISE", "pedidos": 1, "qtd": 1, "receita": 67.2, "bruto": 83.99, "desconto": 16.79}, {"nome": "PEITORAL H BLACK", "categoria": "Peitoral", "linha": "BLACK", "pedidos": 1, "qtd": 1, "receita": 64.99, "bruto": 64.99, "desconto": 0.0}, {"nome": "COLEIRA DE GATO CIRCUS", "categoria": "Coleira de Gato", "linha": "CIRCUS", "pedidos": 2, "qtd": 2, "receita": 64.0, "bruto": 71.99, "desconto": 7.99}, {"nome": "GUIA AMARELINDO", "categoria": "Guia", "linha": "AMARELINDO", "pedidos": 1, "qtd": 1, "receita": 60.79, "bruto": 60.79, "desconto": 0.0}, {"nome": "COLEIRA TATTOO LOVE", "categoria": "Coleira", "linha": "TATTOO LOVE", "pedidos": 1, "qtd": 1, "receita": 59.99, "bruto": 59.99, "desconto": 0.0}, {"nome": "GUIA LEMON", "categoria": "Guia", "linha": "LEMON", "pedidos": 1, "qtd": 1, "receita": 59.27, "bruto": 59.27, "desconto": 0.0}, {"nome": "CONJUNTO PEITORAL+ GUIA CIRCUS", "categoria": "Conjunto Peitoral+Guia", "linha": "CIRCUS", "pedidos": 1, "qtd": 1, "receita": 58.82, "bruto": 58.82, "desconto": 0.0}, {"nome": "CONJUNTO PEITORAL+ GUIA TECHNO", "categoria": "Conjunto Peitoral+Guia", "linha": "TECHNO", "pedidos": 1, "qtd": 1, "receita": 58.82, "bruto": 58.82, "desconto": 0.0}, {"nome": "CONJUNTO PEITORAL+ GUIA FITA LOVERS", "categoria": "Conjunto Peitoral+Guia", "linha": "LOVERS", "pedidos": 1, "qtd": 1, "receita": 58.82, "bruto": 58.82, "desconto": 0.0}, {"nome": "PEITORAL H LOLLA", "categoria": "Peitoral", "linha": "LOLLA", "pedidos": 1, "qtd": 1, "receita": 58.49, "bruto": 64.99, "desconto": 6.5}, {"nome": "GUIA PARADISE", "categoria": "Guia", "linha": "PARADISE", "pedidos": 1, "qtd": 1, "receita": 57.6, "bruto": 71.99, "desconto": 14.39}, {"nome": "COLEIRA CALIF\u00d3RNIA", "categoria": "Coleira", "linha": "CALIF\u00d3RNIA", "pedidos": 1, "qtd": 1, "receita": 55.99, "bruto": 55.99, "desconto": 0.0}, {"nome": "PEITORAL H TECHNO", "categoria": "Peitoral", "linha": "TECHNO", "pedidos": 1, "qtd": 1, "receita": 55.04, "bruto": 68.79, "desconto": 13.75}, {"nome": "PEITORAL H HAHAHA", "categoria": "Peitoral", "linha": "HAHAHA", "pedidos": 1, "qtd": 1, "receita": 53.99, "bruto": 59.99, "desconto": 6.0}, {"nome": "COLEIRA DE GATO ECO", "categoria": "Coleira de Gato", "linha": "ECO", "pedidos": 1, "qtd": 1, "receita": 49.99, "bruto": 49.99, "desconto": 0.0}, {"nome": "COLEIRA DE GATO RUBI", "categoria": "Coleira de Gato", "linha": "RUBI", "pedidos": 1, "qtd": 1, "receita": 49.0, "bruto": 49.0, "desconto": 0.0}, {"nome": "GUIA LAGOON", "categoria": "Guia", "linha": "LAGOON", "pedidos": 1, "qtd": 1, "receita": 48.64, "bruto": 60.79, "desconto": 12.15}, {"nome": "PEITORAL H LAGOON", "categoria": "Peitoral", "linha": "LAGOON", "pedidos": 1, "qtd": 1, "receita": 44.8, "bruto": 55.99, "desconto": 11.19}, {"nome": "PEITORAL H CALIF\u00d3RNIA", "categoria": "Peitoral", "linha": "CALIF\u00d3RNIA", "pedidos": 1, "qtd": 1, "receita": 44.8, "bruto": 55.99, "desconto": 11.19}, {"nome": "COLEIRA DE GATO TATTOO MARINHEIRO", "categoria": "Coleira de Gato", "linha": "TATTOO MARINHEIRO", "pedidos": 1, "qtd": 1, "receita": 39.99, "bruto": 39.99, "desconto": 0.0}, {"nome": "COLEIRA DE GATO CORRIDA DE LISTRAS", "categoria": "Coleira de Gato", "linha": "CORRIDA DE LISTRAS", "pedidos": 1, "qtd": 1, "receita": 39.99, "bruto": 39.99, "desconto": 0.0}, {"nome": "COLEIRA DE GATO BLACK", "categoria": "Coleira de Gato", "linha": "BLACK", "pedidos": 1, "qtd": 1, "receita": 39.99, "bruto": 39.99, "desconto": 0.0}, {"nome": "COLEIRA DE GATO HAHAHA", "categoria": "Coleira de Gato", "linha": "HAHAHA", "pedidos": 1, "qtd": 1, "receita": 39.99, "bruto": 39.99, "desconto": 0.0}, {"nome": "COLEIRA DE GATO AMARELINDO", "categoria": "Coleira de Gato", "linha": "AMARELINDO", "pedidos": 1, "qtd": 1, "receita": 39.99, "bruto": 39.99, "desconto": 0.0}, {"nome": "COLEIRA PARADISE", "categoria": "Coleira", "linha": "PARADISE", "pedidos": 1, "qtd": 1, "receita": 38.4, "bruto": 47.99, "desconto": 9.59}, {"nome": "COLEIRA HAPPY", "categoria": "Coleira", "linha": "HAPPY", "pedidos": 1, "qtd": 1, "receita": 36.79, "bruto": 36.79, "desconto": 0.0}, {"nome": "COLEIRA DE GATO LOLLA", "categoria": "Coleira de Gato", "linha": "LOLLA", "pedidos": 1, "qtd": 1, "receita": 32.0, "bruto": 39.99, "desconto": 7.99}, {"nome": "COLEIRA DE GATO SUNNY", "categoria": "Coleira de Gato", "linha": "SUNNY", "pedidos": 1, "qtd": 1, "receita": 32.0, "bruto": 32.0, "desconto": 0.0}, {"nome": "COLEIRA DE GATO TATTOO LOVE", "categoria": "Coleira de Gato", "linha": "TATTOO LOVE", "pedidos": 1, "qtd": 1, "receita": 32.0, "bruto": 32.0, "desconto": 0.0}, {"nome": "COLEIRA DE GATO BABY", "categoria": "Coleira de Gato", "linha": "BABY", "pedidos": 1, "qtd": 1, "receita": 32.0, "bruto": 32.0, "desconto": 0.0}]}
+;
+const DATA_NUVEMSHOP = {"kpis": {"receita_total": 2368.62, "qtd_total": 36, "pedidos": 20, "clientes_distintos": 19, "ticket_medio": 118.43, "receita_dia": 78.95, "qtd_dia": 1.2, "dias_observados": 30, "primeira_data": "2026-08-23", "ultima_data": "2026-09-21"}, "serie_diaria": [{"data": "23/08", "receita": 36.79}, {"data": "24/08", "receita": 0.0}, {"data": "25/08", "receita": 0.0}, {"data": "26/08", "receita": 0.0}, {"data": "27/08", "receita": 0.0}, {"data": "28/08", "receita": 0.0}, {"data": "29/08", "receita": 0.0}, {"data": "30/08", "receita": 174.04}, {"data": "31/08", "receita": 0.0}, {"data": "01/09", "receita": 247.83}, {"data": "02/09", "receita": 127.91}, {"data": "03/09", "receita": 151.05}, {"data": "04/09", "receita": 100.78}, {"data": "05/09", "receita": 195.08}, {"data": "06/09", "receita": 0.0}, {"data": "07/09", "receita": 88.03}, {"data": "08/09", "receita": 0.0}, {"data": "09/09", "receita": 0.0}, {"data": "10/09", "receita": 0.0}, {"data": "11/09", "receita": 293.45}, {"data": "12/09", "receita": 135.3}, {"data": "13/09", "receita": 159.32}, {"data": "14/09", "receita": 0.0}, {"data": "15/09", "receita": 217.56}, {"data": "16/09", "receita": 0.0}, {"data": "17/09", "receita": 0.0}, {"data": "18/09", "receita": 132.78}, {"data": "19/09", "receita": 55.98}, {"data": "20/09", "receita": 0.0}, {"data": "21/09", "receita": 252.72}], "pedidos_detalhe": [{"venda": "#109", "data": "2026-08-23", "cliente": "Clara Amorim", "total": 36.79, "qtd": 1}, {"venda": "#110", "data": "2026-08-30", "cliente": "Edelis Dallagnol", "total": 174.04, "qtd": 2}, {"venda": "#111", "data": "2026-09-01", "cliente": "Ligia Conconi", "total": 247.83, "qtd": 2}, {"venda": "#112", "data": "2026-09-02", "cliente": "Paola Pereira Leite", "total": 127.91, "qtd": 1}, {"venda": "#114", "data": "2026-09-03", "cliente": "Gabriela Bossa", "total": 71.07, "qtd": 1}, {"venda": "#113", "data": "2026-09-03", "cliente": "Catarina Fernandez", "total": 79.98, "qtd": 1}, {"venda": "#115", "data": "2026-09-04", "cliente": "Cibele Avendano", "total": 100.78, "qtd": 1}, {"venda": "#117", "data": "2026-09-05", "cliente": "Alberto Gherini", "total": 109.57, "qtd": 2}, {"venda": "#116", "data": "2026-09-05", "cliente": "Leandro De Oliveira", "total": 85.51, "qtd": 1}, {"venda": "#118", "data": "2026-09-07", "cliente": "Amanda Batista Galdino Diniz", "total": 88.03, "qtd": 1}, {"venda": "#120", "data": "2026-09-11", "cliente": "Vinicius Savordelli Troncoso", "total": 81.51, "qtd": 1}, {"venda": "#119", "data": "2026-09-11", "cliente": "Paula Carolina Polakoski", "total": 211.94, "qtd": 5}, {"venda": "#121", "data": "2026-09-12", "cliente": "Gisele Milanezi", "total": 135.3, "qtd": 3}, {"venda": "#123", "data": "2026-09-13", "cliente": "Camila Miranda", "total": 159.32, "qtd": 2}, {"venda": "#124", "data": "2026-09-15", "cliente": "Irene Malvina Gonçalves Gomes", "total": 217.56, "qtd": 4}, {"venda": "#125", "data": "2026-09-18", "cliente": "Camila Quadros De Souza Menezes", "total": 132.78, "qtd": 2}, {"venda": "#126", "data": "2026-09-19", "cliente": "Suzana Niizu", "total": 55.98, "qtd": 1}, {"venda": "#129", "data": "2026-09-21", "cliente": "Jalson Saraiva Dos Santos Silva", "total": 51.98, "qtd": 1}, {"venda": "#128", "data": "2026-09-21", "cliente": "Gabriela Assunção", "total": 96.77, "qtd": 2}, {"venda": "#127", "data": "2026-09-21", "cliente": "Irene Malvina Gonçalves Gomes", "total": 103.97, "qtd": 2}]};
+const DATA_PERIODOS = {"30d": {"kpis": {"receita_liquida": 1006.07, "vendas_brutas": 1006.07, "desconto_total": 0.0, "qtd_total": 19, "skus": 14, "receita_dia": 33.54, "qtd_dia": 0.63}, "categorias": [{"categoria": "Coleira de Gato", "qtd": 7, "receita": 279.93}, {"categoria": "Coleira", "qtd": 6, "receita": 273.54}, {"categoria": "Conjunto Peitoral+Guia", "qtd": 2, "receita": 193.44}, {"categoria": "Peitoral", "qtd": 2, "receita": 137.58}, {"categoria": "Guia", "qtd": 2, "receita": 121.58}], "top_produtos": [{"nome": "COLEIRA FLORECER", "qtd": 5, "receita": 228.75}, {"nome": "CONJUNTO PEITORAL+ GUIA NEOPRENE TATTOO MARINHEIRO", "qtd": 1, "receita": 119.92}, {"nome": "COLEIRA DE GATO WOODSMAN", "qtd": 2, "receita": 79.98}, {"nome": "CONJUNTO PEITORAL+ GUIA FITA HAHAHA", "qtd": 1, "receita": 73.52}, {"nome": "PEITORAL H SUNNY", "qtd": 1, "receita": 68.79}]}, "90d": {"kpis": {"receita_liquida": 4409.91, "vendas_brutas": 4789.07, "desconto_total": 379.16, "qtd_total": 82, "skus": 49, "receita_dia": 49.0, "qtd_dia": 0.91}, "categorias": [{"categoria": "Conjunto Peitoral+Guia", "qtd": 17, "receita": 1440.78}, {"categoria": "Coleira de Gato", "qtd": 27, "receita": 959.88}, {"categoria": "Peitoral", "qtd": 13, "receita": 882.64}, {"categoria": "Coleira", "qtd": 15, "receita": 581.69}, {"categoria": "Guia", "qtd": 9, "receita": 506.52}, {"categoria": "Cinto de Seguran\u00e7a", "qtd": 1, "receita": 38.4}], "top_produtos": [{"nome": "COLEIRA FLORECER", "qtd": 11, "receita": 432.27}, {"nome": "CONJUNTO PEITORAL+ GUIA NEOPRENE CIRCUS", "qtd": 3, "receita": 287.82}, {"nome": "PEITORAL H FLORECER", "qtd": 4, "receita": 221.42}, {"nome": "Peitoral Aerado e Guia Sunny Cat Tchucco \u00danico", "qtd": 2, "receita": 215.86}, {"nome": "CONJUNTO PEITORAL+ GUIA NEOPRENE CALIF\u00d3RNIA", "qtd": 2, "receita": 191.88}]}, "365d": {"kpis": {"receita_liquida": 7097.18, "vendas_brutas": 7515.54, "desconto_total": 418.36, "qtd_total": 119, "skus": 66, "receita_dia": 19.44, "qtd_dia": 0.33}, "categorias": [{"categoria": "Conjunto Peitoral+Guia", "qtd": 22, "receita": 2044.28}, {"categoria": "Peitoral", "qtd": 21, "receita": 1414.56}, {"categoria": "Coleira de Gato", "qtd": 31, "receita": 1158.85}, {"categoria": "Coleira", "qtd": 22, "receita": 947.02}, {"categoria": "Guia", "qtd": 14, "receita": 862.15}, {"categoria": "Cinto de Seguran\u00e7a", "qtd": 9, "receita": 670.32}], "top_produtos": [{"nome": "COLEIRA FLORECER", "qtd": 15, "receita": 635.63}, {"nome": "CONJUNTO PEITORAL+ GUIA NEOPRENE CIRCUS", "qtd": 5, "receita": 567.62}, {"nome": "PEITORAL H FLORECER", "qtd": 7, "receita": 419.89}, {"nome": "CINTO DE SEGURAN\u00c7A CORRIDA DE LISTRAS", "qtd": 4, "receita": 319.96}, {"nome": "GUIA  FLORECER", "qtd": 5, "receita": 302.45}]}}
+;
+const DATA_BASE = {"kpis": {"total_contatos": 789, "com_email": 789, "com_telefone": 484, "com_ambos": 484, "com_endereco": 366, "pct_telefone": 61.3, "pct_endereco": 46.4, "assinantes_ativos": 258, "assinaturas_canceladas": 67, "nunca_assinante": 464, "estados_distintos": 24, "emails_duplicados": 3, "ativos_180d": 75, "pct_ativos_180d": 9.5}, "status_email": [{"status": "Nunca foi assinante", "qtd": 464}, {"status": "Assinou", "qtd": 258}, {"status": "Assinatura cancelada", "qtd": 67}], "fonte": [{"fonte": "Wix Stores", "qtd": 437}, {"fonte": "Formulário", "qtd": 236}, {"fonte": "Membros do site", "qtd": 113}, {"fonte": "Criação manual", "qtd": 3}], "estados": [{"estado": "São Paulo", "qtd": 179}, {"estado": "Rio de Janeiro", "qtd": 33}, {"estado": "Minas Gerais", "qtd": 29}, {"estado": "Rio Grande do Sul", "qtd": 22}, {"estado": "Distrito Federal", "qtd": 18}, {"estado": "Paraná", "qtd": 16}, {"estado": "Bahia", "qtd": 14}, {"estado": "Santa Catarina", "qtd": 9}, {"estado": "Pernambuco", "qtd": 8}, {"estado": "Goiás", "qtd": 5}, {"estado": "Sergipe", "qtd": 4}, {"estado": "Espírito Santo", "qtd": 4}], "cidades": [{"cidade": "São Paulo", "qtd": 93}, {"cidade": "Rio de Janeiro", "qtd": 19}, {"cidade": "Belo Horizonte", "qtd": 18}, {"cidade": "Brasília", "qtd": 16}, {"cidade": "Curitiba", "qtd": 11}, {"cidade": "Campinas", "qtd": 9}, {"cidade": "Porto Alegre", "qtd": 7}, {"cidade": "Florianópolis", "qtd": 7}, {"cidade": "Salvador", "qtd": 6}, {"cidade": "São José dos Campos", "qtd": 4}, {"cidade": "Recife", "qtd": 4}, {"cidade": "Aracaju", "qtd": 4}], "cadastros_mensais": [{"mes": "2025-06", "qtd": 1}, {"mes": "2025-07", "qtd": 3}, {"mes": "2025-08", "qtd": 3}, {"mes": "2025-09", "qtd": 3}, {"mes": "2025-10", "qtd": 5}, {"mes": "2025-11", "qtd": 1}, {"mes": "2025-12", "qtd": 2}, {"mes": "2026-01", "qtd": 7}, {"mes": "2026-02", "qtd": 2}, {"mes": "2026-03", "qtd": 7}, {"mes": "2026-04", "qtd": 7}, {"mes": "2026-05", "qtd": 4}, {"mes": "2026-06", "qtd": 30}, {"mes": "2026-07", "qtd": 14}, {"mes": "2026-08", "qtd": 4}]};
+const PALETTE = ["#AB8458","#5B1318","#7A2E32","#C9A468","#8B5E3C","#3D0E12","#D4BD95","#A85D65"];
+const fmtBRL = v => v.toLocaleString('pt-BR', {style:'currency', currency:'BRL'});
+const fmtInt = v => v.toLocaleString('pt-BR');
+
+Chart.defaults.font.family = "'Inter', sans-serif";
+Chart.defaults.color = "#6B6154";
+
+const barLabelPlugin = {
+  id:'barLabel',
+  afterDatasetsDraw(chart){
+    const {ctx} = chart;
+    chart.data.datasets.forEach((ds, di) => {
+      const meta = chart.getDatasetMeta(di);
+      meta.data.forEach((bar, i) => {
+        const val = ds.data[i];
+        if (val === undefined || val === null) return;
+        ctx.save();
+        ctx.font = "700 11px 'Baloo 2', sans-serif";
+        ctx.fillStyle = "#241C15";
+        const label = ds.fmt ? ds.fmt(val) : val;
+        if (chart.config.options.indexAxis === 'y'){
+          ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+          ctx.fillText(label, bar.x + 8, bar.y);
+        } else {
+          ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
+          ctx.fillText(label, bar.x, bar.y - 6);
+        }
+        ctx.restore();
+      });
+    });
+  }
+};
+
+const pointLabelPlugin = {
+  id:'pointLabel',
+  afterDatasetsDraw(chart){
+    const {ctx} = chart;
+    chart.data.datasets.forEach((ds, di) => {
+      const meta = chart.getDatasetMeta(di);
+      meta.data.forEach((point, i) => {
+        const val = ds.data[i];
+        if (val === undefined || val === null) return;
+        ctx.save();
+        ctx.font = "700 11px 'Baloo 2', sans-serif";
+        ctx.fillStyle = "#241612";
+        ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
+        const label = ds.fmt ? ds.fmt(val) : val;
+        ctx.fillText(label, point.x, point.y - 8);
+        ctx.restore();
+      });
+    });
+  }
+};
+
+/* ============ TABS ============ */
+const tabBtns = document.querySelectorAll('.tab-btn');
+const panels = { vendas: document.getElementById('panel-vendas'), base: document.getElementById('panel-base') };
+let chartsBuilt = { vendas:false, base:false };
+
+tabBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    tabBtns.forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    Object.values(panels).forEach(p=>p.classList.remove('active'));
+    const tab = btn.dataset.tab;
+    panels[tab].classList.add('active');
+    if (tab === 'vendas' && !chartsBuilt.vendas){ buildVendas(); chartsBuilt.vendas = true; }
+    if (tab === 'base' && !chartsBuilt.base){ buildBase(); chartsBuilt.base = true; }
+  });
+});
+
+/* ============ VENDAS ============ */
+function buildVendas(){
+  const k = DATA_VENDAS.kpis;
+  const kpiDefs = [
+    {label:"Receita líquida", val:fmtBRL(k.receita_liquida), sub:"Item Total (pós-desconto)", accent:"var(--teal)"},
+    {label:"Vendas brutas", val:fmtBRL(k.vendas_brutas), sub:`Desconto concedido: ${fmtBRL(k.desconto_total)}`, accent:"var(--coral)"},
+    {label:"Unidades vendidas", val:fmtInt(k.qtd_total), sub:`${k.pedidos_total} pedidos no período`, accent:"var(--gold)"},
+    {label:"Ticket médio", val:fmtBRL(k.ticket_medio_pedido), sub:`${fmtBRL(k.ticket_medio_unid)} por unidade`, accent:"var(--plum)"},
+  ];
+  document.getElementById('kpiGridVendas').innerHTML = kpiDefs.map(d => `
+    <div class="kpi" style="--accent:${d.accent}">
+      <div class="kpi-label">${d.label}</div>
+      <div class="kpi-val">${d.val}</div>
+      <div class="kpi-sub">${d.sub}</div>
+    </div>`).join('');
+
+  new Chart(document.getElementById('chartCategoria'), {
+    type:'bar',
+    data:{
+      labels: DATA_VENDAS.categorias.map(c=>c.categoria),
+      datasets:[{
+        data: DATA_VENDAS.categorias.map(c=>c.receita),
+        backgroundColor: PALETTE, borderRadius:6, barThickness:22,
+        fmt: v => fmtBRL(v),
+      }]
+    },
+    options:{
+      indexAxis:'y', responsive:true, maintainAspectRatio:false,
+      layout:{padding:{right:70}},
+      plugins:{ legend:{display:false}, tooltip:{callbacks:{label:c=>fmtBRL(c.raw)}} },
+      scales:{ x:{display:false, grace:'20%'}, y:{grid:{display:false}, ticks:{font:{size:12}}} }
+    },
+    plugins:[barLabelPlugin]
+  });
+
+  new Chart(document.getElementById('chartCategoriaDonut'), {
+    type:'doughnut',
+    data:{
+      labels: DATA_VENDAS.categorias.map(c=>c.categoria),
+      datasets:[{ data: DATA_VENDAS.categorias.map(c=>c.qtd), backgroundColor: PALETTE, borderColor:'#fff', borderWidth:2 }]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false, cutout:'62%',
+      plugins:{
+        legend:{position:'bottom', labels:{boxWidth:9, boxHeight:9, font:{size:11}, padding:12}},
+        tooltip:{callbacks:{label:c=>`${c.label}: ${c.raw} un.`}}
+      }
+    }
+  });
+
+  const top = DATA_VENDAS.produtos.slice(0,15);
+  new Chart(document.getElementById('chartTop'), {
+    type:'bar',
+    data:{
+      labels: top.map(p => p.nome.length>38 ? p.nome.slice(0,36)+'…' : p.nome),
+      datasets:[{ data: top.map(p=>p.receita), backgroundColor: "#AB8458", borderRadius:5, barThickness:16, fmt: v => fmtBRL(v) }]
+    },
+    options:{
+      indexAxis:'y', responsive:true, maintainAspectRatio:false,
+      layout:{padding:{right:80}},
+      plugins:{ legend:{display:false}, tooltip:{callbacks:{
+        title:(c)=>top[c[0].dataIndex].nome,
+        label:(c)=>`${fmtBRL(c.raw)} · ${top[c.dataIndex].qtd} un. · ${top[c.dataIndex].pedidos} pedidos`
+      }} },
+      scales:{ x:{display:false, grace:'25%'}, y:{grid:{display:false}, ticks:{font:{size:11.5}}} }
+    },
+    plugins:[barLabelPlugin]
+  });
+
+  const linhasSorted = DATA_VENDAS.linhas;
+  new Chart(document.getElementById('chartLinha'), {
+    type:'bar',
+    data:{
+      labels: linhasSorted.map(l=>l.linha),
+      datasets:[{
+        data: linhasSorted.map(l=>l.receita),
+        backgroundColor: linhasSorted.map((_,i)=>PALETTE[i%PALETTE.length]),
+        borderRadius:5, fmt: v => 'R$'+v.toFixed(0),
+      }]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      layout:{padding:{top:24}},
+      plugins:{ legend:{display:false}, tooltip:{callbacks:{label:c=>fmtBRL(c.raw)}} },
+      scales:{
+        x:{grid:{display:false}, ticks:{font:{size:10.5}, maxRotation:55, minRotation:55}},
+        y:{display:false, grace:'20%'}
+      }
+    },
+    plugins:[barLabelPlugin]
+  });
+
+  const catColors = {};
+  DATA_VENDAS.categorias.forEach((c,i)=>catColors[c.categoria]=PALETTE[i%PALETTE.length]);
+
+  function renderTable(list){
+    const body = document.getElementById('prodBody');
+    body.innerHTML = list.map((p,i)=>`
+      <tr>
+        <td class="rank">${i+1}</td>
+        <td><span class="prod-name">${p.nome}</span><span class="prod-linha">Linha: ${p.linha}</span></td>
+        <td><span class="tag" style="background:${catColors[p.categoria]}22; color:${catColors[p.categoria]}">${p.categoria}</span></td>
+        <td class="num">${p.pedidos}</td>
+        <td class="num">${p.qtd}</td>
+        <td class="num">${fmtBRL(p.receita)}</td>
+        <td class="num">${p.desconto>0?fmtBRL(p.desconto):'&mdash;'}</td>
+      </tr>`).join('');
+  }
+  renderTable(DATA_VENDAS.produtos);
+
+  document.getElementById('fPedidos').textContent = fmtInt(k.pedidos_total);
+  document.getElementById('fQtd').textContent = fmtInt(k.qtd_total);
+  document.getElementById('fReceita').textContent = fmtBRL(k.receita_liquida);
+  document.getElementById('fDesconto').textContent = fmtBRL(k.desconto_total);
+
+  const catSelect = document.getElementById('catFilter');
+  DATA_VENDAS.categorias.forEach(c=>{
+    const opt = document.createElement('option');
+    opt.value = c.categoria; opt.textContent = c.categoria;
+    catSelect.appendChild(opt);
+  });
+
+  function applyFilter(){
+    const q = document.getElementById('searchInput').value.trim().toLowerCase();
+    const cat = catSelect.value;
+    const filtered = DATA_VENDAS.produtos.filter(p =>
+      (!q || p.nome.toLowerCase().includes(q) || p.linha.toLowerCase().includes(q)) &&
+      (!cat || p.categoria === cat)
+    );
+    renderTable(filtered);
+  }
+  document.getElementById('searchInput').addEventListener('input', applyFilter);
+  catSelect.addEventListener('change', applyFilter);
+
+  /* ---- Vendas recentes (30/90/365 dias) ---- */
+  const pLabels = {'30d':'Últimos 30 dias', '90d':'Últimos 90 dias', '365d':'Últimos 365 dias'};
+  const pOrder = ['30d','90d','365d'];
+  document.getElementById('periodoKpis').innerHTML = pOrder.map(key => {
+    const p = DATA_PERIODOS[key].kpis;
+    return `
+      <div class="periodo-kpi">
+        <div class="p-label">${pLabels[key]}</div>
+        <div class="p-highlight">${fmtBRL(p.receita_liquida)}</div>
+        <div class="p-row"><span>Média por dia</span><span>${fmtBRL(p.receita_dia)}</span></div>
+        <div class="p-row"><span>Unidades vendidas</span><span>${fmtInt(p.qtd_total)}</span></div>
+        <div class="p-row"><span>SKUs com venda</span><span>${p.skus}</span></div>
+      </div>`;
+  }).join('');
+
+  new Chart(document.getElementById('chartPeriodos'), {
+    type:'bar',
+    data:{
+      labels: pOrder.map(k=>pLabels[k]),
+      datasets:[{
+        data: pOrder.map(k=>DATA_PERIODOS[k].kpis.receita_dia),
+        backgroundColor: ["#5B1318","#AB8458","#D4BD95"],
+        borderRadius:6, barThickness:46,
+        fmt: v => fmtBRL(v)+'/dia',
+      }]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      layout:{padding:{top:24}},
+      plugins:{ legend:{display:false}, tooltip:{callbacks:{label:c=>`Média: ${fmtBRL(c.raw)} por dia`}} },
+      scales:{
+        x:{grid:{display:false}, ticks:{font:{size:12}}},
+        y:{display:false, grace:'25%'}
+      }
+    },
+    plugins:[barLabelPlugin]
+  });
+
+  /* ---- Nuvemshop (últimos 30 dias) ---- */
+  const nk = DATA_NUVEMSHOP.kpis;
+
+  const nuvemInvestimento = 898.14;
+  document.getElementById('nuvemshopVendasVal').textContent = fmtBRL(nk.receita_total);
+  document.getElementById('nuvemshopRoasVal').textContent = (nk.receita_total / nuvemInvestimento).toFixed(2).replace('.',',') + 'x';
+
+  const nuvemKpiDefs = [
+    {label:"Receita total", val:fmtBRL(nk.receita_total), sub:`${nk.pedidos} pedidos em ${nk.dias_observados} dias`, accent:"#3D6FD1"},
+    {label:"Média por dia", val:fmtBRL(nk.receita_dia), sub:`${nk.qtd_dia.toFixed(2)} unid./dia`, accent:"#5B1318"},
+    {label:"Ticket médio", val:fmtBRL(nk.ticket_medio), sub:`${nk.qtd_total} unidades vendidas`, accent:"#AB8458"},
+    {label:"Clientes distintos", val:fmtInt(nk.clientes_distintos), sub:`de ${nk.pedidos} pedidos`, accent:"#7A2E32"},
+  ];
+  document.getElementById('kpiGridNuvemshop').innerHTML = nuvemKpiDefs.map(d => `
+    <div class="kpi" style="--accent:${d.accent}">
+      <div class="kpi-label">${d.label}</div>
+      <div class="kpi-val">${d.val}</div>
+      <div class="kpi-sub">${d.sub}</div>
+    </div>`).join('');
+
+  const [dd, dm, dy] = [nk.primeira_data, nk.ultima_data];
+  const fmtDataBR = iso => { const [y,m,d] = iso.split('-'); return `${d}/${m}/${y}`; };
+  const janelaTxt = nk.dias_observados >= 30
+    ? `primeiros 30 dias completos de operação na Nuvemshop`
+    : `${nk.dias_observados} de 30 dias &mdash; a janela ainda está se completando e os números vão ficar mais representativos conforme mais dias forem acumulados`;
+  document.getElementById('nuvemshopDesc').innerHTML =
+    `Primeiros pedidos registrados na Nuvemshop: <b>${nk.pedidos} pedidos</b> entre ${fmtDataBR(nk.primeira_data)} e ${fmtDataBR(nk.ultima_data)} (${janelaTxt}).`;
+
+  new Chart(document.getElementById('chartNuvemshopDiario'), {
+    type:'bar',
+    data:{
+      labels: DATA_NUVEMSHOP.serie_diaria.map(d=>d.data),
+      datasets:[{
+        data: DATA_NUVEMSHOP.serie_diaria.map(d=>d.receita),
+        backgroundColor: "#3D6FD1", borderRadius:4, barThickness:14,
+      }]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{display:false}, tooltip:{callbacks:{label:c=>c.raw>0?fmtBRL(c.raw):'Sem vendas'}} },
+      scales:{
+        x:{grid:{display:false}, ticks:{font:{size:10}, maxRotation:0}},
+        y:{grid:{color:'#EAE0CF'}, beginAtZero:true, ticks:{font:{size:11}}}
+      }
+    }
+  });
+
+  document.getElementById('nuvemshopBody').innerHTML = DATA_NUVEMSHOP.pedidos_detalhe.slice().reverse().map(p => `
+    <tr>
+      <td>${p.venda}</td>
+      <td>${fmtDataBR(p.data)}</td>
+      <td>${p.cliente}</td>
+      <td class="num">${p.qtd}</td>
+      <td class="num">${fmtBRL(p.total)}</td>
+    </tr>`).join('');
+
+  /* ---- Comparativo Wix x Nuvemshop ---- */
+  new Chart(document.getElementById('chartFaturamentoComparativo'), {
+    type:'bar',
+    data:{
+      labels: [['Wix','30 dias'], ['Wix','90 dias'], ['Wix','365 dias'], ['Nuvemshop','30 dias']],
+      datasets:[{
+        data: [
+          DATA_PERIODOS['30d'].kpis.receita_liquida,
+          DATA_PERIODOS['90d'].kpis.receita_liquida,
+          DATA_PERIODOS['365d'].kpis.receita_liquida,
+          nk.receita_total
+        ],
+        backgroundColor: ["#AB8458","#AB8458","#AB8458","#3D6FD1"],
+        borderRadius:6, barThickness:56,
+        fmt: v => fmtBRL(v),
+      }]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      layout:{padding:{top:24}},
+      plugins:{ legend:{display:false}, tooltip:{callbacks:{label:c=>`Faturamento: ${fmtBRL(c.raw)}`}} },
+      scales:{
+        x:{grid:{display:false}, ticks:{font:{size:12}}},
+        y:{display:false, grace:'25%'}
+      }
+    },
+    plugins:[barLabelPlugin]
+  });
+
+  new Chart(document.getElementById('chartComparativo'), {
+    type:'bar',
+    data:{
+      labels: ['Wix (últimos 30 dias)', 'Nuvemshop (últimos 30 dias)'],
+      datasets:[
+        {
+          label:'Receita média/dia',
+          data: [DATA_PERIODOS['30d'].kpis.receita_dia, nk.receita_dia],
+          backgroundColor: ["#AB8458","#3D6FD1"],
+          borderRadius:6, barThickness:56,
+          fmt: v => fmtBRL(v)+'/dia',
+        }
+      ]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      layout:{padding:{top:24}},
+      plugins:{ legend:{display:false}, tooltip:{callbacks:{label:c=>`Média: ${fmtBRL(c.raw)} por dia`}} },
+      scales:{
+        x:{grid:{display:false}, ticks:{font:{size:12.5}}},
+        y:{display:false, grace:'25%'}
+      }
+    },
+    plugins:[barLabelPlugin]
+  });
+}
+
+/* ============ BASE ============ */
+function buildBase(){
+  const k = DATA_BASE.kpis;
+  const kpiDefs = [
+    {label:"Total de contatos", val:fmtInt(k.total_contatos), sub:"Base exportada do Wix", accent:"var(--teal)"},
+    {label:"Ativos (180 dias)", val:fmtInt(k.ativos_180d), sub:`${k.pct_ativos_180d}% da base com atividade recente`, accent:"var(--coral)"},
+    {label:"Com telefone", val:`${k.pct_telefone}%`, sub:`${fmtInt(k.com_telefone)} de ${fmtInt(k.total_contatos)} contatos`, accent:"var(--gold)"},
+    {label:"Assinantes ativos de email", val:fmtInt(k.assinantes_ativos), sub:`${fmtInt(k.assinaturas_canceladas)} cancelaram a assinatura`, accent:"var(--plum)"},
+    {label:"Estados representados", val:k.estados_distintos, sub:`${k.emails_duplicados} emails duplicados na base`, accent:"var(--teal)"},
+  ];
+  document.getElementById('kpiGridBase').innerHTML = kpiDefs.map(d => `
+    <div class="kpi" style="--accent:${d.accent}">
+      <div class="kpi-label">${d.label}</div>
+      <div class="kpi-val">${d.val}</div>
+      <div class="kpi-sub">${d.sub}</div>
+    </div>`).join('');
+
+  if (k.emails_duplicados > 0){
+    document.getElementById('dupAlert').innerHTML = `
+      <div class="alert">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>
+        <div><b>${k.emails_duplicados} emails duplicados</b> identificados na exportação &mdash; vale revisar antes de reimportar na Nuvemshop para evitar contatos repetidos.</div>
+      </div>`;
+  }
+
+  document.getElementById('pComEnd').textContent = fmtInt(k.com_endereco);
+  document.getElementById('pTotal').textContent = fmtInt(k.total_contatos);
+  document.getElementById('pPct').textContent = k.pct_endereco;
+
+  new Chart(document.getElementById('chartCompletude'), {
+    type:'bar',
+    data:{
+      labels:['Com email','Com telefone','Com endereço'],
+      datasets:[{
+        data:[k.com_email, k.com_telefone, k.com_endereco],
+        backgroundColor:["#AB8458","#5B1318","#C9A468"],
+        borderRadius:6, barThickness:26,
+        fmt: v => fmtInt(v)+' ('+Math.round(v/k.total_contatos*100)+'%)'
+      }]
+    },
+    options:{
+      indexAxis:'y', responsive:true, maintainAspectRatio:false,
+      layout:{padding:{right:90}},
+      plugins:{legend:{display:false}},
+      scales:{ x:{display:false, max:k.total_contatos*1.15}, y:{grid:{display:false}} }
+    },
+    plugins:[barLabelPlugin]
+  });
+
+  new Chart(document.getElementById('chartStatusEmail'), {
+    type:'doughnut',
+    data:{
+      labels: DATA_BASE.status_email.map(s=>s.status),
+      datasets:[{ data: DATA_BASE.status_email.map(s=>s.qtd), backgroundColor: ["#DDD2BE","#AB8458","#5B1318"], borderColor:'#fff', borderWidth:2 }]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false, cutout:'62%',
+      plugins:{
+        legend:{position:'bottom', labels:{boxWidth:9, boxHeight:9, font:{size:11}, padding:12}},
+        tooltip:{callbacks:{label:c=>`${c.label}: ${c.raw} (${Math.round(c.raw/k.total_contatos*100)}%)`}}
+      }
+    }
+  });
+
+  const mesesPt = {1:'jan',2:'fev',3:'mar',4:'abr',5:'mai',6:'jun',7:'jul',8:'ago',9:'set',10:'out',11:'nov',12:'dez'};
+  const tempoLabels = DATA_BASE.cadastros_mensais.map(m=>{
+    const [y,mo] = m.mes.split('-');
+    return mesesPt[parseInt(mo)]+'/'+y.slice(2);
+  });
+  new Chart(document.getElementById('chartTempo'), {
+    type:'line',
+    data:{
+      labels: tempoLabels,
+      datasets:[{
+        data: DATA_BASE.cadastros_mensais.map(m=>m.qtd),
+        borderColor:"#AB8458", backgroundColor:"rgba(171,132,88,0.14)",
+        fill:true, tension:.35, pointRadius:4, pointBackgroundColor:"#AB8458",
+        pointBorderColor:'#fff', pointBorderWidth:2,
+        fmt: v => fmtInt(v),
+      }]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      layout:{padding:{top:22}},
+      plugins:{ legend:{display:false}, tooltip:{callbacks:{label:c=>`${c.raw} novos contatos`}} },
+      scales:{
+        x:{grid:{display:false}, ticks:{font:{size:11}}},
+        y:{grid:{color:'#EAE0CF'}, beginAtZero:true, ticks:{font:{size:11}}, grace:'15%'}
+      }
+    },
+    plugins:[pointLabelPlugin]
+  });
+
+  new Chart(document.getElementById('chartFonte'), {
+    type:'bar',
+    data:{
+      labels: DATA_BASE.fonte.map(f=>f.fonte),
+      datasets:[{
+        data: DATA_BASE.fonte.map(f=>f.qtd),
+        backgroundColor: ["#AB8458","#5B1318","#C9A468","#7A2E32"],
+        borderRadius:6, barThickness:26, fmt: v => fmtInt(v)
+      }]
+    },
+    options:{
+      indexAxis:'y', responsive:true, maintainAspectRatio:false,
+      layout:{padding:{right:60}},
+      plugins:{legend:{display:false}},
+      scales:{ x:{display:false, grace:'20%'}, y:{grid:{display:false}} }
+    },
+    plugins:[barLabelPlugin]
+  });
+
+  new Chart(document.getElementById('chartEstados'), {
+    type:'bar',
+    data:{
+      labels: DATA_BASE.estados.map(e=>e.estado),
+      datasets:[{
+        data: DATA_BASE.estados.map(e=>e.qtd),
+        backgroundColor: "#AB8458", borderRadius:5, barThickness:16, fmt: v => fmtInt(v)
+      }]
+    },
+    options:{
+      indexAxis:'y', responsive:true, maintainAspectRatio:false,
+      layout:{padding:{right:40}},
+      plugins:{legend:{display:false}},
+      scales:{ x:{display:false, grace:'20%'}, y:{grid:{display:false}, ticks:{font:{size:11.5}}} }
+    },
+    plugins:[barLabelPlugin]
+  });
+
+  const maxCidade = Math.max(...DATA_BASE.cidades.map(c=>c.qtd));
+  document.getElementById('cidadesBody').innerHTML = DATA_BASE.cidades.map(c=>`
+    <tr>
+      <td class="barcell"><div class="bar" style="width:${(c.qtd/maxCidade*100).toFixed(0)}%"></div><span>${c.cidade}</span></td>
+      <td class="num">${c.qtd}</td>
+    </tr>`).join('');
+}
+
+/* init first tab */
+buildVendas();
+chartsBuilt.vendas = true;
+</script>
+</body>
+</html>
