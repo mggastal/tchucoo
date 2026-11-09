@@ -1,12 +1,14 @@
 {
   "cliente": "Tchucoo",
-  "cor": "#AD96DC",
+  "cor": "#AB8458",
   "letra": "TC",
   "lancamento": "",
   "atualizado": "09/11/2026",
   "kpis": {
-    "spend": 8806.15,
-    "purchase": 70,
-    "cpv": 125.8
+    "spend": 4421.07,
+    "purchase": 101,
+    "cpv": 43.77,
+    "faturamento": 10729.04,
+    "roas": 2.43
   }
 }

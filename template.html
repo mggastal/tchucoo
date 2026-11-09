@@ -1,0 +1,580 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>tchucoo · Painel de Vendas</title>
+<link rel="icon" href="logo_dourado.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Montserrat:wght@300;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"></script>
+<style>
+:root{
+  --bg:#FDFBF8; --paper:#FFFFFF; --ink:#241612; --ink2:#5E5047; --muted:#8C7D71; --line:#EDE4D8;
+  --gold:#AB8458; --gold-soft:#F4ECE1; --maroon:#5B1318; --maroon-soft:#F5E6E6;
+  --fat:#C4893A; --inv:#8E2F38; --good:#2F7D4F; --bad:#B03A2E;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif;font-size:14px;line-height:1.45}
+.num,.kv,.big{font-family:'Baloo 2',Inter,sans-serif}
+header.top{background:var(--paper);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
+.top-in{max-width:1320px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.top-in img{height:30px}
+.top-tt{display:flex;flex-direction:column}
+.top-tt b{font-family:'Baloo 2';font-size:18px;font-weight:600;color:var(--maroon);line-height:1}
+.top-tt span{font-size:11.5px;color:var(--muted)}
+.ctrl{margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.seg{display:flex;background:var(--gold-soft);border-radius:9px;padding:3px;flex-wrap:wrap}
+.seg button{border:0;background:transparent;font:600 12px Inter;color:var(--ink2);padding:6px 10px;border-radius:7px;cursor:pointer;white-space:nowrap}
+.seg button.on{background:var(--paper);color:var(--maroon);box-shadow:0 1px 3px rgba(60,30,10,.12)}
+.dr{display:flex;align-items:center;gap:4px;font-size:12px;color:var(--muted)}
+.dr input{font:500 12px Inter;border:1px solid var(--line);border-radius:7px;padding:5px 6px;color:var(--ink);background:var(--paper)}
+.btn{border:1px solid var(--line);background:var(--paper);font:600 12px Inter;color:var(--ink2);padding:7px 11px;border-radius:8px;cursor:pointer}
+.btn:hover{border-color:var(--gold);color:var(--maroon)}
+nav.tabs{max-width:1320px;margin:0 auto;padding:0 20px;display:flex;gap:4px;overflow-x:auto}
+nav.tabs a{font:600 12.5px Inter;color:var(--muted);text-decoration:none;padding:9px 12px;border-bottom:2px solid transparent;white-space:nowrap}
+nav.tabs a:hover{color:var(--maroon);border-color:var(--gold)}
+main{max-width:1320px;margin:0 auto;padding:18px 20px 40px}
+section{margin-bottom:30px;scroll-margin-top:118px}
+h2{font-family:'Baloo 2';font-size:21px;font-weight:600;color:var(--maroon);margin-bottom:2px}
+.sub{color:var(--muted);font-size:12.5px;margin-bottom:12px}
+.periodo{font-size:13px;color:var(--ink2);margin-bottom:12px}
+.periodo b{color:var(--maroon)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.kpi{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.kpi .kl{font-size:11.5px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.kpi .kv{font-size:27px;font-weight:600;line-height:1.15;margin-top:4px;color:var(--ink)}
+.kpi.hl{background:var(--maroon);border-color:var(--maroon)}
+.kpi.hl .kl{color:#E7C9A6}.kpi.hl .kv{color:#fff}.kpi.hl .kd{color:#F1DCC2}
+.kd{font-size:11.5px;color:var(--muted);margin-top:2px}
+.up{color:var(--good);font-weight:600}.dn{color:var(--bad);font-weight:600}
+.kpi.hl .up{color:#BDE8C9}.kpi.hl .dn{color:#FFC2B8}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:14px 16px;min-width:0}
+.card h3{font-size:13.5px;font-weight:700;margin-bottom:2px;display:flex;align-items:center;gap:8px}
+.card .ch{font-size:11.5px;color:var(--muted);margin-bottom:8px}
+.lbl-t{margin-left:auto;font:600 10.5px Inter;border:1px solid var(--line);background:var(--bg);color:var(--muted);padding:2px 7px;border-radius:6px;cursor:pointer}
+.lbl-t.on{color:var(--maroon);border-color:var(--gold)}
+.cv{position:relative;height:260px}
+.cv.sm{height:200px}
+.legend{display:flex;gap:14px;font-size:11.5px;color:var(--ink2);margin-bottom:6px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.tw{overflow:auto;max-height:470px;border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;font-size:12.5px}
+th{position:sticky;top:0;background:var(--gold-soft);color:var(--ink2);font-weight:600;text-align:right;padding:7px 9px;white-space:nowrap;cursor:pointer;user-select:none;z-index:1}
+th:first-child,td:first-child{text-align:left}
+th.l,td.l{text-align:left}
+th.sorted::after{content:' ▾';color:var(--gold)}th.sorted.asc::after{content:' ▴'}
+td{padding:6px 9px;border-top:1px solid var(--line);text-align:right;white-space:nowrap}
+td.wrap{white-space:normal;min-width:220px;color:var(--ink2);font-size:11.5px}
+tr.tot td{font-weight:700;background:var(--bg)}
+tbody tr:hover td{background:#FBF6EF}
+.insights{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px}
+.ins{background:var(--gold-soft);border-radius:12px;padding:12px 14px}
+.ins .kl{font-size:11px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.05em}
+.ins .big{font-size:22px;font-weight:600;color:var(--maroon);line-height:1.2}
+.ins .kd{color:var(--ink2)}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.chip{border:1px solid var(--line);background:var(--paper);font:600 11.5px Inter;color:var(--ink2);padding:4px 10px;border-radius:20px;cursor:pointer}
+.chip.on{background:var(--maroon);color:#fff;border-color:var(--maroon)}
+.heat td,.heat th{padding:0;text-align:center;font-size:10.5px;cursor:default}
+.heat th{background:transparent;color:var(--muted);font-weight:600;padding:3px 0;position:static}
+.heat td{border:2px solid var(--paper);height:30px;min-width:28px;border-radius:6px;color:var(--ink)}
+.heat td.dl{text-align:right;padding-right:8px;font-weight:600;color:var(--ink2);border:0;background:none!important}
+.funil{display:flex;flex-direction:column;gap:6px}
+.fs{display:grid;grid-template-columns:190px 1fr 150px;align-items:center;gap:10px}
+.fs .fn{font-size:12.5px;font-weight:600;color:var(--ink2)}
+.fs .fb{height:30px;background:var(--gold-soft);border-radius:7px;overflow:hidden}
+.fs .fb div{height:100%;background:var(--fat);border-radius:7px;display:flex;align-items:center;padding-left:10px;color:#fff;font:600 13px 'Baloo 2';min-width:fit-content;padding-right:10px}
+.fs.real .fb div{background:var(--maroon)}
+.fs .fr{font-size:11.5px;color:var(--muted)}
+.fs .fr b{color:var(--ink);font-weight:600}
+.nota{font-size:12px;color:var(--ink2);background:var(--bg);border:1px dashed var(--line);border-radius:10px;padding:9px 12px;margin-top:10px}
+.thumb{width:38px;height:38px;object-fit:cover;border-radius:6px;vertical-align:middle;background:var(--gold-soft)}
+.search{font:500 12.5px Inter;border:1px solid var(--line);border-radius:8px;padding:7px 10px;width:260px;margin-bottom:8px}
+.tag{display:inline-block;font-size:10.5px;font-weight:600;padding:1px 7px;border-radius:10px;background:var(--gold-soft);color:var(--gold)}
+.tag.v{background:var(--maroon-soft);color:var(--maroon)}
+footer{border-top:1px solid var(--line);padding:22px 20px;text-align:center;font-size:11px;color:var(--muted)}
+.gm{font-family:Montserrat,sans-serif;font-size:13px;margin-top:4px}
+.gm b{font-weight:800;color:#E07832;letter-spacing:.28em}
+.gm span{font-weight:300;color:#192638;letter-spacing:.12em}
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:9px 16px;border-radius:9px;font-size:12.5px;opacity:0;transition:.2s;pointer-events:none;z-index:50}
+#toast.on{opacity:1}
+@media (max-width:1000px){.kpis{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}.insights{grid-template-columns:1fr}.fs{grid-template-columns:120px 1fr}.fs .fr{grid-column:2}}
+@media (max-width:640px){header.top{position:static}section{scroll-margin-top:10px}.top-in,main,nav.tabs{padding-left:16px;padding-right:16px}.ctrl{margin-left:0}.kpi .kv{font-size:22px}.search{width:100%}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-in">
+    <img src="logo_dourado.png" alt="tchucoo">
+    <div class="top-tt"><b>Painel de Vendas</b><span id="atualizado"></span></div>
+    <div class="ctrl">
+      <div class="seg" id="presets"></div>
+      <div class="dr"><input type="date" id="dIni"> a <input type="date" id="dFim"></div>
+      <div class="seg" id="modoInv" title="Qual investimento entra no ROAS">
+        <button data-m="vendas" class="on">Invest. vendas</button><button data-m="todas">Todas campanhas</button>
+      </div>
+      <button class="btn" id="btnWpp">Copiar resumo p/ WhatsApp</button>
+    </div>
+  </div>
+  <nav class="tabs">
+    <a href="#geral">Visão geral</a><a href="#diario">Diário</a><a href="#periodos">Semanas e meses</a>
+    <a href="#horarios">Horários</a><a href="#funil">Funil</a><a href="#produtos">Produtos</a>
+    <a href="#campanhas">Campanhas</a><a href="#pedidos">Pedidos</a>
+  </nav>
+</header>
+
+<main>
+<section id="geral">
+  <h2>Visão geral</h2>
+  <div class="periodo" id="periodoTxt"></div>
+  <div class="kpis" id="kpis"></div>
+</section>
+
+<section id="diario">
+  <h2>Dia a dia</h2>
+  <div class="sub">Faturamento da Nuvemshop contra o investimento no Meta, dia a dia, no período escolhido.</div>
+  <div class="grid2">
+    <div class="card"><h3>Faturamento × investimento</h3>
+      <div class="legend"><span><i style="background:var(--fat)"></i>Faturamento</span><span><i style="background:var(--inv)"></i>Investimento</span></div>
+      <div class="cv"><canvas id="cDia"></canvas></div></div>
+    <div class="card"><h3>ROAS diário</h3><div class="ch">Faturamento do dia ÷ investimento do dia</div>
+      <div class="cv"><canvas id="cRoas"></canvas></div></div>
+    <div class="card"><h3>Ticket médio diário</h3><div class="ch">Faturamento ÷ pedidos do dia</div>
+      <div class="cv sm"><canvas id="cTicket"></canvas></div></div>
+    <div class="card"><h3>Pedidos por dia</h3><div class="ch">Pedidos pagos na Nuvemshop</div>
+      <div class="cv sm"><canvas id="cPed"></canvas></div></div>
+  </div>
+  <div class="card" style="margin-top:14px"><h3>Tabela diária</h3><div class="ch">Clique no cabeçalho para ordenar</div>
+    <div class="tw"><table id="tDia"></table></div></div>
+</section>
+
+<section id="periodos">
+  <h2>Semanas e meses</h2>
+  <div class="sub">Histórico completo desde a 1ª venda (30/08), independente do filtro. Semanas de segunda a domingo.</div>
+  <div class="grid2">
+    <div class="card"><h3>Faturamento × investimento por mês</h3>
+      <div class="legend"><span><i style="background:var(--fat)"></i>Faturamento</span><span><i style="background:var(--inv)"></i>Investimento</span></div>
+      <div class="cv"><canvas id="cMes"></canvas></div></div>
+    <div class="card"><h3>Faturamento × investimento por semana</h3>
+      <div class="legend"><span><i style="background:var(--fat)"></i>Faturamento</span><span><i style="background:var(--inv)"></i>Investimento</span></div>
+      <div class="cv"><canvas id="cSem"></canvas></div></div>
+  </div>
+  <div class="card" style="margin-top:14px"><h3>Mensal</h3><div class="tw"><table id="tMes"></table></div></div>
+  <div class="card" style="margin-top:14px"><h3>Semanal</h3><div class="tw" style="max-height:360px"><table id="tSem"></table></div></div>
+</section>
+
+<section id="horarios">
+  <h2>Horários e dias da semana</h2>
+  <div class="sub">Quando a tchucoo vende, no período escolhido. Hora do pedido na Nuvemshop.</div>
+  <div class="insights" id="insights"></div>
+  <div class="grid2">
+    <div class="card"><h3>Faturamento por dia da semana</h3><div class="ch">Total no período</div>
+      <div class="cv"><canvas id="cSemana"></canvas></div></div>
+    <div class="card"><h3>Pedidos por horário</h3><div class="ch">Escolha um dia para ver os melhores horários dele</div>
+      <div class="chips" id="chipsDia"></div>
+      <div class="cv" style="height:224px"><canvas id="cHora"></canvas></div></div>
+  </div>
+  <div class="card" style="margin-top:14px"><h3>Mapa de calor: dia × horário</h3>
+    <div class="chips" id="chipsHeat"><button class="chip on" data-m="ped">Pedidos</button><button class="chip" data-m="fat">Faturamento</button></div>
+    <div style="overflow-x:auto"><table class="heat" id="heat"></table></div></div>
+  <div class="card" style="margin-top:14px"><h3>Resumo por dia da semana</h3>
+    <div class="tw"><table id="tSemana"></table></div></div>
+</section>
+
+<section id="funil">
+  <h2>Funil</h2>
+  <div class="sub">Etapas do Meta Ads até a venda. A última etapa é a venda real da Nuvemshop, não a compra do Pixel.</div>
+  <div class="card"><div class="funil" id="funilBox"></div>
+    <div class="nota" id="funilNota"></div></div>
+</section>
+
+<section id="produtos">
+  <h2>Produtos</h2>
+  <div class="sub" id="prodCob"></div>
+  <div class="grid2">
+    <div class="card"><h3>Faturamento por tipo de produto</h3><div class="cv"><canvas id="cTipo"></canvas></div></div>
+    <div class="card"><h3>Mais vendidos</h3><div class="tw" style="max-height:290px"><table id="tProd"></table></div></div>
+  </div>
+</section>
+
+<section id="campanhas">
+  <h2>Campanhas e anúncios</h2>
+  <div class="sub">Métricas do Meta no período. "Compras Pixel" é o que o Meta registrou e costuma ficar abaixo das vendas reais.</div>
+  <div class="card"><h3>Campanhas</h3><div class="tw"><table id="tCamp"></table></div></div>
+  <div class="card" style="margin-top:14px"><h3>Anúncios</h3><div class="tw"><table id="tAds"></table></div></div>
+</section>
+
+<section id="pedidos">
+  <h2>Pedidos</h2>
+  <div class="sub" id="pedSub"></div>
+  <input class="search" id="busca" placeholder="Buscar pedido, cliente ou produto">
+  <div class="tw"><table id="tPed"></table></div>
+  <div class="nota" id="foraTxt"></div>
+</section>
+</main>
+
+<footer>
+  Vendas: pedidos pagos da Nuvemshop. Investimento: Meta Ads.<br>
+  <div style="margin-top:8px">Desenvolvido por</div>
+  <div class="gm"><b>GRIGOLETTI</b> <span>MÍDIAS</span></div>
+</footer>
+<div id="toast"></div>
+
+<script>
+const D = /*__DADOS__*/null;
+Chart.register(ChartDataLabels);
+Chart.defaults.font.family = 'Inter, sans-serif';
+Chart.defaults.font.size = 11;
+Chart.defaults.color = '#8C7D71';
+Chart.defaults.plugins.legend.display = false;
+Chart.defaults.plugins.datalabels.display = false;
+Chart.defaults.interaction = {mode:'index', intersect:false};
+Chart.defaults.plugins.tooltip.backgroundColor = '#241612';
+Chart.defaults.plugins.tooltip.padding = 9;
+Chart.defaults.maintainAspectRatio = false;
+
+const C = {fat:'#C4893A', inv:'#8E2F38', grid:'#F1EAE0', maroon:'#5B1318', gold:'#AB8458'};
+const DIAS = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+const DIAS_L = ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'];
+const ORD_SEM = [1,2,3,4,5,6,0];
+const MESES = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+
+// ── formatação ──
+const brl = v => 'R$ ' + (v||0).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+const brl0 = v => 'R$ ' + Math.round(v||0).toLocaleString('pt-BR');
+const kfmt = v => Math.abs(v)>=1000 ? (v/1000).toLocaleString('pt-BR',{maximumFractionDigits:1})+'k' : Math.round(v).toLocaleString('pt-BR');
+const n0 = v => (v||0).toLocaleString('pt-BR');
+const xr = v => v==null||!isFinite(v) ? '–' : v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})+'x';
+const pct = v => v==null||!isFinite(v) ? '–' : v.toLocaleString('pt-BR',{maximumFractionDigits:1})+'%';
+const dBR = s => s.slice(8,10)+'/'+s.slice(5,7);
+const div = (a,b) => b ? a/b : null;
+
+// ── datas ──
+const iso = d => d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+const pd = s => new Date(+s.slice(0,4), +s.slice(5,7)-1, +s.slice(8,10));
+const addD = (s,n) => { const d=pd(s); d.setDate(d.getDate()+n); return iso(d); };
+const nDias = (a,b) => Math.round((pd(b)-pd(a))/864e5)+1;
+function diasEntre(a,b){ const r=[]; for(let s=a; s<=b; s=addD(s,1)) r.push(s); return r; }
+const segunda = s => { const d=pd(s); const w=(d.getDay()+6)%7; d.setDate(d.getDate()-w); return iso(d); };
+
+// ── base ──
+const P = D.pedidos.map(p => ({num:p[0], data:p[1], hora:p[2], total:p[3], unid:p[4], cid:p[5], cli:p[6], pag:p[7], envio:p[8], itens:p[9],
+  h: p[2] ? +p[2].slice(0,2) : null, w: pd(p[1]).getDay()}));
+const M = D.meta.linhas.map(l => ({data:l[0], c:l[1], a:l[2], inv:l[3], imp:l[4], clk:l[5], lpv:l[6], vc:l[7], atc:l[8], ic:l[9], pix:l[10]}));
+const CAMPS = D.meta.campanhas, ADS = D.meta.anuncios;
+const ultimoDado = [P.length?P[P.length-1].data:'', D.meta.ultimo_dia||''].sort().pop();
+const ULT_PED = P.length ? P[P.length-1].data : ultimoDado;
+
+const S = {ini:null, fim:null, preset:'30', modo:'vendas', diaHora:'all', heat:'ped',
+  labels: (()=>{ try{ return JSON.parse(localStorage.getItem('tch_labels')||'{}'); }catch(e){ return {}; } })()};
+
+const usaCamp = c => S.modo==='todas' || CAMPS[c].vendas;
+
+function agrega(ini, fim){
+  const ps = P.filter(p => p.data>=ini && p.data<=fim);
+  const ms = M.filter(m => m.data>=ini && m.data<=fim && usaCamp(m.c));
+  const fat = ps.reduce((a,p)=>a+p.total,0), inv = ms.reduce((a,m)=>a+m.inv,0);
+  const unid = ps.reduce((a,p)=>a+p.unid,0), dias = nDias(ini,fim);
+  return {ps, ms, fat, inv, unid, ped:ps.length, dias, roas:div(fat,inv), ticket:div(fat,ps.length), cpp:div(inv,ps.length), fatDia:fat/dias};
+}
+
+// ── presets ──
+const PRESETS = [
+  ['dia','Último dia'], ['7','7 dias'], ['14','14 dias'], ['30','30 dias'], ['mes','Este mês'], ['mesant','Mês passado'], ['black','Black'], ['tudo','Tudo']];
+function rangePreset(k){
+  const ref = ULT_PED;
+  if(k==='dia') return [ref, ref];
+  if(['7','14','30'].includes(k)) return [addD(ref, -(+k-1)), ref];
+  if(k==='mes') return [ref.slice(0,8)+'01', ref];
+  if(k==='mesant'){ const d=pd(ref.slice(0,8)+'01'); d.setDate(0); const f=iso(d); return [f.slice(0,8)+'01', f]; }
+  if(k==='black') return [D.black.inicio, D.black.fim || ref];
+  return [D.inicio, ref];
+}
+const pres = document.getElementById('presets');
+PRESETS.forEach(([k,t]) => { const b=document.createElement('button'); b.textContent=t; b.dataset.k=k; b.onclick=()=>setPreset(k); pres.appendChild(b); });
+function setPreset(k){ S.preset=k; [S.ini,S.fim]=rangePreset(k); if(S.ini<D.inicio) S.ini=D.inicio; syncCtrl(); render(); }
+function syncCtrl(){
+  pres.querySelectorAll('button').forEach(b=>b.classList.toggle('on', b.dataset.k===S.preset));
+  dIni.value=S.ini; dFim.value=S.fim; dIni.min=dFim.min=D.inicio;
+}
+dIni.onchange = dFim.onchange = () => { if(!dIni.value||!dFim.value) return; S.ini=dIni.value; S.fim=dFim.value; if(S.ini>S.fim) [S.ini,S.fim]=[S.fim,S.ini]; S.preset=null; syncCtrl(); render(); };
+document.querySelectorAll('#modoInv button').forEach(b => b.onclick = () => {
+  S.modo=b.dataset.m; document.querySelectorAll('#modoInv button').forEach(x=>x.classList.toggle('on',x===b)); render(); });
+
+// ── gráficos ──
+const charts = {};
+function lblOn(id){ return S.labels[id] !== false; }
+function chart(id, cfg, rotulos){
+  if(charts[id]) charts[id].destroy();
+  const cv = document.getElementById(id);
+  const card = cv.closest('.card'); const h3 = card.querySelector('h3');
+  if(rotulos && !h3.querySelector('.lbl-t')){
+    const b=document.createElement('button'); b.className='lbl-t'; b.textContent='123'; b.title='Mostrar/ocultar valores';
+    b.onclick=()=>{ S.labels[id]=!lblOn(id); try{localStorage.setItem('tch_labels',JSON.stringify(S.labels));}catch(e){} render(); };
+    h3.appendChild(b);
+  }
+  const t = h3.querySelector('.lbl-t'); if(t) t.classList.toggle('on', lblOn(id));
+  if(rotulos && lblOn(id)){
+    cfg.options = cfg.options||{}; cfg.options.plugins = cfg.options.plugins||{};
+    cfg.options.plugins.datalabels = Object.assign({display:'auto', anchor:'end', align:'end', offset:1, clamp:true,
+      color:'#5E5047', font:{weight:600, size:10, family:'Inter'}, formatter:rotulos}, cfg.options.plugins.datalabels||{});
+  }
+  charts[id] = new Chart(cv, cfg);
+}
+const eixoX = {grid:{display:false}, ticks:{maxRotation:0, autoSkip:true, autoSkipPadding:8}};
+const eixoY = (fmt) => ({beginAtZero:true, grid:{color:C.grid}, border:{display:false}, ticks:{callback:fmt, maxTicksLimit:5}, grace:'12%'});
+const barra = (label, data, cor) => ({label, data, backgroundColor:cor, borderRadius:{topLeft:4,topRight:4}, borderSkipped:'bottom', maxBarThickness:34, categoryPercentage:.75, barPercentage:.92});
+
+function render(){
+  const A = agrega(S.ini, S.fim);
+  const ant = agrega(addD(S.ini, -A.dias), addD(S.ini, -1));
+  const antValido = addD(S.ini,-1) >= D.inicio;
+  renderKpis(A, ant, antValido);
+  renderDiario(A);
+  renderPeriodos();
+  renderHorarios(A);
+  renderFunil(A);
+  renderProdutos(A);
+  renderCampanhas();
+  renderPedidos(A);
+}
+
+// ── visão geral ──
+function delta(a, b, ok, inverso){
+  if(!ok || b==null || !b || a==null) return '<span>sem período anterior comparável</span>';
+  const d = (a/b-1)*100; const bom = inverso ? d<0 : d>0;
+  return `<span class="${Math.abs(d)<0.5?'':(bom?'up':'dn')}">${d>=0?'▲':'▼'} ${Math.abs(d).toLocaleString('pt-BR',{maximumFractionDigits:0})}%</span> vs período anterior`;
+}
+function renderKpis(A, B, ok){
+  const pr = PRESETS.find(p=>p[0]===S.preset);
+  periodoTxt.innerHTML = `<b>${pr?pr[1]+': ':''}${dBR(S.ini)} a ${dBR(S.fim)}</b> (${A.dias} ${A.dias>1?'dias':'dia'})` +
+    (ok ? ` · comparado com ${dBR(addD(S.ini,-A.dias))} a ${dBR(addD(S.ini,-1))}` : '') +
+    ` · investimento ${S.modo==='vendas'?'só das campanhas de vendas':'de todas as campanhas'}`;
+  const K = [
+    ['Faturamento', brl(A.fat), delta(A.fat,B.fat,ok), 'hl'],
+    ['ROAS', xr(A.roas), delta(A.roas,B.roas,ok), 'hl'],
+    ['Investimento', brl(A.inv), delta(A.inv,B.inv,ok)],
+    ['Pedidos', n0(A.ped), delta(A.ped,B.ped,ok)],
+    ['Ticket médio', A.ticket==null?'–':brl(A.ticket), delta(A.ticket,B.ticket,ok)],
+    ['Faturamento por dia', brl(A.fatDia), delta(A.fatDia,B.fatDia,ok)],
+    ['Custo por pedido', A.cpp==null?'–':brl(A.cpp), delta(A.cpp,B.cpp,ok,true)],
+    ['Unidades vendidas', n0(A.unid), `${A.ped?(A.unid/A.ped).toLocaleString('pt-BR',{maximumFractionDigits:1}):'–'} por pedido`],
+  ];
+  kpis.innerHTML = K.map(k=>`<div class="kpi ${k[3]||''}"><div class="kl">${k[0]}</div><div class="kv">${k[1]}</div><div class="kd">${k[2]}</div></div>`).join('');
+}
+
+// ── diário ──
+function porDia(A){
+  const dias = diasEntre(S.ini, S.fim);
+  const m = Object.fromEntries(dias.map(d=>[d,{fat:0,ped:0,unid:0,inv:0}]));
+  A.ps.forEach(p=>{ const x=m[p.data]; x.fat+=p.total; x.ped++; x.unid+=p.unid; });
+  A.ms.forEach(r=>{ m[r.data].inv+=r.inv; });
+  return dias.map(d=>({d, ...m[d]}));
+}
+function renderDiario(A){
+  const R = porDia(A); const L = R.map(r=>dBR(r.d)+(R.length<=14?' '+DIAS[pd(r.d).getDay()]:''));
+  const denso = R.length>31;
+  chart('cDia', {type:'bar', data:{labels:L, datasets:[barra('Faturamento',R.map(r=>r.fat),C.fat), barra('Investimento',R.map(r=>r.inv),C.inv)]},
+    options:{scales:{x:eixoX, y:eixoY(kfmt)}, plugins:{tooltip:{callbacks:{label:c=>c.dataset.label+': '+brl(c.raw)}},
+      datalabels:{display:c=>!denso && c.datasetIndex===0 && c.dataset.data[c.dataIndex]>0 ? 'auto':false}}}}, v=>kfmt(v));
+  const roas = R.map(r=>r.inv?r.fat/r.inv:null);
+  chart('cRoas', {type:'line', data:{labels:L, datasets:[{label:'ROAS', data:roas, borderColor:C.maroon, backgroundColor:C.maroon, borderWidth:2, pointRadius:R.length>45?0:3, pointHoverRadius:5, spanGaps:true, tension:.25}]},
+    options:{scales:{x:eixoX, y:eixoY(v=>v+'x')}, plugins:{tooltip:{callbacks:{label:c=>'ROAS: '+xr(c.raw)}}, datalabels:{align:'top', display:denso?false:'auto'}}}}, v=>v==null?'':v.toLocaleString('pt-BR',{maximumFractionDigits:1})+'x');
+  const tk = R.map(r=>r.ped?r.fat/r.ped:null);
+  chart('cTicket', {type:'line', data:{labels:L, datasets:[{label:'Ticket médio', data:tk, borderColor:C.fat, backgroundColor:C.fat, borderWidth:2, pointRadius:R.length>45?0:3, spanGaps:true, tension:.25}]},
+    options:{scales:{x:eixoX, y:eixoY(v=>'R$'+v)}, plugins:{tooltip:{callbacks:{label:c=>'Ticket: '+brl(c.raw)}}, datalabels:{align:'top', display:denso?false:'auto'}}}}, v=>v==null?'':Math.round(v));
+  chart('cPed', {type:'bar', data:{labels:L, datasets:[barra('Pedidos',R.map(r=>r.ped),C.fat)]},
+    options:{scales:{x:eixoX, y:eixoY(v=>v)}, plugins:{datalabels:{display:c=>!denso&&c.dataset.data[c.dataIndex]>0?'auto':false}}}}, v=>v);
+  // tabela
+  const linhas = R.slice().reverse().map(r=>[
+    [dBR(r.d)+' '+DIAS[pd(r.d).getDay()], r.d], [n0(r.ped), r.ped], [n0(r.unid), r.unid], [brl(r.fat), r.fat],
+    [r.ped?brl(r.fat/r.ped):'–', r.ped?r.fat/r.ped:-1], [brl(r.inv), r.inv], [xr(div(r.fat,r.inv)), div(r.fat,r.inv)??-1], [r.ped&&r.inv?brl(r.inv/r.ped):'–', r.ped?r.inv/r.ped:-1]]);
+  const tot = [['Total'], [n0(A.ped)], [n0(A.unid)], [brl(A.fat)], [A.ticket?brl(A.ticket):'–'], [brl(A.inv)], [xr(A.roas)], [A.cpp?brl(A.cpp):'–']];
+  tabela('tDia', ['Dia','Pedidos','Unid.','Faturamento','Ticket médio','Investimento','ROAS','Custo/pedido'], linhas, tot);
+}
+
+// ── semanas e meses (histórico completo) ──
+function agrupa(chave, rotulo){
+  const g = {};
+  const ate = ultimoDado;
+  diasEntre(D.inicio, ate).forEach(d=>{ const k=chave(d); g[k] = g[k] || {k, ini:d, fim:d, fat:0, ped:0, unid:0, inv:0}; g[k].fim=d; });
+  P.forEach(p=>{ const x=g[chave(p.data)]; if(x){ x.fat+=p.total; x.ped++; x.unid+=p.unid; } });
+  M.forEach(m=>{ if(!usaCamp(m.c)) return; const x=g[chave(m.data)]; if(x) x.inv+=m.inv; });
+  return Object.values(g).sort((a,b)=>a.k<b.k?-1:1).map(x=>({...x, rot:rotulo(x), dias:nDias(x.ini,x.fim)}));
+}
+function renderPeriodos(){
+  const ultMes = ultimoDado.slice(0,7);
+  const meses = agrupa(d=>d.slice(0,7), x=>MESES[+x.k.slice(5,7)-1]+'/'+x.k.slice(2,4)+(x.k===ultMes||x.k===D.inicio.slice(0,7)?'*':''));
+  const sems = agrupa(segunda, x=>dBR(x.ini));
+  ;
+  [['cMes',meses],['cSem',sems]].forEach(([id,R])=>{
+    chart(id, {type:'bar', data:{labels:R.map(r=>r.rot), datasets:[barra('Faturamento',R.map(r=>r.fat),C.fat), barra('Investimento',R.map(r=>r.inv),C.inv)]},
+      options:{scales:{x:eixoX, y:eixoY(kfmt)}, plugins:{tooltip:{callbacks:{title:c=>{const r=R[c[0].dataIndex]; return dBR(r.ini)+' a '+dBR(r.fim)+' ('+r.dias+' dias)';},
+        label:c=>c.dataset.label+': '+brl(c.raw), afterBody:c=>{const r=R[c[0].dataIndex]; return ['ROAS: '+xr(div(r.fat,r.inv)), 'Pedidos: '+r.ped, 'Ticket: '+(r.ped?brl(r.fat/r.ped):'–')];}}}}}}, v=>kfmt(v));
+  });
+  const cab = ['Período','Dias','Pedidos','Faturamento','Fat./dia','Ticket médio','Investimento','ROAS','Custo/pedido'];
+  const lin = R => R.slice().reverse().map(r=>[[r.rot, r.k], [r.dias, r.dias], [n0(r.ped), r.ped], [brl(r.fat), r.fat], [brl(r.fat/r.dias), r.fat/r.dias],
+    [r.ped?brl(r.fat/r.ped):'–', r.ped?r.fat/r.ped:-1], [brl(r.inv), r.inv], [xr(div(r.fat,r.inv)), div(r.fat,r.inv)??-1], [r.ped?brl(r.inv/r.ped):'–', r.ped?r.inv/r.ped:-1]]);
+  tabela('tMes', cab, lin(meses));
+  tabela('tSem', ['Semana'].concat(cab.slice(1)), lin(sems).map(l=>{ const r=sems.find(s=>s.k===l[0][1]); l[0]=[dBR(r.ini)+' a '+dBR(r.fim), r.k]; return l; }));
+}
+
+// ── horários ──
+function renderHorarios(A){
+  const ps = A.ps.filter(p=>p.h!=null);
+  const ocorr = Array(7).fill(0); diasEntre(S.ini,S.fim).forEach(d=>ocorr[pd(d).getDay()]++);
+  const sem = Array.from({length:7},(_,w)=>({w, ped:0, fat:0}));
+  ps.forEach(p=>{ sem[p.w].ped++; sem[p.w].fat+=p.total; });
+  const heat = Array.from({length:7},()=>Array.from({length:24},()=>({ped:0,fat:0})));
+  ps.forEach(p=>{ heat[p.w][p.h].ped++; heat[p.w][p.h].fat+=p.total; });
+
+  // insights
+  const melhorDia = sem.slice().sort((a,b)=>b.fat-a.fat)[0];
+  const horas = Array.from({length:24},(_,h)=>({h, ped:ps.filter(p=>p.h===h).length, fat:ps.filter(p=>p.h===h).reduce((a,p)=>a+p.total,0)}));
+  const janelas = Array.from({length:24},(_,h)=>({h, ped:horas[h].ped+horas[(h+1)%24].ped+horas[(h+2)%24].ped, fat:horas[h].fat+horas[(h+1)%24].fat+horas[(h+2)%24].fat}));
+  const melhorJan = janelas.slice().sort((a,b)=>b.ped-a.ped||b.fat-a.fat)[0];
+  let melhorCel = {w:0,h:0,ped:0,fat:0}; heat.forEach((r,w)=>r.forEach((c,h)=>{ if(c.ped>melhorCel.ped||(c.ped===melhorCel.ped&&c.fat>melhorCel.fat)) melhorCel={w,h,...c}; }));
+  const hh = h => String(h).padStart(2,'0')+'h';
+  insights.innerHTML = !ps.length ? '<div class="ins"><div class="kd">Sem pedidos no período.</div></div>' : `
+    <div class="ins"><div class="kl">Melhor dia da semana</div><div class="big">${DIAS_L[melhorDia.w]}</div>
+      <div class="kd">${brl(melhorDia.fat)} em ${melhorDia.ped} pedidos (${pct(melhorDia.fat/A.fat*100)} do faturamento)</div></div>
+    <div class="ins"><div class="kl">Melhor faixa de horário</div><div class="big">${hh(melhorJan.h)} às ${hh((melhorJan.h+3)%24)}</div>
+      <div class="kd">${melhorJan.ped} pedidos, ${brl(melhorJan.fat)} (${pct(melhorJan.ped/ps.length*100)} dos pedidos)</div></div>
+    <div class="ins"><div class="kl">Melhor dia + horário</div><div class="big">${DIAS_L[melhorCel.w]}, ${hh(melhorCel.h)}</div>
+      <div class="kd">${melhorCel.ped} pedidos, ${brl(melhorCel.fat)}${ps.length<60?' · base pequena, trate como tendência':''}</div></div>`;
+
+  const ordem = ORD_SEM.map(w=>sem[w]);
+  chart('cSemana', {type:'bar', data:{labels:ordem.map(s=>DIAS[s.w]), datasets:[barra('Faturamento',ordem.map(s=>s.fat),C.fat)]},
+    options:{scales:{x:eixoX, y:eixoY(kfmt)}, plugins:{tooltip:{callbacks:{label:c=>{const s=ordem[c.dataIndex]; return ['Faturamento: '+brl(s.fat), 'Pedidos: '+s.ped, 'Ticket: '+(s.ped?brl(s.fat/s.ped):'–')];}}}}}}, v=>kfmt(v));
+
+  // horário (com filtro de dia)
+  chipsDia.innerHTML = [['all','Todos']].concat(ORD_SEM.map(w=>[String(w),DIAS[w]])).map(([k,t])=>`<button class="chip ${S.diaHora===k?'on':''}" data-k="${k}">${t}</button>`).join('');
+  chipsDia.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{ S.diaHora=b.dataset.k; renderHorarios(agrega(S.ini,S.fim)); });
+  const hs = Array.from({length:24},(_,h)=>{ const sel = S.diaHora==='all' ? ps.filter(p=>p.h===h) : ps.filter(p=>p.h===h && p.w===+S.diaHora); return {ped:sel.length, fat:sel.reduce((a,p)=>a+p.total,0)}; });
+  chart('cHora', {type:'bar', data:{labels:hs.map((_,h)=>hh(h)), datasets:[barra('Pedidos',hs.map(x=>x.ped),C.fat)]},
+    options:{scales:{x:{...eixoX, ticks:{maxRotation:0, autoSkip:false, callback:(v,i)=>i%2?'':hh(i)}}, y:eixoY(v=>Number.isInteger(v)?v:'')},
+      plugins:{tooltip:{callbacks:{title:c=>hh(c[0].dataIndex)+' às '+hh(c[0].dataIndex+1), label:c=>{const x=hs[c.dataIndex]; return ['Pedidos: '+x.ped, 'Faturamento: '+brl(x.fat)];}}}, datalabels:{display:c=>c.dataset.data[c.dataIndex]>0?'auto':false}}}}, v=>v);
+
+  // mapa de calor
+  chipsHeat.querySelectorAll('.chip').forEach(b=>{ b.classList.toggle('on', b.dataset.m===S.heat); b.onclick=()=>{ S.heat=b.dataset.m; renderHorarios(agrega(S.ini,S.fim)); }; });
+  const max = Math.max(1, ...heat.flat().map(c=>c[S.heat]));
+  let h = '<tr><th></th>'+Array.from({length:24},(_,i)=>`<th>${String(i).padStart(2,'0')}</th>`).join('')+'</tr>';
+  ORD_SEM.forEach(w=>{
+    h += `<tr><td class="dl">${DIAS[w]}</td>` + heat[w].map((c,i)=>{
+      const v=c[S.heat], a = v ? .15 + .85*v/max : 0;
+      const bg = v ? `rgba(171,132,88,${a.toFixed(2)})` : '#F7F2EB';
+      const txt = v ? (S.heat==='ped'? v : kfmt(v)) : '';
+      return `<td style="background:${bg};color:${a>.6?'#fff':'#241612'}" title="${DIAS_L[w]} ${String(i).padStart(2,'0')}h: ${c.ped} pedidos, ${brl(c.fat)}">${txt}</td>`;
+    }).join('') + '</tr>';
+  });
+  document.getElementById('heat').innerHTML = h;
+
+  const lin = ORD_SEM.map(w=>{ const s=sem[w]; return [[DIAS_L[w], (w+6)%7], [ocorr[w], ocorr[w]], [n0(s.ped), s.ped], [brl(s.fat), s.fat], [pct(A.fat?s.fat/A.fat*100:null), s.fat],
+    [s.ped?brl(s.fat/s.ped):'–', s.ped?s.fat/s.ped:-1], [ocorr[w]?brl(s.fat/ocorr[w]):'–', ocorr[w]?s.fat/ocorr[w]:-1]]; });
+  tabela('tSemana', ['Dia','Ocorrências','Pedidos','Faturamento','% do fat.','Ticket médio','Média por dia'], lin);
+}
+
+// ── funil ──
+function renderFunil(A){
+  const t = k => A.ms.reduce((a,m)=>a+m[k],0);
+  const E = [['Impressões','imp'],['Cliques no link','clk'],['Visualizações da página','lpv'],['Viram produto','vc'],['Adicionaram ao carrinho','atc'],['Iniciaram checkout','ic'],['Compras (Pixel)','pix']].map(([n,k])=>({n, v:t(k)}));
+  E.push({n:'Vendas reais (Nuvemshop)', v:A.ped, real:true});
+  const max = Math.max(1, E[0].v);
+  funilBox.innerHTML = E.map((e,i)=>{
+    const prev = i ? E[i===7?5:i-1] : null;
+    const w = Math.max(e.v/max*100, e.v?2:0);
+    const taxa = prev && prev.v ? `<b>${pct(e.v/prev.v*100)}</b> de "${prev.n.toLowerCase()}"` : '';
+    const custo = e.v && A.inv && i ? ` · ${brl(A.inv/e.v)} cada` : (i===0&&e.v? ` · CPM ${brl(A.inv/e.v*1000)}`:'');
+    return `<div class="fs ${e.real?'real':''}"><div class="fn">${e.n}</div><div class="fb"><div style="width:${Math.log10(e.v+1)/Math.log10(max+1)*100}%">${n0(e.v)}</div></div><div class="fr">${taxa}${custo}</div></div>`;
+  }).join('');
+  const pix = E[6].v;
+  funilNota.innerHTML = `Barras em escala logarítmica para caber todas as etapas. O Pixel registrou <b>${n0(pix)}</b> compras e a Nuvemshop teve <b>${n0(A.ped)}</b> pedidos pagos no período`
+    + (A.ped ? ` (o Pixel captou ${pct(pix/A.ped*100)}).` : '.') + ' O funil e o ROAS usam as vendas reais, porque toda venda da tchucoo vem de tráfego. A taxa da última etapa é sobre quem iniciou o checkout.'
+    + (S.modo==='vendas' ? ' Etapas do Meta somam só as campanhas de vendas.' : '');
+}
+
+// ── produtos ──
+function renderProdutos(A){
+  const com = A.ps.filter(p=>p.itens.length);
+  prodCob.innerHTML = `Produtos detalhados em <b>${com.length}</b> de ${A.ps.length} pedidos do período (${pct(A.ps.length?com.length/A.ps.length*100:null)}). `+
+    `Os outros vieram na lista da Nuvemshop sem o detalhe dos itens, então os rankings abaixo são parciais.`;
+  const tipos = {}, prods = {};
+  com.forEach(p=>p.itens.forEach(([nome,varr,q,tot,tipo])=>{
+    tipos[tipo] = tipos[tipo]||{fat:0,q:0}; tipos[tipo].fat+=tot; tipos[tipo].q+=q;
+    prods[nome] = prods[nome]||{nome,tipo,fat:0,q:0,ped:new Set()}; prods[nome].fat+=tot; prods[nome].q+=q; prods[nome].ped.add(p.num);
+  }));
+  const T = Object.entries(tipos).sort((a,b)=>b[1].fat-a[1].fat);
+  chart('cTipo', {type:'bar', data:{labels:T.map(t=>t[0]), datasets:[{...barra('Faturamento',T.map(t=>t[1].fat),C.fat), borderRadius:{topRight:4,bottomRight:4}, borderSkipped:'left'}]},
+    options:{indexAxis:'y', scales:{y:{grid:{display:false}}, x:{...eixoY(kfmt)}}, plugins:{tooltip:{callbacks:{label:c=>{const t=T[c.dataIndex][1]; return ['Faturamento: '+brl(t.fat),'Unidades: '+t.q];}}}, datalabels:{anchor:'end',align:'right'}}}}, v=>brl0(v));
+  const L = Object.values(prods).sort((a,b)=>b.fat-a.fat).map(p=>[[p.nome.charAt(0)+p.nome.slice(1).toLowerCase(), p.nome],[n0(p.q),p.q],[n0(p.ped.size),p.ped.size],[brl(p.fat),p.fat]]);
+  tabela('tProd', ['Produto','Unid.','Pedidos','Faturamento'], L);
+}
+
+// ── campanhas ──
+function renderCampanhas(){
+  const ms = M.filter(m=>m.data>=S.ini && m.data<=S.fim);
+  const soma = (arr, key) => { const g={}; arr.forEach(m=>{ const k=m[key]; g[k]=g[k]||{inv:0,imp:0,clk:0,lpv:0,atc:0,ic:0,pix:0}; ['inv','imp','clk','lpv','atc','ic','pix'].forEach(f=>g[k][f]+=m[f]); }); return g; };
+  const row = (x) => [[brl(x.inv),x.inv],[n0(x.imp),x.imp],[n0(x.clk),x.clk],[pct(div(x.clk,x.imp)*100),div(x.clk,x.imp)??-1],[x.clk?brl(x.inv/x.clk):'–',x.clk?x.inv/x.clk:-1],
+    [n0(x.lpv),x.lpv],[n0(x.atc),x.atc],[n0(x.ic),x.ic],[n0(x.pix),x.pix],[x.pix?brl(x.inv/x.pix):'–',x.pix?x.inv/x.pix:-1]];
+  const cab = ['Investimento','Impressões','Cliques','CTR','CPC','Visualiz. pág.','Carrinho','Checkout','Compras Pixel','Custo/compra Pixel'];
+  const gc = soma(ms,'c');
+  tabela('tCamp', ['Campanha','Tipo'].concat(cab), Object.entries(gc).sort((a,b)=>b[1].inv-a[1].inv).map(([c,x])=>
+    [[CAMPS[c].n, CAMPS[c].n], [CAMPS[c].vendas?'<span class="tag v">Vendas</span>':'<span class="tag">Outros</span>', CAMPS[c].vendas?1:0]].concat(row(x))));
+  const ga = soma(ms,'a');
+  tabela('tAds', ['Anúncio','Campanha'].concat(cab), Object.entries(ga).sort((a,b)=>b[1].inv-a[1].inv).map(([a,x])=>{ const ad=ADS[a];
+    return [[`${ad.t?`<img class="thumb" src="${ad.t}" loading="lazy"> `:''}${esc(ad.n)}`, ad.n], [`<span style="font-size:11px;color:#8C7D71">${esc(CAMPS[ad.c].n)}</span>`, CAMPS[ad.c].n]].concat(row(x)); }));
+}
+
+// ── pedidos ──
+function renderPedidos(A){
+  const cont = {}; P.forEach(p=>cont[p.cid]=(cont[p.cid]||0)+1);
+  const rec = new Set(A.ps.filter(p=>cont[p.cid]>1).map(p=>p.cid)).size, cli = new Set(A.ps.map(p=>p.cid)).size;
+  pedSub.innerHTML = `${A.ped} pedidos pagos de ${cli} clientes no período. ${rec} ${rec===1?'cliente comprou':'clientes compraram'} mais de uma vez (contando todo o histórico). Último pedido na base: <b>#${D.ultimo_pedido.num}</b> em ${dBR(D.ultimo_pedido.data)} às ${D.ultimo_pedido.hora}.`;
+  const q = (busca.value||'').toLowerCase();
+  const L = A.ps.slice().reverse().filter(p=>!q || ('#'+p.num+' '+p.cli+' '+p.itens.map(i=>i[0]).join(' ')).toLowerCase().includes(q)).map(p=>[
+    ['#'+p.num, p.num], [dBR(p.data)+' '+DIAS[p.w], p.data], [p.hora, p.hora], [esc(p.cli)+(cont[p.cid]>1?' <span class="tag v">recompra</span>':''), p.cli],
+    [brl(p.total), p.total], [n0(p.unid), p.unid], [p.pag, p.pag], [esc(p.envio), p.envio],
+    [p.itens.length ? esc(p.itens.map(i=>(i[2]>1?i[2]+'× ':'')+i[0].toLowerCase()+(i[1]&&i[1]!=='Único'?' ('+i[1]+')':'')).join(', ')) : '<span style="color:#B5A89C">sem detalhe</span>', p.itens.length]]);
+  tabela('tPed', ['Pedido','Data','Hora','Cliente','Total','Unid.','Pagamento','Envio','Produtos'], L, null, {8:'wrap', 3:'l', 6:'l', 7:'l'});
+  foraTxt.innerHTML = '<b>Fora das contas:</b> ' + (D.fora.length ? D.fora.map(f=>`#${f.num} (${dBR(f.data)}, ${brl(f.total)}, ${f.motivo})`).join(' · ') : 'nenhum');
+}
+busca.oninput = () => renderPedidos(agrega(S.ini,S.fim));
+
+// ── tabela genérica, ordenável ──
+const esc = s => String(s??'').replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const ordem = {};
+function tabela(id, cab, linhas, total, classes){
+  classes = classes || {};
+  const o = ordem[id];
+  if(o){ linhas = linhas.slice().sort((a,b)=>{ const x=a[o.i][1], y=b[o.i][1]; const r = (typeof x==='string'||typeof y==='string') ? String(x).localeCompare(String(y),'pt-BR') : x-y; return o.asc ? r : -r; }); }
+  const el = document.getElementById(id);
+  el.innerHTML = '<thead><tr>'+cab.map((c,i)=>`<th data-i="${i}" class="${classes[i]&&classes[i]!=='wrap'?classes[i]:''} ${classes[i]==='wrap'?'l':''} ${o&&o.i===i?'sorted'+(o.asc?' asc':''):''}">${c}</th>`).join('')+'</tr></thead><tbody>'+
+    linhas.map(l=>'<tr>'+l.map((c,i)=>`<td class="${classes[i]||''}">${c[0]}</td>`).join('')+'</tr>').join('') +
+    (total ? '<tr class="tot">'+total.map(c=>`<td>${c[0]}</td>`).join('')+'</tr>' : '') + '</tbody>';
+  el.querySelectorAll('th').forEach(th=>th.onclick=()=>{
+    const i=+th.dataset.i; const prev=ordem[id];
+    const texto = linhas.length && typeof linhas[0][i][1]==='string' && i!==1;
+    ordem[id] = prev&&prev.i===i ? {i, asc:!prev.asc} : {i, asc:texto};
+    tabela(id, cab, linhas, total, classes);
+  });
+}
+
+// ── WhatsApp ──
+btnWpp.onclick = () => {
+  const A = agrega(S.ini, S.fim); const pr = PRESETS.find(p=>p[0]===S.preset);
+  const tit = `*${pr&&!['tudo','black'].includes(S.preset)?pr[1]+' ':''}${S.preset==='black'?'Black ':''}(${dBR(S.ini)} a ${dBR(S.fim)})*`;
+  const inv = S.modo==='vendas' ? 'Investimento em vendas' : 'Investimento total';
+  const txt = [tit, `*Vendas:* ${brl(A.fat)}`, `*Pedidos:* ${A.ped}`, `*Unidades:* ${A.unid}`, `*Ticket médio:* ${A.ticket?brl(A.ticket):'–'}`,
+    `*Média por dia:* ${brl(A.fatDia)}`, `*${inv}:* ${brl(A.inv)}`, `*Custo por pedido:* ${A.cpp?brl(A.cpp):'–'}`, `*ROAS:* ${xr(A.roas)}`].join('\n');
+  const ok = () => { toast.textContent='Resumo copiado'; toast.classList.add('on'); setTimeout(()=>toast.classList.remove('on'),1800); };
+  if(navigator.clipboard) navigator.clipboard.writeText(txt).then(ok, ()=>prompt('Copie o resumo:', txt)); else prompt('Copie o resumo:', txt);
+};
+
+atualizado.textContent = `Pedidos até #${D.ultimo_pedido.num} (${dBR(D.ultimo_pedido.data)} ${D.ultimo_pedido.hora}) · Meta até ${dBR(D.meta.ultimo_dia)} · gerado ${D.gerado}`;
+setPreset('30');
+</script>
+</body>
+</html>
