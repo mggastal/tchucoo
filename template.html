@@ -120,7 +120,7 @@ footer{border-top:1px solid var(--line);padding:22px 20px;text-align:center;font
     </div>
   </div>
   <nav class="tabs">
-    <a href="#geral">Visão geral</a><a href="#diario">Diário</a><a href="#periodos">Semanas e meses</a>
+    <a href="#geral">Visão geral</a><a href="#diario">Evolução</a><a href="#periodos">Semanas e meses</a>
     <a href="#horarios">Horários</a><a href="#funil">Funil</a><a href="#produtos">Produtos</a>
     <a href="#campanhas">Campanhas</a><a href="#pedidos">Pedidos</a>
   </nav>
@@ -134,20 +134,23 @@ footer{border-top:1px solid var(--line);padding:22px 20px;text-align:center;font
 </section>
 
 <section id="diario">
-  <h2>Dia a dia</h2>
-  <div class="sub">Faturamento da Nuvemshop contra o investimento no Meta, dia a dia, no período escolhido.</div>
+  <div style="display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap;margin-bottom:12px">
+    <div><h2>Evolução</h2>
+    <div class="sub" style="margin:0">Faturamento da Nuvemshop contra o investimento no Meta, no período escolhido.</div></div>
+    <div class="seg" id="gran" style="margin-left:auto"><button data-g="dia" class="on">Por dia</button><button data-g="sem">Por semana</button><button data-g="mes">Por mês</button></div>
+  </div>
   <div class="grid2">
     <div class="card"><h3>Faturamento × investimento</h3>
       <div class="legend"><span><i style="background:var(--fat)"></i>Faturamento</span><span><i style="background:var(--inv)"></i>Investimento</span></div>
       <div class="cv"><canvas id="cDia"></canvas></div></div>
-    <div class="card"><h3>ROAS diário</h3><div class="ch">Faturamento do dia ÷ investimento do dia</div>
+    <div class="card"><h3><span>ROAS <span class="gtx">diário</span></span></h3><div class="ch">Faturamento ÷ investimento</div>
       <div class="cv"><canvas id="cRoas"></canvas></div></div>
-    <div class="card"><h3>Ticket médio diário</h3><div class="ch">Faturamento ÷ pedidos do dia</div>
+    <div class="card"><h3><span>Ticket médio <span class="gtx">diário</span></span></h3><div class="ch">Faturamento ÷ pedidos</div>
       <div class="cv sm"><canvas id="cTicket"></canvas></div></div>
-    <div class="card"><h3>Pedidos por dia</h3><div class="ch">Pedidos pagos na Nuvemshop</div>
+    <div class="card"><h3><span>Pedidos <span class="gtx2">por dia</span></span></h3><div class="ch">Pedidos pagos na Nuvemshop</div>
       <div class="cv sm"><canvas id="cPed"></canvas></div></div>
   </div>
-  <div class="card" style="margin-top:14px"><h3>Tabela diária</h3><div class="ch">Clique no cabeçalho para ordenar</div>
+  <div class="card" style="margin-top:14px"><h3><span>Tabela <span class="gtx">diária</span></span></h3><div class="ch">Clique no cabeçalho para ordenar</div>
     <div class="tw"><table id="tDia"></table></div></div>
 </section>
 
@@ -268,7 +271,7 @@ const CAMPS = D.meta.campanhas, ADS = D.meta.anuncios;
 const ultimoDado = [P.length?P[P.length-1].data:'', D.meta.ultimo_dia||''].sort().pop();
 const ULT_PED = P.length ? P[P.length-1].data : ultimoDado;
 
-const S = {ini:null, fim:null, preset:'30', modo:'vendas', diaHora:'all', heat:'ped',
+const S = {gran:'dia', ini:null, fim:null, preset:'30', modo:'vendas', diaHora:'all', heat:'ped',
   labels: (()=>{ try{ return JSON.parse(localStorage.getItem('tch_labels')||'{}'); }catch(e){ return {}; } })()};
 
 const usaCamp = c => S.modo==='todas' || CAMPS[c].vendas;
@@ -367,33 +370,47 @@ function renderKpis(A, B, ok){
 }
 
 // ── diário ──
+// agrupa o período escolhido por dia, semana (seg a dom) ou mês; grupos cortados nas pontas do filtro
+const chaveG = d => S.gran==='sem' ? segunda(d) : S.gran==='mes' ? d.slice(0,7) : d;
 function porDia(A){
-  const dias = diasEntre(S.ini, S.fim);
-  const m = Object.fromEntries(dias.map(d=>[d,{fat:0,ped:0,unid:0,inv:0}]));
-  A.ps.forEach(p=>{ const x=m[p.data]; x.fat+=p.total; x.ped++; x.unid+=p.unid; });
-  A.ms.forEach(r=>{ m[r.data].inv+=r.inv; });
-  return dias.map(d=>({d, ...m[d]}));
+  const m = {};
+  diasEntre(S.ini, S.fim).forEach(d=>{ const k=chaveG(d); m[k]=m[k]||{d:k, ini:d, fim:d, fat:0, ped:0, unid:0, inv:0}; m[k].fim=d; });
+  A.ps.forEach(p=>{ const x=m[chaveG(p.data)]; x.fat+=p.total; x.ped++; x.unid+=p.unid; });
+  A.ms.forEach(r=>{ m[chaveG(r.data)].inv+=r.inv; });
+  return Object.values(m).sort((a,b)=>a.d<b.d?-1:1).map(x=>({...x, dias:nDias(x.ini,x.fim)}));
 }
+function rotG(r, curto){
+  const parcial = r.dias < (S.gran==='sem'?7:S.gran==='mes'?new Date(+r.d.slice(0,4), +r.d.slice(5,7), 0).getDate():1) ? '*' : '';
+  if(S.gran==='mes') return MESES[+r.d.slice(5,7)-1]+'/'+r.d.slice(2,4)+parcial;
+  if(S.gran==='sem') return curto ? dBR(r.ini)+parcial : dBR(r.ini)+' a '+dBR(r.fim)+parcial;
+  return dBR(r.d)+(curto?'':' '+DIAS[pd(r.d).getDay()]);
+}
+const GTX = {dia:['diário','diária','por dia'], sem:['semanal','semanal','por semana'], mes:['mensal','mensal','por mês']};
+document.querySelectorAll('#gran button').forEach(b => b.onclick = () => {
+  S.gran=b.dataset.g; document.querySelectorAll('#gran button').forEach(x=>x.classList.toggle('on',x===b)); renderDiario(agrega(S.ini,S.fim)); });
 function renderDiario(A){
-  const R = porDia(A); const L = R.map(r=>dBR(r.d)+(R.length<=14?' '+DIAS[pd(r.d).getDay()]:''));
+  const R = porDia(A); const L = R.map(r=>S.gran==='dia' ? dBR(r.d)+(R.length<=14?' '+DIAS[pd(r.d).getDay()]:'') : rotG(r,true));
+  document.querySelectorAll('#diario .gtx').forEach((e,i)=>e.textContent = GTX[S.gran][e.closest('.card').querySelector('#tDia')?1:0]);
+  document.querySelectorAll('#diario .gtx2').forEach(e=>e.textContent = GTX[S.gran][2]);
+  const tip = {title:c=>{ const r=R[c[0].dataIndex]; return S.gran==='dia' ? rotG(r) : rotG(r)+' ('+r.dias+(r.dias>1?' dias':' dia')+')'; }};
   const denso = R.length>31;
   chart('cDia', {type:'bar', data:{labels:L, datasets:[barra('Faturamento',R.map(r=>r.fat),C.fat), barra('Investimento',R.map(r=>r.inv),C.inv)]},
-    options:{scales:{x:eixoX, y:eixoY(kfmt)}, plugins:{tooltip:{callbacks:{label:c=>c.dataset.label+': '+brl(c.raw)}},
+    options:{scales:{x:eixoX, y:eixoY(kfmt)}, plugins:{tooltip:{callbacks:{...tip, label:c=>c.dataset.label+': '+brl(c.raw), afterBody:c=>{const r=R[c[0].dataIndex]; return S.gran==='dia'?[]:['ROAS: '+xr(div(r.fat,r.inv)), 'Pedidos: '+r.ped];}}},
       datalabels:{display:c=>!denso && c.datasetIndex===0 && c.dataset.data[c.dataIndex]>0 ? 'auto':false}}}}, v=>kfmt(v));
   const roas = R.map(r=>r.inv?r.fat/r.inv:null);
   chart('cRoas', {type:'line', data:{labels:L, datasets:[{label:'ROAS', data:roas, borderColor:C.maroon, backgroundColor:C.maroon, borderWidth:2, pointRadius:R.length>45?0:3, pointHoverRadius:5, spanGaps:true, tension:.25}]},
-    options:{scales:{x:eixoX, y:eixoY(v=>v+'x')}, plugins:{tooltip:{callbacks:{label:c=>'ROAS: '+xr(c.raw)}}, datalabels:{align:'top', display:denso?false:'auto'}}}}, v=>v==null?'':v.toLocaleString('pt-BR',{maximumFractionDigits:1})+'x');
+    options:{scales:{x:eixoX, y:eixoY(v=>v+'x')}, plugins:{tooltip:{callbacks:{...tip, label:c=>'ROAS: '+xr(c.raw)}}, datalabels:{align:'top', display:denso?false:'auto'}}}}, v=>v==null?'':v.toLocaleString('pt-BR',{maximumFractionDigits:1})+'x');
   const tk = R.map(r=>r.ped?r.fat/r.ped:null);
   chart('cTicket', {type:'line', data:{labels:L, datasets:[{label:'Ticket médio', data:tk, borderColor:C.fat, backgroundColor:C.fat, borderWidth:2, pointRadius:R.length>45?0:3, spanGaps:true, tension:.25}]},
-    options:{scales:{x:eixoX, y:eixoY(v=>'R$'+v)}, plugins:{tooltip:{callbacks:{label:c=>'Ticket: '+brl(c.raw)}}, datalabels:{align:'top', display:denso?false:'auto'}}}}, v=>v==null?'':Math.round(v));
+    options:{scales:{x:eixoX, y:eixoY(v=>'R$'+v)}, plugins:{tooltip:{callbacks:{...tip, label:c=>'Ticket: '+brl(c.raw)}}, datalabels:{align:'top', display:denso?false:'auto'}}}}, v=>v==null?'':Math.round(v));
   chart('cPed', {type:'bar', data:{labels:L, datasets:[barra('Pedidos',R.map(r=>r.ped),C.fat)]},
-    options:{scales:{x:eixoX, y:eixoY(v=>v)}, plugins:{datalabels:{display:c=>!denso&&c.dataset.data[c.dataIndex]>0?'auto':false}}}}, v=>v);
+    options:{scales:{x:eixoX, y:eixoY(v=>v)}, plugins:{tooltip:{callbacks:{...tip}}, datalabels:{display:c=>!denso&&c.dataset.data[c.dataIndex]>0?'auto':false}}}}, v=>v);
   // tabela
   const linhas = R.slice().reverse().map(r=>[
-    [dBR(r.d)+' '+DIAS[pd(r.d).getDay()], r.d], [n0(r.ped), r.ped], [n0(r.unid), r.unid], [brl(r.fat), r.fat],
+    [rotG(r), r.d], [n0(r.ped), r.ped], [n0(r.unid), r.unid], [brl(r.fat), r.fat],
     [r.ped?brl(r.fat/r.ped):'–', r.ped?r.fat/r.ped:-1], [brl(r.inv), r.inv], [xr(div(r.fat,r.inv)), div(r.fat,r.inv)??-1], [r.ped&&r.inv?brl(r.inv/r.ped):'–', r.ped?r.inv/r.ped:-1]]);
   const tot = [['Total'], [n0(A.ped)], [n0(A.unid)], [brl(A.fat)], [A.ticket?brl(A.ticket):'–'], [brl(A.inv)], [xr(A.roas)], [A.cpp?brl(A.cpp):'–']];
-  tabela('tDia', ['Dia','Pedidos','Unid.','Faturamento','Ticket médio','Investimento','ROAS','Custo/pedido'], linhas, tot);
+  tabela('tDia', [{dia:'Dia',sem:'Semana',mes:'Mês'}[S.gran],'Pedidos','Unid.','Faturamento','Ticket médio','Investimento','ROAS','Custo/pedido'], linhas, tot);
 }
 
 // ── semanas e meses (histórico completo) ──
