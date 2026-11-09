@@ -171,9 +171,48 @@ def juntar(base, novos):
     return n_novos, n_atual, n_itens
 
 
+def parse_csv(caminho):
+    """Export de vendas da Nuvemshop (CSV ; latin-1, uma linha por produto).
+    Dados pessoais (CPF, e-mail, endereço) são ignorados."""
+    import csv
+    raw = Path(caminho).read_bytes()
+    try:
+        txt = raw.decode("utf-8")
+    except UnicodeDecodeError:
+        txt = raw.decode("latin-1")
+    pedidos = {}
+    for r in csv.DictReader(txt.splitlines(), delimiter=";"):
+        num = int(r["Número do Pedido"])
+        if num not in pedidos:
+            dt = datetime.strptime(r["Data"], "%d/%m/%Y %H:%M:%S")
+            pag = (r.get("Status do Pagamento") or "").strip()
+            meio = (r.get("Meio de pagamento") or "").strip()
+            meio = {"pix": "Pix", "credit_card": "Cartão de crédito"}.get(meio.lower(), meio)
+            pedidos[num] = {
+                "num": num, "data": dt.date().isoformat(), "hora": dt.strftime("%H:%M"),
+                "cliente": abreviar(r["Nome do comprador"]), "cliente_id": cliente_id(r["Nome do comprador"]),
+                "total": round(float(r["Total"]), 2), "unidades": 0,
+                "status": "Recebido" if pag == "Confirmado" else pag,
+                "pagamento": f"{r.get('Forma de Pagamento','')} - {meio}".strip(" -"),
+                "envio_status": r.get("Status do Envio", ""), "envio": r.get("Forma de Entrega", ""),
+                "itens": []}
+        nome = r["Nome do Produto"].strip()
+        m = re.match(r"^(.*?)\s*\(([^()]*)\)$", nome)
+        nome, var = (m.group(1), m.group(2)) if m else (nome, "Único")
+        qtd = int(float(r["Quantidade Comprada"] or 1)); preco = round(float(r["Valor do Produto"]), 2)
+        pedidos[num]["itens"].append({"produto": nome, "variante": var, "sku": r.get("SKU", ""),
+                                      "qtd": qtd, "preco": preco, "total": round(qtd * preco, 2)})
+        pedidos[num]["unidades"] += qtd
+    return list(pedidos.values())
+
+
 def main():
-    texto = Path(sys.argv[1]).read_text(encoding="utf-8") if len(sys.argv) > 1 else sys.stdin.read()
-    novos = parse(texto)
+    arq = sys.argv[1] if len(sys.argv) > 1 else None
+    if arq and arq.lower().endswith(".csv"):
+        novos = parse_csv(arq)
+    else:
+        texto = Path(arq).read_text(encoding="utf-8") if arq else sys.stdin.read()
+        novos = parse(texto)
     if not novos:
         sys.exit("Nenhum pedido encontrado no texto colado.")
     base = carregar()

@@ -513,9 +513,58 @@
   "unidades": 6,
   "status": "Recebido",
   "pagamento": "Getnet - Cartão de crédito",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Frete grátis a partir de R$ 115,00",
-  "itens": []
+  "itens": [
+   {
+    "produto": "GUIA ROSA",
+    "variante": "G",
+    "sku": "354290849G",
+    "qtd": 1,
+    "preco": 60.79,
+    "total": 60.79
+   },
+   {
+    "produto": "GUIA LAGOON",
+    "variante": "G",
+    "sku": "354290859G",
+    "qtd": 1,
+    "preco": 60.79,
+    "total": 60.79
+   },
+   {
+    "produto": "PEITORAL H ROSA",
+    "variante": "M",
+    "sku": "354290866M",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   },
+   {
+    "produto": "PEITORAL H LAGOON",
+    "variante": "G",
+    "sku": "354290873G",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   },
+   {
+    "produto": "COLEIRA ROSA",
+    "variante": "M",
+    "sku": "354290883M",
+    "qtd": 1,
+    "preco": 26.99,
+    "total": 26.99
+   },
+   {
+    "produto": "COLEIRA LAGOON",
+    "variante": "G",
+    "sku": "354290891G",
+    "qtd": 1,
+    "preco": 26.99,
+    "total": 26.99
+   }
+  ]
  },
  "196": {
   "num": 196,
@@ -527,9 +576,34 @@
   "unidades": 3,
   "status": "Recebido",
   "pagamento": "Getnet - Cartão de crédito",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Frete grátis a partir de R$ 115,00",
-  "itens": []
+  "itens": [
+   {
+    "produto": "PEITORAL MOLETOM AERADO BLACK",
+    "variante": "P",
+    "sku": "354290929P",
+    "qtd": 1,
+    "preco": 36.99,
+    "total": 36.99
+   },
+   {
+    "produto": "PEITORAL H TATTOO MARINHEIRO",
+    "variante": "P",
+    "sku": "354290998P",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   },
+   {
+    "produto": "CINTO DE SEGURANÇA TATTOO MARINHEIRO",
+    "variante": "Tamanho único",
+    "sku": "TCH0119",
+    "qtd": 1,
+    "preco": 47.99,
+    "total": 47.99
+   }
+  ]
  },
  "195": {
   "num": 195,
@@ -541,9 +615,34 @@
   "unidades": 3,
   "status": "Recebido",
   "pagamento": "Getnet - Pix",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "São Paulo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "COLEIRA POA POA",
+    "variante": "G",
+    "sku": "354290738G",
+    "qtd": 1,
+    "preco": 26.99,
+    "total": 26.99
+   },
+   {
+    "produto": "COLEIRA DE GATO POA POA",
+    "variante": "Tamanho único",
+    "sku": "TCH0055",
+    "qtd": 1,
+    "preco": 25.99,
+    "total": 25.99
+   },
+   {
+    "produto": "PEITORAL H POA POA",
+    "variante": "G",
+    "sku": "354290786G",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   }
+  ]
  },
  "194": {
   "num": 194,
@@ -555,9 +654,26 @@
   "unidades": 2,
   "status": "Recebido",
   "pagamento": "Getnet - Pix",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Frete fixo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "PEITORAL MOLETOM AERADO BLACK",
+    "variante": "P",
+    "sku": "354290929P",
+    "qtd": 1,
+    "preco": 36.99,
+    "total": 36.99
+   },
+   {
+    "produto": "PEITORAL MOLETOM AERADO MARRAKESH",
+    "variante": "P",
+    "sku": "354290938P",
+    "qtd": 1,
+    "preco": 36.99,
+    "total": 36.99
+   }
+  ]
  },
  "193": {
   "num": 193,
@@ -569,9 +685,50 @@
   "unidades": 5,
   "status": "Recebido",
   "pagamento": "Getnet - Cartão de crédito",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Frete grátis a partir de R$ 115,00",
-  "itens": []
+  "itens": [
+   {
+    "produto": "COLEIRA HAHAHA",
+    "variante": "M",
+    "sku": "354291087M",
+    "qtd": 1,
+    "preco": 26.99,
+    "total": 26.99
+   },
+   {
+    "produto": "COLEIRA PARADISE",
+    "variante": "M",
+    "sku": "354291090M",
+    "qtd": 1,
+    "preco": 26.99,
+    "total": 26.99
+   },
+   {
+    "produto": "COLEIRA DE GATO OCEAN",
+    "variante": "Tamanho único",
+    "sku": "TCH0162",
+    "qtd": 1,
+    "preco": 25.99,
+    "total": 25.99
+   },
+   {
+    "produto": "COLEIRA DE GATO WOODSMAN",
+    "variante": "Tamanho único",
+    "sku": "TCH0167",
+    "qtd": 1,
+    "preco": 25.99,
+    "total": 25.99
+   },
+   {
+    "produto": "COLEIRA DE GATO CORRIDA DE LISTRAS",
+    "variante": "Tamanho único",
+    "sku": "CAT50104",
+    "qtd": 1,
+    "preco": 15.99,
+    "total": 15.99
+   }
+  ]
  },
  "192": {
   "num": 192,
@@ -583,9 +740,50 @@
   "unidades": 5,
   "status": "Recebido",
   "pagamento": "Getnet - Cartão de crédito",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Frete grátis a partir de R$ 115,00",
-  "itens": []
+  "itens": [
+   {
+    "produto": "COLEIRA DE GATO FLORECER",
+    "variante": "Tamanho único",
+    "sku": "TCH0015",
+    "qtd": 1,
+    "preco": 25.99,
+    "total": 25.99
+   },
+   {
+    "produto": "COLEIRA DE GATO WOODSMAN",
+    "variante": "Tamanho único",
+    "sku": "TCH0167",
+    "qtd": 1,
+    "preco": 25.99,
+    "total": 25.99
+   },
+   {
+    "produto": "COLEIRA DE GATO CIRCUS",
+    "variante": "Tamanho único",
+    "sku": "TCH0014",
+    "qtd": 1,
+    "preco": 25.99,
+    "total": 25.99
+   },
+   {
+    "produto": "COLEIRA DE GATO TATTOO LOVE",
+    "variante": "Tamanho único",
+    "sku": "CAT50105",
+    "qtd": 1,
+    "preco": 25.99,
+    "total": 25.99
+   },
+   {
+    "produto": "COLEIRA DE GATO TATTOO MARINHEIRO",
+    "variante": "Tamanho único",
+    "sku": "CAT50106",
+    "qtd": 1,
+    "preco": 15.99,
+    "total": 15.99
+   }
+  ]
  },
  "191": {
   "num": 191,
@@ -597,9 +795,18 @@
   "unidades": 1,
   "status": "Recebido",
   "pagamento": "Getnet - Pix",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Frete fixo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "PEITORAL MOLETOM AERADO BLACK",
+    "variante": "PP",
+    "sku": "354290929PP",
+    "qtd": 1,
+    "preco": 29.99,
+    "total": 29.99
+   }
+  ]
  },
  "190": {
   "num": 190,
@@ -611,9 +818,26 @@
   "unidades": 2,
   "status": "Recebido",
   "pagamento": "Getnet - Cartão de crédito",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Frete fixo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "PEITORAL MOLETOM AERADO OCEAN",
+    "variante": "M",
+    "sku": "354290926M",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   },
+   {
+    "produto": "COLEIRA OCEAN",
+    "variante": "G",
+    "sku": "354291238G",
+    "qtd": 1,
+    "preco": 26.99,
+    "total": 26.99
+   }
+  ]
  },
  "189": {
   "num": 189,
@@ -625,9 +849,18 @@
   "unidades": 1,
   "status": "Recebido",
   "pagamento": "Getnet - Cartão de crédito",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "São Paulo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "COLEIRA DE GATO OCEAN",
+    "variante": "Tamanho único",
+    "sku": "TCH0162",
+    "qtd": 1,
+    "preco": 25.99,
+    "total": 25.99
+   }
+  ]
  },
  "188": {
   "num": 188,
@@ -639,9 +872,26 @@
   "unidades": 2,
   "status": "Recebido",
   "pagamento": "Getnet - Cartão de crédito",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Frete grátis a partir de R$ 115,00",
-  "itens": []
+  "itens": [
+   {
+    "produto": "PEITORAL MOLETOM AERADO POA POA",
+    "variante": "P",
+    "sku": "354290665P",
+    "qtd": 1,
+    "preco": 29.99,
+    "total": 29.99
+   },
+   {
+    "produto": "TREND COAT AREIA",
+    "variante": "Tamanho único",
+    "sku": "7890774134338",
+    "qtd": 1,
+    "preco": 89.99,
+    "total": 89.99
+   }
+  ]
  },
  "187": {
   "num": 187,
@@ -653,9 +903,26 @@
   "unidades": 2,
   "status": "Recebido",
   "pagamento": "Getnet - Cartão de crédito",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Frete fixo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "CONJUNTO PEITORAL+ GUIA FITA WOODSMAN",
+    "variante": "Tamanho único",
+    "sku": "TCH0144",
+    "qtd": 1,
+    "preco": 51.99,
+    "total": 51.99
+   },
+   {
+    "produto": "COLEIRA DE GATO WOODSMAN",
+    "variante": "Tamanho único",
+    "sku": "TCH0167",
+    "qtd": 1,
+    "preco": 25.99,
+    "total": 25.99
+   }
+  ]
  },
  "186": {
   "num": 186,
@@ -667,9 +934,26 @@
   "unidades": 2,
   "status": "Recebido",
   "pagamento": "Getnet - Cartão de crédito",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Frete fixo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "PEITORAL H CIRCUS",
+    "variante": "PP",
+    "sku": "354290542PP",
+    "qtd": 1,
+    "preco": 29.99,
+    "total": 29.99
+   },
+   {
+    "produto": "PEITORAL H TATTOO MARINHEIRO",
+    "variante": "PP",
+    "sku": "354290998PP",
+    "qtd": 1,
+    "preco": 28.99,
+    "total": 28.99
+   }
+  ]
  },
  "185": {
   "num": 185,
@@ -681,9 +965,42 @@
   "unidades": 4,
   "status": "Recebido",
   "pagamento": "Getnet - Pix",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Frete grátis a partir de R$ 115,00",
-  "itens": []
+  "itens": [
+   {
+    "produto": "PEITORAL H CIRCUS",
+    "variante": "G",
+    "sku": "354290542G",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   },
+   {
+    "produto": "GUIA CIRCUS",
+    "variante": "G",
+    "sku": "3542905633",
+    "qtd": 1,
+    "preco": 60.79,
+    "total": 60.79
+   },
+   {
+    "produto": "GUIA TATTOO LOVE",
+    "variante": "G",
+    "sku": "354290974G",
+    "qtd": 1,
+    "preco": 60.79,
+    "total": 60.79
+   },
+   {
+    "produto": "PEITORAL H TATTOO LOVE",
+    "variante": "G",
+    "sku": "354291058G",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   }
+  ]
  },
  "184": {
   "num": 184,
@@ -695,9 +1012,42 @@
   "unidades": 4,
   "status": "Recusado",
   "pagamento": "Getnet - Pix",
-  "envio_status": "Por embalar",
+  "envio_status": "Não está embalado",
   "envio": "Frete grátis a partir de R$ 115,00",
-  "itens": []
+  "itens": [
+   {
+    "produto": "PEITORAL H CIRCUS",
+    "variante": "G",
+    "sku": "354290542G",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   },
+   {
+    "produto": "GUIA CIRCUS",
+    "variante": "G",
+    "sku": "3542905633",
+    "qtd": 1,
+    "preco": 60.79,
+    "total": 60.79
+   },
+   {
+    "produto": "GUIA TATTOO LOVE",
+    "variante": "G",
+    "sku": "354290974G",
+    "qtd": 1,
+    "preco": 60.79,
+    "total": 60.79
+   },
+   {
+    "produto": "PEITORAL H TATTOO LOVE",
+    "variante": "G",
+    "sku": "354291058G",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   }
+  ]
  },
  "183": {
   "num": 183,
@@ -709,9 +1059,34 @@
   "unidades": 3,
   "status": "Recebido",
   "pagamento": "Getnet - Cartão de crédito",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Frete grátis a partir de R$ 115,00",
-  "itens": []
+  "itens": [
+   {
+    "produto": "CONJUNTO PEITORAL+ GUIA CIRCUS",
+    "variante": "Tamanho único",
+    "sku": "TCH0017",
+    "qtd": 1,
+    "preco": 73.52,
+    "total": 73.52
+   },
+   {
+    "produto": "CONJUNTO PEITORAL+ GUIA FITA SUNNY",
+    "variante": "Tamanho único",
+    "sku": "TCH0045",
+    "qtd": 1,
+    "preco": 73.52,
+    "total": 73.52
+   },
+   {
+    "produto": "CONJUNTO PEITORAL+ GUIA FITA OCEAN",
+    "variante": "Tamanho único",
+    "sku": "TCH0141",
+    "qtd": 1,
+    "preco": 73.52,
+    "total": 73.52
+   }
+  ]
  },
  "182": {
   "num": 182,
@@ -723,9 +1098,18 @@
   "unidades": 1,
   "status": "Recebido",
   "pagamento": "Getnet - Pix",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Frete fixo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "PEITORAL MOLETOM AERADO BLACK",
+    "variante": "PP",
+    "sku": "354290929PP",
+    "qtd": 1,
+    "preco": 29.99,
+    "total": 29.99
+   }
+  ]
  },
  "181": {
   "num": 181,
@@ -737,9 +1121,26 @@
   "unidades": 2,
   "status": "Recebido",
   "pagamento": "Getnet - Pix",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Frete fixo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "COLEIRA DE GATO TATTOO LOVE",
+    "variante": "Tamanho único",
+    "sku": "CAT50105",
+    "qtd": 1,
+    "preco": 34.99,
+    "total": 34.99
+   },
+   {
+    "produto": "COLEIRA DE GATO CORRIDA DE LISTRAS",
+    "variante": "Tamanho único",
+    "sku": "CAT50104",
+    "qtd": 1,
+    "preco": 15.99,
+    "total": 15.99
+   }
+  ]
  },
  "180": {
   "num": 180,
@@ -751,9 +1152,26 @@
   "unidades": 2,
   "status": "Recusado",
   "pagamento": "Getnet - Pix",
-  "envio_status": "Por embalar",
+  "envio_status": "Não está embalado",
   "envio": "Frete fixo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "COLEIRA DE GATO TATTOO LOVE",
+    "variante": "Tamanho único",
+    "sku": "CAT50105",
+    "qtd": 1,
+    "preco": 34.99,
+    "total": 34.99
+   },
+   {
+    "produto": "COLEIRA DE GATO CORRIDA DE LISTRAS",
+    "variante": "Tamanho único",
+    "sku": "CAT50104",
+    "qtd": 1,
+    "preco": 15.99,
+    "total": 15.99
+   }
+  ]
  },
  "179": {
   "num": 179,
@@ -765,9 +1183,26 @@
   "unidades": 2,
   "status": "Recebido",
   "pagamento": "Getnet - Pix",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Frete grátis a partir de R$ 115,00",
-  "itens": []
+  "itens": [
+   {
+    "produto": "ADAPTADOR DE CINTO DE SEGURANÇA BLACK",
+    "variante": "Tamanho único",
+    "sku": "TCH0073",
+    "qtd": 1,
+    "preco": 47.99,
+    "total": 47.99
+   },
+   {
+    "produto": "CONJUNTO AIR MESH BORDÔ GATO",
+    "variante": "Tamanho único",
+    "sku": "7890774124520",
+    "qtd": 1,
+    "preco": 111.92,
+    "total": 111.92
+   }
+  ]
  },
  "178": {
   "num": 178,
@@ -779,9 +1214,18 @@
   "unidades": 2,
   "status": "Recebido",
   "pagamento": "Getnet - Cartão de crédito",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "São Paulo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "PEITORAL MOLETOM AERADO BLACK",
+    "variante": "PP",
+    "sku": "354290929PP",
+    "qtd": 2,
+    "preco": 29.99,
+    "total": 59.98
+   }
+  ]
  },
  "177": {
   "num": 177,
@@ -793,9 +1237,58 @@
   "unidades": 6,
   "status": "Recebido",
   "pagamento": "Getnet - Cartão de crédito",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Frete grátis a partir de R$ 115,00",
-  "itens": []
+  "itens": [
+   {
+    "produto": "GUIA TATTOO MARINHEIRO",
+    "variante": "P",
+    "sku": "354290970P",
+    "qtd": 1,
+    "preco": 60.79,
+    "total": 60.79
+   },
+   {
+    "produto": "GUIA TATTOO LOVE",
+    "variante": "G",
+    "sku": "354290974G",
+    "qtd": 1,
+    "preco": 60.79,
+    "total": 60.79
+   },
+   {
+    "produto": "PEITORAL H TATTOO MARINHEIRO",
+    "variante": "P",
+    "sku": "354290998P",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   },
+   {
+    "produto": "PEITORAL H TATTOO LOVE",
+    "variante": "M",
+    "sku": "354291058M",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   },
+   {
+    "produto": "COLEIRA TATTOO MARINHEIRO",
+    "variante": "P",
+    "sku": "354291071P",
+    "qtd": 1,
+    "preco": 21.99,
+    "total": 21.99
+   },
+   {
+    "produto": "COLEIRA TATTOO LOVE",
+    "variante": "M",
+    "sku": "354291076M",
+    "qtd": 1,
+    "preco": 22.99,
+    "total": 22.99
+   }
+  ]
  },
  "176": {
   "num": 176,
@@ -807,9 +1300,26 @@
   "unidades": 2,
   "status": "Recebido",
   "pagamento": "Getnet - Pix",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "São Paulo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "COLEIRA TATTOO MARINHEIRO",
+    "variante": "P",
+    "sku": "354291071P",
+    "qtd": 1,
+    "preco": 21.99,
+    "total": 21.99
+   },
+   {
+    "produto": "COLEIRA TATTOO LOVE",
+    "variante": "P",
+    "sku": "354291076P",
+    "qtd": 1,
+    "preco": 21.99,
+    "total": 21.99
+   }
+  ]
  },
  "175": {
   "num": 175,
@@ -821,9 +1331,18 @@
   "unidades": 1,
   "status": "Recebido",
   "pagamento": "Getnet - Cartão de crédito",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "São Paulo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "CINTO DE SEGURANÇA TATTOO MARINHEIRO",
+    "variante": "Tamanho único",
+    "sku": "TCH0119",
+    "qtd": 1,
+    "preco": 47.99,
+    "total": 47.99
+   }
+  ]
  },
  "174": {
   "num": 174,
@@ -835,9 +1354,18 @@
   "unidades": 1,
   "status": "Recebido",
   "pagamento": "Getnet - Pix",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Frete fixo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "PEITORAL H CALIFÓRNIA",
+    "variante": "PP",
+    "sku": "354291054PP",
+    "qtd": 1,
+    "preco": 15.99,
+    "total": 15.99
+   }
+  ]
  },
  "173": {
   "num": 173,
@@ -849,9 +1377,26 @@
   "unidades": 2,
   "status": "Recebido",
   "pagamento": "Getnet - Pix",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Frete fixo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "COLEIRA AMARELINDO",
+    "variante": "PP",
+    "sku": "354290838PP",
+    "qtd": 1,
+    "preco": 15.99,
+    "total": 15.99
+   },
+   {
+    "produto": "PEITORAL MOLETOM AERADO PARADISE",
+    "variante": "PP",
+    "sku": "354290942PP",
+    "qtd": 1,
+    "preco": 29.99,
+    "total": 29.99
+   }
+  ]
  },
  "172": {
   "num": 172,
@@ -863,9 +1408,18 @@
   "unidades": 1,
   "status": "Recebido",
   "pagamento": "Getnet - Pix",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "São Paulo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "COLEIRA DE GATO AMARELINDO",
+    "variante": "Tamanho único",
+    "sku": "TCH0092",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   }
+  ]
  },
  "171": {
   "num": 171,
@@ -877,9 +1431,18 @@
   "unidades": 1,
   "status": "Recebido",
   "pagamento": "Getnet - Cartão de crédito",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Frete fixo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "COLEIRA TATTOO MARINHEIRO",
+    "variante": "G",
+    "sku": "354291071G",
+    "qtd": 1,
+    "preco": 23.99,
+    "total": 23.99
+   }
+  ]
  },
  "170": {
   "num": 170,
@@ -891,9 +1454,18 @@
   "unidades": 1,
   "status": "Recebido",
   "pagamento": "Getnet - Pix",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Frete grátis a partir de R$ 115,00",
-  "itens": []
+  "itens": [
+   {
+    "produto": "PEITORAL AERADO E GUIA SUNNY",
+    "variante": "Tamanho único",
+    "sku": "TCH0032",
+    "qtd": 1,
+    "preco": 119.92,
+    "total": 119.92
+   }
+  ]
  },
  "169": {
   "num": 169,
@@ -905,9 +1477,26 @@
   "unidades": 2,
   "status": "Recebido",
   "pagamento": "Getnet - Pix",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Frete fixo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "COLEIRA DE GATO LOVERS",
+    "variante": "Tamanho único",
+    "sku": "TCH0033",
+    "qtd": 1,
+    "preco": 15.99,
+    "total": 15.99
+   },
+   {
+    "produto": "COLEIRA DE GATO TATTOO MARINHEIRO",
+    "variante": "Tamanho único",
+    "sku": "CAT50106",
+    "qtd": 1,
+    "preco": 15.99,
+    "total": 15.99
+   }
+  ]
  },
  "168": {
   "num": 168,
@@ -919,9 +1508,26 @@
   "unidades": 2,
   "status": "Recebido",
   "pagamento": "Getnet - Pix",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Frete fixo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "PEITORAL MOLETOM AERADO BLACK",
+    "variante": "PP",
+    "sku": "354290929PP",
+    "qtd": 1,
+    "preco": 18.09,
+    "total": 18.09
+   },
+   {
+    "produto": "PEITORAL MOLETOM AERADO MARRAKESH",
+    "variante": "PP",
+    "sku": "354290938PP",
+    "qtd": 1,
+    "preco": 18.99,
+    "total": 18.99
+   }
+  ]
  },
  "167": {
   "num": 167,
@@ -933,9 +1539,26 @@
   "unidades": 2,
   "status": "Recebido",
   "pagamento": "Getnet - Cartão de crédito",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Frete grátis a partir de R$ 99,00",
-  "itens": []
+  "itens": [
+   {
+    "produto": "GUIA CALIFORNIA",
+    "variante": "P",
+    "sku": "354290993P",
+    "qtd": 1,
+    "preco": 60.79,
+    "total": 60.79
+   },
+   {
+    "produto": "PEITORAL H CALIFÓRNIA",
+    "variante": "M",
+    "sku": "354291054M",
+    "qtd": 1,
+    "preco": 47.99,
+    "total": 47.99
+   }
+  ]
  },
  "166": {
   "num": 166,
@@ -947,9 +1570,26 @@
   "unidades": 2,
   "status": "Recebido",
   "pagamento": "Getnet - Cartão de crédito",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "São Paulo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "CONJUNTO PEITORAL+ GUIA FITA CORRIDA DE LISTRAS",
+    "variante": "Único",
+    "sku": "TCH0142",
+    "qtd": 1,
+    "preco": 35.99,
+    "total": 35.99
+   },
+   {
+    "produto": "CONJUNTO PEITORAL+ GUIA FITA WOODSMAN",
+    "variante": "Tamanho único",
+    "sku": "TCH0144",
+    "qtd": 1,
+    "preco": 35.99,
+    "total": 35.99
+   }
+  ]
  },
  "165": {
   "num": 165,
@@ -961,9 +1601,42 @@
   "unidades": 5,
   "status": "Recebido",
   "pagamento": "Getnet - Pix",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "São Paulo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "COLEIRA DE GATO LOVERS",
+    "variante": "Tamanho único",
+    "sku": "TCH0033",
+    "qtd": 2,
+    "preco": 15.99,
+    "total": 31.98
+   },
+   {
+    "produto": "COLEIRA DE GATO WOODSMAN",
+    "variante": "Tamanho único",
+    "sku": "TCH0167",
+    "qtd": 1,
+    "preco": 15.99,
+    "total": 15.99
+   },
+   {
+    "produto": "COLEIRA DE GATO TATTOO MARINHEIRO",
+    "variante": "Tamanho único",
+    "sku": "CAT50106",
+    "qtd": 1,
+    "preco": 15.99,
+    "total": 15.99
+   },
+   {
+    "produto": "COLEIRA DE GATO CORRIDA DE LISTRAS",
+    "variante": "Tamanho único",
+    "sku": "CAT50104",
+    "qtd": 1,
+    "preco": 15.99,
+    "total": 15.99
+   }
+  ]
  },
  "164": {
   "num": 164,
@@ -975,9 +1648,18 @@
   "unidades": 1,
   "status": "Recebido",
   "pagamento": "Getnet - Cartão de crédito",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Frete fixo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "COLEIRA DE GATO LOVERS",
+    "variante": "Tamanho único",
+    "sku": "TCH0033",
+    "qtd": 1,
+    "preco": 15.99,
+    "total": 15.99
+   }
+  ]
  },
  "163": {
   "num": 163,
@@ -989,9 +1671,58 @@
   "unidades": 6,
   "status": "Recebido",
   "pagamento": "Getnet - Cartão de crédito",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Frete grátis a partir de R$ 99,00",
-  "itens": []
+  "itens": [
+   {
+    "produto": "GUIA CORDA ROSA PITAYA",
+    "variante": "P",
+    "sku": "354290816P",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   },
+   {
+    "produto": "GUIA CORDA NATURE",
+    "variante": "P",
+    "sku": "354290824G",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   },
+   {
+    "produto": "GUIA LARANJINHA",
+    "variante": "PP",
+    "sku": "354290855PP",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   },
+   {
+    "produto": "PEITORAL MOLETOM AERADO PARADISE",
+    "variante": "PP",
+    "sku": "354290942PP",
+    "qtd": 1,
+    "preco": 18.99,
+    "total": 18.99
+   },
+   {
+    "produto": "PEITORAL MOLETOM AERADO TATTOO LOVE",
+    "variante": "PP",
+    "sku": "354290955PP",
+    "qtd": 1,
+    "preco": 18.99,
+    "total": 18.99
+   },
+   {
+    "produto": "COLETE VELUDO COTELE ROSA CHÁ CACHORRO",
+    "variante": "Tamanho único",
+    "sku": "7890774134468",
+    "qtd": 1,
+    "preco": 65.99,
+    "total": 65.99
+   }
+  ]
  },
  "162": {
   "num": 162,
@@ -1003,9 +1734,34 @@
   "unidades": 3,
   "status": "Recebido",
   "pagamento": "Getnet - Cartão de crédito",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Frete fixo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "PEITORAL MOLETOM AERADO BLACK",
+    "variante": "M",
+    "sku": "354290929M",
+    "qtd": 1,
+    "preco": 21.99,
+    "total": 21.99
+   },
+   {
+    "produto": "PEITORAL MOLETOM AERADO WOODSMAN",
+    "variante": "M",
+    "sku": "354290931M",
+    "qtd": 1,
+    "preco": 21.99,
+    "total": 21.99
+   },
+   {
+    "produto": "PEITORAL H É GOL",
+    "variante": "M",
+    "sku": "354291004M",
+    "qtd": 1,
+    "preco": 16.99,
+    "total": 16.99
+   }
+  ]
  },
  "161": {
   "num": 161,
@@ -1017,9 +1773,26 @@
   "unidades": 2,
   "status": "Recebido",
   "pagamento": "Getnet - Cartão de crédito",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Frete fixo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "CONJUNTO PEITORAL+ GUIA FITA WOODSMAN",
+    "variante": "Tamanho único",
+    "sku": "TCH0144",
+    "qtd": 1,
+    "preco": 35.99,
+    "total": 35.99
+   },
+   {
+    "produto": "COLEIRA DE GATO CORRIDA DE LISTRAS",
+    "variante": "Tamanho único",
+    "sku": "CAT50104",
+    "qtd": 1,
+    "preco": 15.99,
+    "total": 15.99
+   }
+  ]
  },
  "160": {
   "num": 160,
@@ -1031,9 +1804,34 @@
   "unidades": 3,
   "status": "Recebido",
   "pagamento": "Getnet - Cartão de crédito",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Frete fixo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "PEITORAL H HAHAHA",
+    "variante": "P",
+    "sku": "354291046P",
+    "qtd": 1,
+    "preco": 16.99,
+    "total": 16.99
+   },
+   {
+    "produto": "COLEIRA CORRIDA DE LISTRAS",
+    "variante": "P",
+    "sku": "354291079P",
+    "qtd": 1,
+    "preco": 15.99,
+    "total": 15.99
+   },
+   {
+    "produto": "GUIA HAHAHA",
+    "variante": "P",
+    "sku": "354297102P",
+    "qtd": 1,
+    "preco": 60.79,
+    "total": 60.79
+   }
+  ]
  },
  "159": {
   "num": 159,
@@ -1045,9 +1843,18 @@
   "unidades": 1,
   "status": "Recebido",
   "pagamento": "Getnet - Pix",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Frete fixo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "COLEIRA DE GATO BABY",
+    "variante": "Tamanho único",
+    "sku": "TCH0024",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   }
+  ]
  },
  "158": {
   "num": 158,
@@ -1059,9 +1866,18 @@
   "unidades": 1,
   "status": "Recebido",
   "pagamento": "Getnet - Cartão de crédito",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "São Paulo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "COLEIRA DE GATO TATTOO LOVE",
+    "variante": "Tamanho único",
+    "sku": "CAT50105",
+    "qtd": 1,
+    "preco": 39.92,
+    "total": 39.92
+   }
+  ]
  },
  "157": {
   "num": 157,
@@ -1073,9 +1889,18 @@
   "unidades": 1,
   "status": "Recusado",
   "pagamento": "Getnet - Pix",
-  "envio_status": "Por embalar",
+  "envio_status": "Não está embalado",
   "envio": "Frete fixo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "COLEIRA DE GATO CIRCUS",
+    "variante": "Tamanho único",
+    "sku": "TCH0014",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   }
+  ]
  },
  "156": {
   "num": 156,
@@ -1087,9 +1912,26 @@
   "unidades": 2,
   "status": "Recebido",
   "pagamento": "Getnet - Cartão de crédito",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Frete fixo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "GUIA LARANJINHA",
+    "variante": "P",
+    "sku": "354290855P",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   },
+   {
+    "produto": "PEITORAL H CORRIDA DE LISTRAS",
+    "variante": "P",
+    "sku": "TCH0125P",
+    "qtd": 1,
+    "preco": 15.99,
+    "total": 15.99
+   }
+  ]
  },
  "155": {
   "num": 155,
@@ -1101,9 +1943,18 @@
   "unidades": 1,
   "status": "Recebido",
   "pagamento": "Getnet - Cartão de crédito",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Frete fixo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "ADAPTADOR DE CINTO DE SEGURANÇA BLACK",
+    "variante": "Tamanho único",
+    "sku": "TCH0073",
+    "qtd": 1,
+    "preco": 47.99,
+    "total": 47.99
+   }
+  ]
  },
  "154": {
   "num": 154,
@@ -1115,9 +1966,18 @@
   "unidades": 1,
   "status": "Recebido",
   "pagamento": "Getnet - Cartão de crédito",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "São Paulo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "COLEIRA DE GATO FLORECER",
+    "variante": "Tamanho único",
+    "sku": "TCH0015",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   }
+  ]
  },
  "153": {
   "num": 153,
@@ -1129,9 +1989,34 @@
   "unidades": 3,
   "status": "Recebido",
   "pagamento": "Getnet - Pix",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Frete grátis a partir de R$ 99,00",
-  "itens": []
+  "itens": [
+   {
+    "produto": "COLEIRA FLORECER",
+    "variante": "P",
+    "sku": "354290583P",
+    "qtd": 1,
+    "preco": 36.79,
+    "total": 36.79
+   },
+   {
+    "produto": "ADAPTADOR DE CINTO DE SEGURANÇA FLORECER",
+    "variante": "Tamanho único",
+    "sku": "TCH0020",
+    "qtd": 1,
+    "preco": 47.99,
+    "total": 47.99
+   },
+   {
+    "produto": "CINTO DE SEGURANÇA HAHAHA",
+    "variante": "Tamanho único",
+    "sku": "TCH0156",
+    "qtd": 1,
+    "preco": 47.99,
+    "total": 47.99
+   }
+  ]
  },
  "152": {
   "num": 152,
@@ -1143,9 +2028,18 @@
   "unidades": 1,
   "status": "Recebido",
   "pagamento": "Getnet - Pix",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Frete grátis a partir de R$ 99,00",
-  "itens": []
+  "itens": [
+   {
+    "produto": "CONJUNTO AIR MESH BORDÔ GATO",
+    "variante": "Tamanho único",
+    "sku": "7890774124520",
+    "qtd": 1,
+    "preco": 111.92,
+    "total": 111.92
+   }
+  ]
  },
  "151": {
   "num": 151,
@@ -1157,9 +2051,26 @@
   "unidades": 2,
   "status": "Recebido",
   "pagamento": "Getnet - Cartão de crédito",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Frete grátis a partir de R$ 99,00",
-  "itens": []
+  "itens": [
+   {
+    "produto": "GUIA SUNNY",
+    "variante": "G",
+    "sku": "354290671G",
+    "qtd": 1,
+    "preco": 60.79,
+    "total": 60.79
+   },
+   {
+    "produto": "PEITORAL H SUNNY",
+    "variante": "P",
+    "sku": "354290779P",
+    "qtd": 1,
+    "preco": 47.99,
+    "total": 47.99
+   }
+  ]
  },
  "150": {
   "num": 150,
@@ -1171,9 +2082,18 @@
   "unidades": 1,
   "status": "Recebido",
   "pagamento": "Getnet - Cartão de crédito",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Frete fixo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "GUIA ROSA",
+    "variante": "G",
+    "sku": "354290849G",
+    "qtd": 1,
+    "preco": 60.79,
+    "total": 60.79
+   }
+  ]
  },
  "149": {
   "num": 149,
@@ -1185,9 +2105,18 @@
   "unidades": 1,
   "status": "Recebido",
   "pagamento": "Getnet - Pix",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Frete grátis a partir de R$ 99,00",
-  "itens": []
+  "itens": [
+   {
+    "produto": "CONJUNTO AIR MESH BORDÔ GATO",
+    "variante": "Tamanho único",
+    "sku": "7890774124520",
+    "qtd": 1,
+    "preco": 111.92,
+    "total": 111.92
+   }
+  ]
  },
  "148": {
   "num": 148,
@@ -1199,9 +2128,18 @@
   "unidades": 1,
   "status": "Recebido",
   "pagamento": "Getnet - Pix",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Frete fixo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "COLEIRA DE GATO TATTOO LOVE",
+    "variante": "Tamanho único",
+    "sku": "CAT50105",
+    "qtd": 1,
+    "preco": 39.92,
+    "total": 39.92
+   }
+  ]
  },
  "147": {
   "num": 147,
@@ -1213,9 +2151,18 @@
   "unidades": 1,
   "status": "Recebido",
   "pagamento": "Getnet - Cartão de crédito",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Frete fixo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "CONJUNTO PEITORAL+ GUIA FITA TATTOO MARINHEIRO",
+    "variante": "Tamanho único",
+    "sku": "TCH0140",
+    "qtd": 1,
+    "preco": 73.52,
+    "total": 73.52
+   }
+  ]
  },
  "146": {
   "num": 146,
@@ -1227,9 +2174,18 @@
   "unidades": 1,
   "status": "Recebido",
   "pagamento": "Getnet - Pix",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Frete fixo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "ADAPTADOR DE CINTO DE SEGURANÇA AMARELINDO",
+    "variante": "Tamanho único",
+    "sku": "TCH0074",
+    "qtd": 1,
+    "preco": 47.99,
+    "total": 47.99
+   }
+  ]
  },
  "145": {
   "num": 145,
@@ -1241,9 +2197,18 @@
   "unidades": 1,
   "status": "Recebido",
   "pagamento": "Getnet - Cartão de crédito",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Frete fixo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "ADAPTADOR DE CINTO DE SEGURANÇA BLACK",
+    "variante": "Tamanho único",
+    "sku": "TCH0073",
+    "qtd": 1,
+    "preco": 47.99,
+    "total": 47.99
+   }
+  ]
  },
  "144": {
   "num": 144,
@@ -1255,9 +2220,18 @@
   "unidades": 1,
   "status": "Recebido",
   "pagamento": "Getnet - Pix",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "São Paulo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "ADAPTADOR DE CINTO DE SEGURANÇA TECHNO",
+    "variante": "Tamanho único",
+    "sku": "TCH0013",
+    "qtd": 1,
+    "preco": 47.99,
+    "total": 47.99
+   }
+  ]
  },
  "143": {
   "num": 143,
@@ -1269,9 +2243,18 @@
   "unidades": 1,
   "status": "Recebido",
   "pagamento": "Getnet - Pix",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Frete fixo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "COLEIRA DE GATO POA POA",
+    "variante": "Tamanho único",
+    "sku": "TCH0055",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   }
+  ]
  },
  "142": {
   "num": 142,
@@ -1283,9 +2266,18 @@
   "unidades": 1,
   "status": "Recebido",
   "pagamento": "Getnet - Cartão de crédito",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "São Paulo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "COLEIRA DE GATO AMARELINDO",
+    "variante": "Tamanho único",
+    "sku": "TCH0092",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   }
+  ]
  },
  "141": {
   "num": 141,
@@ -1297,9 +2289,18 @@
   "unidades": 1,
   "status": "Recebido",
   "pagamento": "Getnet - Cartão de crédito",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Frete grátis a partir de R$ 99,00",
-  "itens": []
+  "itens": [
+   {
+    "produto": "CONJUNTO PEITORAL+ GUIA NEOPRENE HAHAHA",
+    "variante": "Tamanho único",
+    "sku": "TCH0148",
+    "qtd": 1,
+    "preco": 119.92,
+    "total": 119.92
+   }
+  ]
  },
  "140": {
   "num": 140,
@@ -1311,9 +2312,18 @@
   "unidades": 1,
   "status": "Recebido",
   "pagamento": "Getnet - Cartão de crédito",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "São Paulo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "COLEIRA DE GATO FLORECER",
+    "variante": "Tamanho único",
+    "sku": "TCH0015",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   }
+  ]
  },
  "139": {
   "num": 139,
@@ -1325,9 +2335,18 @@
   "unidades": 1,
   "status": "Recebido",
   "pagamento": "Getnet - Cartão de crédito",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Frete fixo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "PEITORAL H ROSA",
+    "variante": "G",
+    "sku": "354290866G",
+    "qtd": 1,
+    "preco": 47.99,
+    "total": 47.99
+   }
+  ]
  },
  "138": {
   "num": 138,
@@ -1339,9 +2358,18 @@
   "unidades": 1,
   "status": "Recebido",
   "pagamento": "Getnet - Pix",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Frete fixo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "COLEIRA DE GATO TECHNO",
+    "variante": "Tamanho único",
+    "sku": "TCH0016",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   }
+  ]
  },
  "137": {
   "num": 137,
@@ -1353,9 +2381,34 @@
   "unidades": 3,
   "status": "Recebido",
   "pagamento": "Getnet - Cartão de crédito",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Frete fixo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "CONJUNTO PEITORAL+ GUIA NEOPRENE TECHNO",
+    "variante": "Tamanho único",
+    "sku": "TCH0009",
+    "qtd": 1,
+    "preco": 119.92,
+    "total": 119.92
+   },
+   {
+    "produto": "PEITORAL H BLACK",
+    "variante": "G",
+    "sku": "354290898G",
+    "qtd": 1,
+    "preco": 47.99,
+    "total": 47.99
+   },
+   {
+    "produto": "GUIA BLACK",
+    "variante": "G",
+    "sku": "354290958G",
+    "qtd": 1,
+    "preco": 60.79,
+    "total": 60.79
+   }
+  ]
  },
  "136": {
   "num": 136,
@@ -1367,9 +2420,26 @@
   "unidades": 2,
   "status": "Recebido",
   "pagamento": "Getnet - Cartão de crédito",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "São Paulo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "COLEIRA DE GATO WOODSMAN",
+    "variante": "Tamanho único",
+    "sku": "TCH0167",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   },
+   {
+    "produto": "COLEIRA DE GATO TATTOO MARINHEIRO",
+    "variante": "Tamanho único",
+    "sku": "CAT50106",
+    "qtd": 1,
+    "preco": 39.92,
+    "total": 39.92
+   }
+  ]
  },
  "135": {
   "num": 135,
@@ -1381,9 +2451,34 @@
   "unidades": 3,
   "status": "Recebido",
   "pagamento": "Getnet - Cartão de crédito",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Frete grátis a partir de R$ 99,00",
-  "itens": []
+  "itens": [
+   {
+    "produto": "COLEIRA DE GATO ECO",
+    "variante": "Tamanho único",
+    "sku": "TCH0057",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   },
+   {
+    "produto": "COLEIRA DE GATO AZUL",
+    "variante": "Tamanho único",
+    "sku": "TCH0090",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   },
+   {
+    "produto": "COLEIRA DE GATO WOODSMAN",
+    "variante": "Tamanho único",
+    "sku": "TCH0167",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   }
+  ]
  },
  "134": {
   "num": 134,
@@ -1395,9 +2490,18 @@
   "unidades": 1,
   "status": "Recusado",
   "pagamento": "Getnet - Pix",
-  "envio_status": "Por embalar",
+  "envio_status": "Não está embalado",
   "envio": "São Paulo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "COLEIRA DE GATO CIRCUS",
+    "variante": "Tamanho único",
+    "sku": "TCH0014",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   }
+  ]
  },
  "133": {
   "num": 133,
@@ -1409,9 +2513,18 @@
   "unidades": 1,
   "status": "Recebido",
   "pagamento": "Getnet - Cartão de crédito",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Frete grátis a partir de R$ 99,00",
-  "itens": []
+  "itens": [
+   {
+    "produto": "CONJUNTO PEITORAL+ GUIA NEOPRENE HAPPY",
+    "variante": "Único",
+    "sku": "TCH0043",
+    "qtd": 1,
+    "preco": 119.92,
+    "total": 119.92
+   }
+  ]
  },
  "132": {
   "num": 132,
@@ -1423,9 +2536,42 @@
   "unidades": 7,
   "status": "Recebido",
   "pagamento": "Getnet - Cartão de crédito",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Frete grátis a partir de R$ 99,00",
-  "itens": []
+  "itens": [
+   {
+    "produto": "CONJUNTO PEITORAL+ GUIA NEOPRENE WOODSMAN",
+    "variante": "Único",
+    "sku": "TCH0145",
+    "qtd": 2,
+    "preco": 119.92,
+    "total": 239.84
+   },
+   {
+    "produto": "CONJUNTO PEITORAL+ GUIA NEOPRENE TATTOO MARINHEIRO",
+    "variante": "Único",
+    "sku": "TCH0146",
+    "qtd": 1,
+    "preco": 119.92,
+    "total": 119.92
+   },
+   {
+    "produto": "CONJUNTO PEITORAL+ GUIA NEOPRENE PARADISE",
+    "variante": "Único",
+    "sku": "TCH0149",
+    "qtd": 2,
+    "preco": 119.92,
+    "total": 239.84
+   },
+   {
+    "produto": "CONJUNTO PEITORAL+ GUIA NEOPRENE CALIFÓRNIA",
+    "variante": "Único",
+    "sku": "TCH0151",
+    "qtd": 2,
+    "preco": 119.92,
+    "total": 239.84
+   }
+  ]
  },
  "131": {
   "num": 131,
@@ -1437,9 +2583,18 @@
   "unidades": 2,
   "status": "Recebido",
   "pagamento": "Getnet - Cartão de crédito",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Frete grátis a partir de R$ 99,00",
-  "itens": []
+  "itens": [
+   {
+    "produto": "GUIA AMARELINDO",
+    "variante": "G",
+    "sku": "354290840G",
+    "qtd": 2,
+    "preco": 60.79,
+    "total": 121.58
+   }
+  ]
  },
  "130": {
   "num": 130,
@@ -1451,9 +2606,50 @@
   "unidades": 5,
   "status": "Recebido",
   "pagamento": "Getnet - Cartão de crédito",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Frete grátis a partir de R$ 99,00",
-  "itens": []
+  "itens": [
+   {
+    "produto": "COLEIRA DE GATO SUNNY",
+    "variante": "Único",
+    "sku": "TCH0054",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   },
+   {
+    "produto": "COLEIRA DE GATO POA POA",
+    "variante": "Único",
+    "sku": "",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   },
+   {
+    "produto": "COLEIRA DE GATO OCEAN",
+    "variante": "Único",
+    "sku": "TCH0162",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   },
+   {
+    "produto": "COLEIRA DE GATO CIRCUS",
+    "variante": "Único",
+    "sku": "TCH0014",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   },
+   {
+    "produto": "CONJUNTO AIR MESH BORDÔ GATO",
+    "variante": "Único",
+    "sku": "7890774124520",
+    "qtd": 1,
+    "preco": 111.92,
+    "total": 111.92
+   }
+  ]
  },
  "129": {
   "num": 129,
@@ -1465,9 +2661,18 @@
   "unidades": 1,
   "status": "Recebido",
   "pagamento": "Getnet - Pix",
-  "envio_status": "Por embalar",
+  "envio_status": "Não está embalado",
   "envio": "Frete fixo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "COLEIRA DE GATO BLACK",
+    "variante": "Único",
+    "sku": "TCH0102",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   }
+  ]
  },
  "128": {
   "num": 128,
@@ -1479,9 +2684,26 @@
   "unidades": 2,
   "status": "Recebido",
   "pagamento": "Getnet - Pix",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Frete fixo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "COLEIRA BLACK",
+    "variante": "M",
+    "sku": "354290811M",
+    "qtd": 1,
+    "preco": 36.79,
+    "total": 36.79
+   },
+   {
+    "produto": "ADAPTADOR DE CINTO DE SEGURANÇA BLACK",
+    "variante": "Único",
+    "sku": "",
+    "qtd": 1,
+    "preco": 47.99,
+    "total": 47.99
+   }
+  ]
  },
  "127": {
   "num": 127,
@@ -1493,9 +2715,26 @@
   "unidades": 2,
   "status": "Recebido",
   "pagamento": "Getnet - Pix",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "São Paulo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "PEITORAL H FLORECER",
+    "variante": "P",
+    "sku": "354290538P",
+    "qtd": 1,
+    "preco": 47.99,
+    "total": 47.99
+   },
+   {
+    "produto": "PEITORAL H TATTOO LOVE",
+    "variante": "P",
+    "sku": "354291058P",
+    "qtd": 1,
+    "preco": 47.99,
+    "total": 47.99
+   }
+  ]
  },
  "126": {
   "num": 126,
@@ -1507,9 +2746,18 @@
   "unidades": 1,
   "status": "Recebido",
   "pagamento": "Getnet - Cartão de crédito",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "São Paulo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "ADAPTADOR DE CINTO DE SEGURANÇA AMARELINDO",
+    "variante": "Único",
+    "sku": "",
+    "qtd": 1,
+    "preco": 47.99,
+    "total": 47.99
+   }
+  ]
  },
  "125": {
   "num": 125,
@@ -1521,9 +2769,26 @@
   "unidades": 2,
   "status": "Recebido",
   "pagamento": "Getnet - Cartão de crédito",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Frete grátis a partir de R$ 99,00",
-  "itens": []
+  "itens": [
+   {
+    "produto": "PEITORAL MOLETOM AERADO PARADISE",
+    "variante": "P",
+    "sku": "354290942P",
+    "qtd": 1,
+    "preco": 71.99,
+    "total": 71.99
+   },
+   {
+    "produto": "GUIA PARADISE",
+    "variante": "G",
+    "sku": "354290989G",
+    "qtd": 1,
+    "preco": 60.79,
+    "total": 60.79
+   }
+  ]
  },
  "124": {
   "num": 124,
@@ -1535,9 +2800,42 @@
   "unidades": 4,
   "status": "Recebido",
   "pagamento": "Getnet - Pix",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Frete grátis a partir de R$ 99,00",
-  "itens": []
+  "itens": [
+   {
+    "produto": "PEITORAL H FLORECER",
+    "variante": "M",
+    "sku": "354290538M",
+    "qtd": 1,
+    "preco": 47.99,
+    "total": 47.99
+   },
+   {
+    "produto": "GUIA FLORECER",
+    "variante": "G",
+    "sku": "354290557G",
+    "qtd": 1,
+    "preco": 60.79,
+    "total": 60.79
+   },
+   {
+    "produto": "GUIA TATTOO LOVE",
+    "variante": "G",
+    "sku": "354290974G",
+    "qtd": 1,
+    "preco": 60.79,
+    "total": 60.79
+   },
+   {
+    "produto": "PEITORAL H TATTOO LOVE",
+    "variante": "M",
+    "sku": "354291058M",
+    "qtd": 1,
+    "preco": 47.99,
+    "total": 47.99
+   }
+  ]
  },
  "123": {
   "num": 123,
@@ -1549,9 +2847,26 @@
   "unidades": 2,
   "status": "Recebido",
   "pagamento": "Getnet - Cartão de crédito",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Total Express - Standard",
-  "itens": []
+  "itens": [
+   {
+    "produto": "CONJUNTO PEITORAL+ GUIA FLORECER",
+    "variante": "Único",
+    "sku": "TCH0018",
+    "qtd": 1,
+    "preco": 73.52,
+    "total": 73.52
+   },
+   {
+    "produto": "CONJUNTO PEITORAL+ GUIA FITA NINA",
+    "variante": "Único",
+    "sku": "TCH0087",
+    "qtd": 1,
+    "preco": 73.52,
+    "total": 73.52
+   }
+  ]
  },
  "121": {
   "num": 121,
@@ -1563,9 +2878,34 @@
   "unidades": 3,
   "status": "Recebido",
   "pagamento": "Getnet - Cartão de crédito",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Total Express - Standard",
-  "itens": []
+  "itens": [
+   {
+    "produto": "COLEIRA DE GATO FLORECER",
+    "variante": "Único",
+    "sku": "TCH0015",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   },
+   {
+    "produto": "COLEIRA DE GATO LOVERS",
+    "variante": "Único",
+    "sku": "",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   },
+   {
+    "produto": "COLEIRA DE GATO TATTOO LOVE",
+    "variante": "Único",
+    "sku": "CAT50105",
+    "qtd": 1,
+    "preco": 39.92,
+    "total": 39.92
+   }
+  ]
  },
  "120": {
   "num": 120,
@@ -1577,9 +2917,18 @@
   "unidades": 1,
   "status": "Recebido",
   "pagamento": "Getnet - Cartão de crédito",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "São Paulo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "CONJUNTO PEITORAL+BABY GIRL",
+    "variante": "Único",
+    "sku": "TCH0023",
+    "qtd": 1,
+    "preco": 73.52,
+    "total": 73.52
+   }
+  ]
  },
  "119": {
   "num": 119,
@@ -1591,9 +2940,42 @@
   "unidades": 5,
   "status": "Recebido",
   "pagamento": "Getnet - Cartão de crédito",
-  "envio_status": "Enviada",
+  "envio_status": "Enviado",
   "envio": "Frete fixo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "COLEIRA DE GATO FLORECER",
+    "variante": "Único",
+    "sku": "TCH0015",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   },
+   {
+    "produto": "COLEIRA DE GATO SUNNY",
+    "variante": "Único",
+    "sku": "TCH0054",
+    "qtd": 2,
+    "preco": 39.99,
+    "total": 79.98
+   },
+   {
+    "produto": "COLEIRA DE GATO POA POA",
+    "variante": "Único",
+    "sku": "",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   },
+   {
+    "produto": "COLEIRA DE GATO CIRCUS",
+    "variante": "Único",
+    "sku": "TCH0014",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   }
+  ]
  },
  "118": {
   "num": 118,
@@ -1607,7 +2989,16 @@
   "pagamento": "Getnet - Cartão de crédito",
   "envio_status": "Entregue",
   "envio": "Total Express - Standard",
-  "itens": []
+  "itens": [
+   {
+    "produto": "CONJUNTO PEITORAL+BABY GIRL",
+    "variante": "Único",
+    "sku": "TCH0023",
+    "qtd": 1,
+    "preco": 73.52,
+    "total": 73.52
+   }
+  ]
  },
  "117": {
   "num": 117,
@@ -1621,7 +3012,24 @@
   "pagamento": "Getnet - Cartão de crédito",
   "envio_status": "Entregue",
   "envio": "Total Express - Standard",
-  "itens": []
+  "itens": [
+   {
+    "produto": "COLEIRA AMARELINDO",
+    "variante": "G",
+    "sku": "354290838G",
+    "qtd": 1,
+    "preco": 36.79,
+    "total": 36.79
+   },
+   {
+    "produto": "GUIA AMARELINDO",
+    "variante": "G",
+    "sku": "354290840G",
+    "qtd": 1,
+    "preco": 60.79,
+    "total": 60.79
+   }
+  ]
  },
  "116": {
   "num": 116,
@@ -1635,7 +3043,16 @@
   "pagamento": "Getnet - Cartão de crédito",
   "envio_status": "Entregue",
   "envio": "Frete fixo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "CONJUNTO PEITORAL+ GUIA CIRCUS",
+    "variante": "Único",
+    "sku": "TCH0017",
+    "qtd": 1,
+    "preco": 73.52,
+    "total": 73.52
+   }
+  ]
  },
  "115": {
   "num": 115,
@@ -1649,7 +3066,16 @@
   "pagamento": "Getnet - Cartão de crédito",
   "envio_status": "Entregue",
   "envio": "Frete fixo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "PEITORAL H + GUIA CALIFORNIA PP",
+    "variante": "Único",
+    "sku": "TCH0028",
+    "qtd": 1,
+    "preco": 88.79,
+    "total": 88.79
+   }
+  ]
  },
  "114": {
   "num": 114,
@@ -1663,7 +3089,16 @@
   "pagamento": "Getnet - Pix",
   "envio_status": "Entregue",
   "envio": "Total Express - Standard",
-  "itens": []
+  "itens": [
+   {
+    "produto": "GUIA BLACK",
+    "variante": "G",
+    "sku": "354290958G",
+    "qtd": 1,
+    "preco": 60.79,
+    "total": 60.79
+   }
+  ]
  },
  "113": {
   "num": 113,
@@ -1677,7 +3112,16 @@
   "pagamento": "Getnet - Cartão de crédito",
   "envio_status": "Entregue",
   "envio": "São Paulo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "PEITORAL MOLETOM AERADO WOODSMAN",
+    "variante": "P",
+    "sku": "354290931P",
+    "qtd": 1,
+    "preco": 71.99,
+    "total": 71.99
+   }
+  ]
  },
  "112": {
   "num": 112,
@@ -1691,7 +3135,16 @@
   "pagamento": "Getnet - Pix",
   "envio_status": "Entregue",
   "envio": "São Paulo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "Peitoral Aerado e Guia Sunny Cat Tchucco Único",
+    "variante": "Único",
+    "sku": "TCH0032",
+    "qtd": 1,
+    "preco": 119.92,
+    "total": 119.92
+   }
+  ]
  },
  "111": {
   "num": 111,
@@ -1705,7 +3158,24 @@
   "pagamento": "Getnet - Cartão de crédito",
   "envio_status": "Entregue",
   "envio": "São Paulo",
-  "itens": []
+  "itens": [
+   {
+    "produto": "CONJUNTO PEITORAL+ GUIA NEOPRENE FLORECER",
+    "variante": "Único",
+    "sku": "TCH0008",
+    "qtd": 1,
+    "preco": 119.92,
+    "total": 119.92
+   },
+   {
+    "produto": "CONJUNTO PEITORAL+ GUIA NEOPRENE TECHNO",
+    "variante": "Único",
+    "sku": "TCH0009",
+    "qtd": 1,
+    "preco": 119.92,
+    "total": 119.92
+   }
+  ]
  },
  "110": {
   "num": 110,
@@ -1719,6 +3189,115 @@
   "pagamento": "Getnet - Cartão de crédito",
   "envio_status": "Entregue",
   "envio": "Total Express - Standard",
-  "itens": []
+  "itens": [
+   {
+    "produto": "CONJUNTO PEITORAL+ GUIA NEOPRENE OCEAN",
+    "variante": "Único",
+    "sku": "TCH0150",
+    "qtd": 1,
+    "preco": 119.92,
+    "total": 119.92
+   },
+   {
+    "produto": "COLEIRA DE GATO OCEAN",
+    "variante": "Único",
+    "sku": "TCH0162",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   }
+  ]
+ },
+ "109": {
+  "num": 109,
+  "data": "2026-08-23",
+  "hora": "16:52",
+  "cliente": "Clara A.",
+  "cliente_id": "6cc0e03e6c",
+  "total": 36.79,
+  "unidades": 1,
+  "status": "Recebido",
+  "pagamento": "Getnet - Cartão de crédito",
+  "envio_status": "Entregue",
+  "envio": "Frete grátis",
+  "itens": [
+   {
+    "produto": "COLEIRA FLORECER",
+    "variante": "PP",
+    "sku": "354290583PP",
+    "qtd": 1,
+    "preco": 36.79,
+    "total": 36.79
+   }
+  ]
+ },
+ "104": {
+  "num": 104,
+  "data": "2026-08-19",
+  "hora": "10:11",
+  "cliente": "Victor L.",
+  "cliente_id": "6499129f0f",
+  "total": 0.8,
+  "unidades": 1,
+  "status": "Recebido",
+  "pagamento": "Getnet - Pix",
+  "envio_status": "Entregue",
+  "envio": "Frete grátis",
+  "itens": [
+   {
+    "produto": "PRODUTO TESTE",
+    "variante": "Único",
+    "sku": "PRODUTOTESTE",
+    "qtd": 1,
+    "preco": 0.8,
+    "total": 0.8
+   }
+  ]
+ },
+ "103": {
+  "num": 103,
+  "data": "2026-08-19",
+  "hora": "09:58",
+  "cliente": "Victor L.",
+  "cliente_id": "6499129f0f",
+  "total": 0.8,
+  "unidades": 1,
+  "status": "Recebido",
+  "pagamento": "Getnet - Pix",
+  "envio_status": "Entregue",
+  "envio": "Frete grátis",
+  "itens": [
+   {
+    "produto": "PRODUTO TESTE",
+    "variante": "Único",
+    "sku": "PRODUTOTESTE",
+    "qtd": 1,
+    "preco": 0.8,
+    "total": 0.8
+   }
+  ]
+ },
+ "102": {
+  "num": 102,
+  "data": "2026-08-19",
+  "hora": "09:52",
+  "cliente": "Victor L.",
+  "cliente_id": "6499129f0f",
+  "total": 0.8,
+  "unidades": 1,
+  "status": "Recebido",
+  "pagamento": "Getnet - Cartão de crédito",
+  "envio_status": "Entregue",
+  "envio": "Frete grátis",
+  "itens": [
+   {
+    "produto": "PRODUTO TESTE",
+    "variante": "Único",
+    "sku": "PRODUTOTESTE",
+    "qtd": 1,
+    "preco": 0.8,
+    "total": 0.8
+   }
+  ]
  }
 }

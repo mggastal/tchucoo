@@ -121,7 +121,7 @@ def meta():
 # ── Nuvemshop ───────────────────────────────────────────────────────────
 TIPOS = ["CONJUNTO PEITORAL+ GUIA", "CONJUNTO PEITORAL + GUIA", "COLEIRA DE GATO",
          "PEITORAL MOLETOM", "PEITORAL AERADO", "PEITORAL H", "PEITORAL", "COLEIRA",
-         "GUIA", "CINTO DE SEGURANÇA", "BANDANA", "TAG", "CAMA", "BRINQUEDO"]
+         "GUIA", "ADAPTADOR DE CINTO", "CINTO DE SEGURANÇA", "BANDANA", "TAG", "CAMA", "BRINQUEDO"]
 
 
 def tipo_produto(nome):
