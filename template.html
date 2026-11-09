@@ -191,9 +191,8 @@ footer{border-top:1px solid var(--line);padding:22px 20px;text-align:center;font
 
 <section id="funil">
   <h2>Funil</h2>
-  <div class="sub">Etapas do Meta Ads até a venda. A última etapa é a venda real da Nuvemshop, não a compra do Pixel.</div>
-  <div class="card"><div class="funil" id="funilBox"></div>
-    <div class="nota" id="funilNota"></div></div>
+  <div class="sub">Etapas do Meta Ads até a venda. A última etapa é a venda real da Nuvemshop.</div>
+  <div class="card"><div class="funil" id="funilBox"></div></div>
 </section>
 
 <section id="produtos">
@@ -499,27 +498,25 @@ function renderHorarios(A){
 // ── funil ──
 function renderFunil(A){
   const t = k => A.ms.reduce((a,m)=>a+m[k],0);
-  const E = [['Impressões','imp'],['Cliques no link','clk'],['Visualizações da página','lpv'],['Viram produto','vc'],['Adicionaram ao carrinho','atc'],['Iniciaram checkout','ic'],['Compras (Pixel)','pix']].map(([n,k])=>({n, v:t(k)}));
+  const E = [['Impressões','imp'],['Cliques no link','clk'],['Visualizações da página','lpv'],['Viram produto','vc'],['Adicionaram ao carrinho','atc'],['Iniciaram checkout','ic']].map(([n,k])=>({n, v:t(k)}));
   E.push({n:'Vendas reais (Nuvemshop)', v:A.ped, real:true});
   const max = Math.max(1, E[0].v);
   funilBox.innerHTML = E.map((e,i)=>{
-    const prev = i ? E[i===7?5:i-1] : null;
+    const prev = i ? E[i-1] : null;
     const w = Math.max(e.v/max*100, e.v?2:0);
     const taxa = prev && prev.v ? `<b>${pct(e.v/prev.v*100)}</b> de "${prev.n.toLowerCase()}"` : '';
     const custo = e.v && A.inv && i ? ` · ${brl(A.inv/e.v)} cada` : (i===0&&e.v? ` · CPM ${brl(A.inv/e.v*1000)}`:'');
     return `<div class="fs ${e.real?'real':''}"><div class="fn">${e.n}</div><div class="fb"><div style="width:${Math.log10(e.v+1)/Math.log10(max+1)*100}%">${n0(e.v)}</div></div><div class="fr">${taxa}${custo}</div></div>`;
   }).join('');
-  const pix = E[6].v;
-  funilNota.innerHTML = `Barras em escala logarítmica para caber todas as etapas. O Pixel registrou <b>${n0(pix)}</b> compras e a Nuvemshop teve <b>${n0(A.ped)}</b> pedidos pagos no período`
-    + (A.ped ? ` (o Pixel captou ${pct(pix/A.ped*100)}).` : '.') + ' O funil e o ROAS usam as vendas reais, porque toda venda da tchucoo vem de tráfego. A taxa da última etapa é sobre quem iniciou o checkout.'
-    + (S.modo==='vendas' ? ' Etapas do Meta somam só as campanhas de vendas.' : '');
 }
 
 // ── produtos ──
 function renderProdutos(A){
   const com = A.ps.filter(p=>p.itens.length);
-  prodCob.innerHTML = `Produtos detalhados em <b>${com.length}</b> de ${A.ps.length} pedidos do período (${pct(A.ps.length?com.length/A.ps.length*100:null)}). `+
-    `Os outros vieram na lista da Nuvemshop sem o detalhe dos itens, então os rankings abaixo são parciais.`;
+  // só avisa quando algum pedido do período veio sem os produtos
+  const faltam = A.ps.length - com.length;
+  prodCob.innerHTML = faltam ? `${faltam} ${faltam>1?'pedidos do período vieram':'pedido do período veio'} sem os produtos e ${faltam>1?'ficam':'fica'} fora do ranking.` : '';
+  prodCob.style.display = faltam ? '' : 'none';
   const tipos = {}, prods = {};
   com.forEach(p=>p.itens.forEach(([nome,varr,q,tot,tipo])=>{
     tipos[tipo] = tipos[tipo]||{fat:0,q:0}; tipos[tipo].fat+=tot; tipos[tipo].q+=q;
