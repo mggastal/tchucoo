@@ -31,14 +31,17 @@ IMG_DIR    = Path("imgs")
 BRT = timezone(timedelta(hours=-3))
 
 
-def ler_csv(aba):
-    url = f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/gviz/tq?tqx=out:csv&sheet={aba}"
+def _ctx():
     try:
         import certifi
-        ctx = ssl.create_default_context(cafile=certifi.where())
+        return ssl.create_default_context(cafile=certifi.where())
     except ImportError:
-        ctx = ssl.create_default_context()
-    raw = urllib.request.urlopen(url, context=ctx, timeout=60).read()
+        return ssl.create_default_context()
+
+
+def ler_csv(aba):
+    url = f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/gviz/tq?tqx=out:csv&sheet={aba}"
+    raw = urllib.request.urlopen(url, context=_ctx(), timeout=60).read()
     return pd.read_csv(io.BytesIO(raw))
 
 
@@ -54,7 +57,16 @@ def num(s):
 _usadas = set()
 
 
-def thumb(url):
+def thumb(urls):
+    """Tenta as URLs do anúncio (mais recentes primeiro); a 1ª que baixar vira a miniatura."""
+    for u in urls:
+        r = _thumb(u)
+        if r:
+            return r
+    return ""
+
+
+def _thumb(url):
     if not isinstance(url, str) or not url.startswith("http"):
         return ""
     p = urlparse(url)
@@ -66,8 +78,12 @@ def thumb(url):
     if not fp.exists():
         try:
             req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-            fp.write_bytes(urllib.request.urlopen(req, timeout=10).read())
+            dados = urllib.request.urlopen(req, timeout=15, context=_ctx()).read()
+            if len(dados) < 500:
+                return ""
+            fp.write_bytes(dados)
         except Exception:
+            _usadas.discard(nome)
             return ""
     return "imgs/" + nome
 
@@ -85,7 +101,7 @@ def meta():
     df = ler_csv("meta-ads")
     col = {
         "Date": "data", "Campaign Name": "camp", "Adset Name": "conj", "Ad Name": "ad",
-        "Thumbnail URL": "thumb", "Spend (Cost, Amount Spent)": "inv",
+        "Thumbnail URL": "thumb", "Image URL": "img", "Spend (Cost, Amount Spent)": "inv",
         "Impressions": "imp", "Action Link Clicks": "clk",
         "Action Landing Page View": "lpv", "Action Omni View Content": "vc",
         "Action Omni Add To Cart": "atc", "Action Omni Initiated Checkout": "ic",
@@ -99,9 +115,9 @@ def meta():
     df = df[(df["inv"] > 0) | (df["imp"] > 0)]
 
     camps = sorted(df["camp"].unique())
-    ads = (df.sort_values("data").groupby(["camp", "conj", "ad"], as_index=False)
-             .agg(thumb=("thumb", "last")))
-    ads["thumb"] = [thumb(u) for u in ads["thumb"]]
+    ads = (df.sort_values("data", ascending=False).groupby(["camp", "conj", "ad"], as_index=False, sort=True)
+             .agg(thumb=("thumb", list), img=("img", list)))
+    ads["thumb"] = [thumb(list(dict.fromkeys(t + i))) for t, i in zip(ads["thumb"], ads["img"])]
     ad_idx = {(r.camp, r.conj, r.ad): i for i, r in enumerate(ads.itertuples())}
 
     linhas = []
