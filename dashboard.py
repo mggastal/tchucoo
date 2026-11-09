@@ -134,6 +134,61 @@ def meta():
     }
 
 
+# ── públicos (abas de breakdown) ────────────────────────────────────────
+POSICOES = {
+    "feed": "Feed", "facebook_reels": "Reels Facebook", "instagram_reels": "Reels Instagram",
+    "instagram_stories": "Stories Instagram", "facebook_stories": "Stories Facebook",
+    "instagram_explore_grid_home": "Explorar Instagram", "instagram_explore": "Explorar Instagram",
+    "marketplace": "Marketplace", "rewarded_video": "Vídeo com recompensa", "search": "Pesquisa",
+    "threads_feed": "Threads", "right_hand_column": "Coluna da direita",
+    "facebook_notification": "Notificações Facebook", "status": "Status", "an_classic": "Audience Network",
+    "facebook_profile_feed": "Perfil Facebook", "instagram_profile_feed": "Perfil Instagram",
+    "video_feeds": "Vídeos Facebook", "instream_video": "Vídeo in-stream",
+}
+REGIOES = {"Federal District": "Distrito Federal"}
+METR = {"Spend (Cost, Amount Spent)": "inv", "Impressions": "imp", "Action Landing Page View": "lpv",
+        "Action Omni Add To Cart": "atc", "Action Omni Initiated Checkout": "ic", "Action Omni Purchase": "pix"}
+
+
+def publicos(camps):
+    out = {}
+    specs = {
+        "ga": ("breakdown-gender-age", ["Age (Breakdown)", "Gender (Breakdown)"], True),
+        "pos": ("breakdown-platform", ["Platform Position (Breakdown)"], True),
+        "reg": ("breakdown-regiao", ["Region (Breakdown)"], False),
+    }
+    for chave, (aba, dims, tem_camp) in specs.items():
+        try:
+            df = ler_csv(aba)
+        except Exception as e:
+            print(f"  aviso: {aba} não carregou ({e})"); out[chave] = []; continue
+        df["Date"] = pd.to_datetime(df["Date"]).dt.strftime("%Y-%m-%d")
+        df = df[df["Date"] >= INICIO]
+        for c in METR:
+            df[c] = num(df[c]) if c in df.columns else 0
+        grp = ["Date"] + (["Campaign Name"] if tem_camp else []) + dims
+        g = df.groupby(grp, as_index=False)[list(METR)].sum()
+        g = g[(g["Spend (Cost, Amount Spent)"] > 0) | (g["Impressions"] > 0)]
+        linhas = []
+        for r in g.itertuples(index=False):
+            r = list(r)
+            data, resto = r[0], r[1:]
+            ci = -1
+            if tem_camp:
+                c = resto.pop(0)
+                ci = camps.index(c) if c in camps else -1
+            vals = [str(x) for x in resto[:len(dims)]]
+            if chave == "pos":
+                vals = [POSICOES.get(vals[0], vals[0].replace("_", " ").capitalize())]
+            if chave == "reg":
+                vals = [REGIOES.get(vals[0], vals[0].replace(" (state)", ""))]
+            m = resto[len(dims):]
+            linhas.append([data, ci] + vals + [round(float(m[0]), 2)] + [int(x) for x in m[1:]])
+        out[chave] = linhas
+        print(f"  {aba}: {len(linhas)} linhas")
+    return out
+
+
 # ── Nuvemshop ───────────────────────────────────────────────────────────
 TIPOS = ["CONJUNTO PEITORAL+ GUIA", "CONJUNTO PEITORAL + GUIA", "COLEIRA DE GATO",
          "PEITORAL MOLETOM", "PEITORAL AERADO", "PEITORAL H", "PEITORAL", "COLEIRA",
@@ -185,6 +240,7 @@ def main():
     IMG_DIR.mkdir(exist_ok=True)
     m = meta()
     limpar_thumbs()
+    m["publicos"] = publicos([c["n"] for c in m["campanhas"]])
     print(f"  {len(m['linhas'])} linhas, até {m['ultimo_dia']}")
 
     agora = datetime.now(BRT)

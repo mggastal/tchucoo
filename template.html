@@ -124,7 +124,7 @@ footer{border-top:1px solid var(--line);padding:22px 20px;text-align:center;font
   <nav class="tabs">
     <a href="#geral">Visão geral</a><a href="#diario">Evolução</a><a href="#periodos">Semanas e meses</a>
     <a href="#horarios">Horários</a><a href="#funil">Funil</a><a href="#produtos">Produtos</a>
-    <a href="#campanhas">Campanhas</a><a href="#pedidos">Pedidos</a>
+    <a href="#publicos">Públicos</a><a href="#campanhas">Campanhas</a><a href="#pedidos">Pedidos</a>
   </nav>
 </header>
 
@@ -202,6 +202,21 @@ footer{border-top:1px solid var(--line);padding:22px 20px;text-align:center;font
     <div class="card"><h3>Faturamento por tipo de produto</h3><div class="cv"><canvas id="cTipo"></canvas></div></div>
     <div class="card"><h3>Mais vendidos</h3><div class="tw" style="max-height:290px"><table id="tProd"></table></div></div>
   </div>
+</section>
+
+<section id="publicos">
+  <h2>Públicos</h2>
+  <div class="sub">Quem mais compra, no período escolhido. A Nuvemshop não diz de qual público veio cada venda, então aqui a comparação usa carrinhos e compras registradas pelo Meta. "Melhor" = menor custo por compra (mínimo de 3 compras); sem isso, menor custo por carrinho.</div>
+  <div class="insights" id="pubIns" style="grid-template-columns:repeat(4,1fr)"></div>
+  <div class="card"><h3>Conjuntos de anúncios</h3><div class="ch">F = público frio, Q = público quente</div>
+    <div class="tw"><table id="tConj"></table></div></div>
+  <div class="card" style="margin-top:14px"><h3>Compras por idade e gênero</h3>
+    <div class="legend"><span><i style="background:var(--fat)"></i>Mulheres</span><span><i style="background:var(--inv)"></i>Homens</span></div>
+    <div class="cv sm"><canvas id="cIdade"></canvas></div></div>
+  <div class="card" style="margin-top:14px"><h3>Idade e gênero</h3><div class="tw" style="max-height:300px"><table id="tIdade"></table></div></div>
+  <div class="card" style="margin-top:14px"><h3>Posicionamentos</h3><div class="tw" style="max-height:300px"><table id="tPos"></table></div></div>
+  <div class="card" style="margin-top:14px"><h3>Estados</h3><div class="ch">O Meta só entrega investimento e impressões por estado (sem carrinho nem compras), somando todas as campanhas.</div>
+    <div class="tw" style="max-height:300px"><table id="tReg"></table></div></div>
 </section>
 
 <section id="campanhas">
@@ -304,7 +319,7 @@ function syncCtrl(){
   pres.querySelectorAll('button').forEach(b=>b.classList.toggle('on', b.dataset.k===S.preset));
   dIni.value=S.ini; dFim.value=S.fim; dIni.min=dFim.min=D.inicio;
 }
-dIni.onchange = dFim.onchange = () => { if(!dIni.value||!dFim.value) return; S.ini=dIni.value; S.fim=dFim.value; if(S.ini>S.fim) [S.ini,S.fim]=[S.fim,S.ini]; S.preset=null; syncCtrl(); render(); };
+dIni.onchange = dFim.onchange = () => { if(!dIni.value||!dFim.value) return; S.ini=dIni.value; S.fim=dFim.value; if(S.ini>S.fim) [S.ini,S.fim]=[S.fim,S.ini]; if(S.ini<D.inicio) S.ini=D.inicio; if(S.fim<D.inicio) S.fim=D.inicio; S.preset=null; syncCtrl(); render(); };
 document.querySelectorAll('#modoInv button').forEach(b => b.onclick = () => {
   S.modo=b.dataset.m; document.querySelectorAll('#modoInv button').forEach(x=>x.classList.toggle('on',x===b)); render(); });
 
@@ -342,6 +357,7 @@ function render(){
   renderHorarios(A);
   renderFunil(A);
   renderProdutos(A);
+  renderPublicos();
   renderCampanhas();
   renderPedidos(A);
 }
@@ -542,6 +558,64 @@ function renderCampanhas(){
   const ga = soma(ms,'a');
   tabela('tAds', ['Anúncio','Campanha'].concat(cab), Object.entries(ga).sort((a,b)=>b[1].inv-a[1].inv).map(([a,x])=>{ const ad=ADS[a];
     return [[`${ad.t?`<img class="thumb" src="${ad.t}" loading="lazy"> `:''}${esc(ad.n)}`, ad.n], [`<span style="font-size:11px;color:#8C7D71">${esc(CAMPS[ad.c].n)}</span>`, CAMPS[ad.c].n]].concat(row(x)); }));
+}
+
+// ── públicos ──
+const GEN = {female:'Mulheres', male:'Homens', unknown:'Não informado'};
+function somaPub(linhas, chave){
+  const g = {};
+  linhas.forEach(r=>{ const k = chave(r); if(k==null) return;
+    const x = g[k] = g[k] || {k, inv:0, imp:0, clk:0, lpv:0, atc:0, ic:0, pix:0};
+    ['inv','imp','clk','lpv','atc','ic','pix'].forEach(f=>x[f]+=r[f]||0); });
+  return Object.values(g);
+}
+function melhor(arr){
+  const totInv = arr.reduce((a,x)=>a+x.inv,0);
+  const c1 = arr.filter(x=>x.pix>=3).sort((a,b)=>a.inv/a.pix-b.inv/b.pix)[0];
+  if(c1) return {x:c1, txt:`${brl(c1.inv/c1.pix)} por compra · ${c1.pix} compras · ${pct(totInv?c1.inv/totInv*100:null)} do investimento`};
+  const c2 = arr.filter(x=>x.atc>=5).sort((a,b)=>a.inv/a.atc-b.inv/b.atc)[0];
+  if(c2) return {x:c2, txt:`${brl(c2.inv/c2.atc)} por carrinho · ${c2.atc} carrinhos (poucas compras no período)`};
+  return null;
+}
+function linhaPub(x, totInv){
+  return [[brl(x.inv),x.inv],[pct(totInv?x.inv/totInv*100:null),x.inv],[n0(x.imp),x.imp],[n0(x.lpv),x.lpv],[n0(x.atc),x.atc],[n0(x.ic),x.ic],[n0(x.pix),x.pix],
+    [x.atc?brl(x.inv/x.atc):'–',x.atc?x.inv/x.atc:1e9],[x.pix?brl(x.inv/x.pix):'–',x.pix?x.inv/x.pix:1e9]];
+}
+const CAB_PUB = ['Investimento','% invest.','Impressões','Visualiz. pág.','Carrinho','Checkout','Compras','Custo/carrinho','Custo/compra'];
+function renderPublicos(){
+  const ok = (d,ci) => d>=S.ini && d<=S.fim && (ci<0 ? true : usaCamp(ci));
+  const PB = D.meta.publicos || {ga:[],pos:[],reg:[]};
+  // conjuntos (aba meta-ads)
+  const ms = M.filter(m=>ok(m.data,m.c)).map(m=>({...m, conj:ADS[m.a].conj, camp:CAMPS[m.c].n}));
+  const conj = somaPub(ms, r=>r.camp+'||'+r.conj);
+  const ga = PB.ga.filter(r=>ok(r[0],r[1])).map(r=>({idade:r[2], gen:r[3], inv:r[4], imp:r[5], lpv:r[6], atc:r[7], ic:r[8], pix:r[9]}));
+  const pos = somaPub(PB.pos.filter(r=>ok(r[0],r[1])).map(r=>({k:r[2], inv:r[3], imp:r[4], lpv:r[5], atc:r[6], ic:r[7], pix:r[8]})), r=>r.k);
+  const reg = somaPub(PB.reg.filter(r=>ok(r[0],-1)).map(r=>({k:r[2], inv:r[3], imp:r[4], lpv:r[5], atc:r[6], ic:r[7], pix:r[8]})), r=>r.k);
+  const temp = somaPub(ms, r=>/^Q-/i.test(r.conj)?'Público quente':/^F-/i.test(r.conj)?'Público frio':null);
+  const idg = somaPub(ga.filter(r=>r.gen!=='unknown' && r.idade!=='Unknown'), r=>r.idade+' · '+GEN[r.gen]);
+
+  const card = (tit, m, nome) => `<div class="ins"><div class="kl">${tit}</div><div class="big" style="font-size:18px">${m?nome(m.x):'–'}</div><div class="kd">${m?m.txt:'Sem dados suficientes no período'}</div></div>`;
+  pubIns.innerHTML = card('Melhor conjunto', melhor(conj), x=>esc(x.k.split('||')[1])) + card('Melhor idade e gênero', melhor(idg), x=>x.k)
+    + card('Melhor posicionamento', melhor(pos), x=>x.k) + card('Frio × quente', melhor(temp), x=>x.k);
+
+  const tot = a => a.reduce((s,x)=>s+x.inv,0);
+  const tc = tot(conj);
+  tabela('tConj', ['Conjunto','Público'].concat(CAB_PUB), conj.sort((a,b)=>b.inv-a.inv).map(x=>{ const [camp,cj]=x.k.split('||');
+    const tipo = /^Q-/i.test(cj) ? 'Quente' : /^F-/i.test(cj) ? 'Frio' : '–';
+    return [[`${esc(cj)}<div style="font-size:10.5px;color:#8C7D71">${esc(camp)}</div>`,cj],[tipo==='–'?'–':`<span class="tag ${tipo==='Quente'?'v':''}">${tipo}</span>`,tipo]].concat(linhaPub(x,tc)); }), null, {1:'l'});
+
+  const IDADES = ['18-24','25-34','35-44','45-54','55-64','65+'];
+  const porIG = (i,g) => ga.filter(r=>r.idade===i && r.gen===g).reduce((a,r)=>a+r.pix,0);
+  chart('cIdade', {type:'bar', data:{labels:IDADES, datasets:[barra('Mulheres',IDADES.map(i=>porIG(i,'female')),C.fat), barra('Homens',IDADES.map(i=>porIG(i,'male')),C.inv)]},
+    options:{scales:{x:eixoX, y:eixoY(v=>Number.isInteger(v)?v:'')}, plugins:{tooltip:{callbacks:{label:c=>{ const g=c.datasetIndex?'male':'female'; const i=IDADES[c.dataIndex];
+      const inv=ga.filter(r=>r.idade===i&&r.gen===g).reduce((a,r)=>a+r.inv,0); return `${c.dataset.label}: ${c.raw} compras · ${brl(inv)} investidos`; }}},
+      datalabels:{display:c=>c.dataset.data[c.dataIndex]>0?'auto':false}}}}, v=>v);
+  const ti = tot(idg);
+  tabela('tIdade', ['Idade e gênero'].concat(CAB_PUB), idg.sort((a,b)=>b.inv-a.inv).map(x=>[[x.k,x.k]].concat(linhaPub(x,ti))));
+  const tp = tot(pos);
+  tabela('tPos', ['Posicionamento'].concat(CAB_PUB), pos.sort((a,b)=>b.inv-a.inv).map(x=>[[x.k,x.k]].concat(linhaPub(x,tp))));
+  const tr = tot(reg);
+  tabela('tReg', ['Estado','Investimento','% invest.','Impressões','CPM'], reg.sort((a,b)=>b.inv-a.inv).map(x=>[[x.k,x.k],[brl(x.inv),x.inv],[pct(tr?x.inv/tr*100:null),x.inv],[n0(x.imp),x.imp],[x.imp?brl(x.inv/x.imp*1000):'–',x.imp?x.inv/x.imp:1e9]]));
 }
 
 // ── pedidos ──
