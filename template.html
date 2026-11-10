@@ -264,6 +264,7 @@ const MESES = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov'
 // ── formatação ──
 const brl = v => 'R$ ' + (v||0).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
 const brl0 = v => 'R$ ' + Math.round(v||0).toLocaleString('pt-BR');
+const rkf = v => v==null||!v ? '' : 'R$ '+kfmt(v);
 const kfmt = v => Math.abs(v)>=1000 ? (v/1000).toLocaleString('pt-BR',{maximumFractionDigits:1})+'k' : Math.round(v).toLocaleString('pt-BR');
 const n0 = v => (v||0).toLocaleString('pt-BR');
 const xr = v => v==null||!isFinite(v) ? '–' : v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})+'x';
@@ -340,6 +341,9 @@ function chart(id, cfg, rotulos){
     cfg.options = cfg.options||{}; cfg.options.plugins = cfg.options.plugins||{};
     cfg.options.plugins.datalabels = Object.assign({display:'auto', anchor:'end', align:'end', offset:1, clamp:true,
       color:'#5E5047', font:{weight:600, size:10, family:'Inter'}, formatter:rotulos}, cfg.options.plugins.datalabels||{});
+  } else if(rotulos){
+    cfg.options = cfg.options||{}; cfg.options.plugins = cfg.options.plugins||{};
+    cfg.options.plugins.datalabels = {display:false};
   }
   charts[id] = new Chart(cv, cfg);
 }
@@ -413,13 +417,13 @@ function renderDiario(A){
   const denso = R.length>31;
   chart('cDia', {type:'bar', data:{labels:L, datasets:[barra('Faturamento',R.map(r=>r.fat),C.fat), barra('Investimento',R.map(r=>r.inv),C.inv)]},
     options:{scales:{x:eixoX, y:eixoY(kfmt)}, plugins:{tooltip:{callbacks:{...tip, label:c=>c.dataset.label+': '+brl(c.raw), afterBody:c=>{const r=R[c[0].dataIndex]; return S.gran==='dia'?[]:['ROAS: '+xr(div(r.fat,r.inv)), 'Pedidos: '+r.ped];}}},
-      datalabels:{display:c=>!denso && c.datasetIndex===0 && c.dataset.data[c.dataIndex]>0 ? 'auto':false}}}}, v=>kfmt(v));
+      datalabels:{display:c=>!denso && c.dataset.data[c.dataIndex]>0 ? 'auto':false}}}}, rkf);
   const roas = R.map(r=>r.inv?r.fat/r.inv:null);
   chart('cRoas', {type:'line', data:{labels:L, datasets:[{label:'ROAS', data:roas, borderColor:C.maroon, backgroundColor:C.maroon, borderWidth:2, pointRadius:R.length>45?0:3, pointHoverRadius:5, spanGaps:true, tension:.25}]},
     options:{scales:{x:eixoX, y:eixoY(v=>v+'x')}, plugins:{tooltip:{callbacks:{...tip, label:c=>'ROAS: '+xr(c.raw)}}, datalabels:{align:'top', display:denso?false:'auto'}}}}, v=>v==null?'':v.toLocaleString('pt-BR',{maximumFractionDigits:1})+'x');
   const tk = R.map(r=>r.ped?r.fat/r.ped:null);
   chart('cTicket', {type:'line', data:{labels:L, datasets:[{label:'Ticket médio', data:tk, borderColor:C.fat, backgroundColor:C.fat, borderWidth:2, pointRadius:R.length>45?0:3, spanGaps:true, tension:.25}]},
-    options:{scales:{x:eixoX, y:eixoY(v=>'R$'+v)}, plugins:{tooltip:{callbacks:{...tip, label:c=>'Ticket: '+brl(c.raw)}}, datalabels:{align:'top', display:denso?false:'auto'}}}}, v=>v==null?'':Math.round(v));
+    options:{scales:{x:eixoX, y:eixoY(v=>'R$'+v)}, plugins:{tooltip:{callbacks:{...tip, label:c=>'Ticket: '+brl(c.raw)}}, datalabels:{align:'top', display:denso?false:'auto'}}}}, v=>v==null?'':'R$ '+Math.round(v));
   chart('cPed', {type:'bar', data:{labels:L, datasets:[barra('Pedidos',R.map(r=>r.ped),C.fat)]},
     options:{scales:{x:eixoX, y:eixoY(v=>v)}, plugins:{tooltip:{callbacks:{...tip}}, datalabels:{display:c=>!denso&&c.dataset.data[c.dataIndex]>0?'auto':false}}}}, v=>v);
   // tabela
@@ -447,7 +451,7 @@ function renderPeriodos(){
   [['cMes',meses],['cSem',sems]].forEach(([id,R])=>{
     chart(id, {type:'bar', data:{labels:R.map(r=>r.rot), datasets:[barra('Faturamento',R.map(r=>r.fat),C.fat), barra('Investimento',R.map(r=>r.inv),C.inv)]},
       options:{scales:{x:eixoX, y:eixoY(kfmt)}, plugins:{tooltip:{callbacks:{title:c=>{const r=R[c[0].dataIndex]; return dBR(r.ini)+' a '+dBR(r.fim)+' ('+r.dias+' dias)';},
-        label:c=>c.dataset.label+': '+brl(c.raw), afterBody:c=>{const r=R[c[0].dataIndex]; return ['ROAS: '+xr(div(r.fat,r.inv)), 'Pedidos: '+r.ped, 'Ticket: '+(r.ped?brl(r.fat/r.ped):'–')];}}}}}}, v=>kfmt(v));
+        label:c=>c.dataset.label+': '+brl(c.raw), afterBody:c=>{const r=R[c[0].dataIndex]; return ['ROAS: '+xr(div(r.fat,r.inv)), 'Pedidos: '+r.ped, 'Ticket: '+(r.ped?brl(r.fat/r.ped):'–')];}}}}}}, rkf);
   });
   const cab = ['Período','Dias','Pedidos','Faturamento','Fat./dia','Ticket médio','Investimento','ROAS','Custo/pedido'];
   const lin = R => R.slice().reverse().map(r=>[[r.rot, r.k], [r.dias, r.dias], [n0(r.ped), r.ped], [brl(r.fat), r.fat], [brl(r.fat/r.dias), r.fat/r.dias],
@@ -482,7 +486,7 @@ function renderHorarios(A){
 
   const ordem = ORD_SEM.map(w=>sem[w]);
   chart('cSemana', {type:'bar', data:{labels:ordem.map(s=>DIAS[s.w]), datasets:[barra('Faturamento',ordem.map(s=>s.fat),C.fat)]},
-    options:{scales:{x:eixoX, y:eixoY(kfmt)}, plugins:{tooltip:{callbacks:{label:c=>{const s=ordem[c.dataIndex]; return ['Faturamento: '+brl(s.fat), 'Pedidos: '+s.ped, 'Ticket: '+(s.ped?brl(s.fat/s.ped):'–')];}}}}}}, v=>kfmt(v));
+    options:{scales:{x:eixoX, y:eixoY(kfmt)}, plugins:{tooltip:{callbacks:{label:c=>{const s=ordem[c.dataIndex]; return ['Faturamento: '+brl(s.fat), 'Pedidos: '+s.ped, 'Ticket: '+(s.ped?brl(s.fat/s.ped):'–')];}}}}}}, rkf);
 
   // horário (com filtro de dia)
   chipsDia.innerHTML = [['all','Todos']].concat(ORD_SEM.map(w=>[String(w),DIAS[w]])).map(([k,t])=>`<button class="chip ${S.diaHora===k?'on':''}" data-k="${k}">${t}</button>`).join('');
