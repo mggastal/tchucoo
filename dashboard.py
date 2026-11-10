@@ -25,7 +25,7 @@ INICIO     = "2026-08-30"          # 1ª venda oficial na Nuvemshop
 EXCLUIR    = {109: "venda teste (dona da loja)"}
 RE_VENDAS  = r"VENDAS"            # campanhas que entram no ROAS padrão
 BLACK      = {"inicio": "2026-10-21", "fim": "", "campanha": "BLACKFRIDAY"}
-STATUS_OK  = {"Recebido"}
+STATUS_FORA = {"Recusado"}   # Pendente conta (Pix demora a confirmar na Nuvemshop)
 IMG_DIR    = Path("imgs")
 
 BRT = timezone(timedelta(hours=-3))
@@ -211,7 +211,7 @@ def pedidos():
         motivo = None
         if p["num"] in EXCLUIR:
             motivo = EXCLUIR[p["num"]]
-        elif p["status"] not in STATUS_OK:
+        elif p["status"] in STATUS_FORA or not p["status"]:
             motivo = p["status"].lower() or "sem status"
         elif p["data"] < INICIO:
             motivo = "antes da 1ª venda oficial"

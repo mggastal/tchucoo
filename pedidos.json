@@ -1,4 +1,27 @@
 {
+ "223": {
+  "num": 223,
+  "data": "2026-11-09",
+  "hora": "21:00",
+  "cliente": "Jonatas S.",
+  "cliente_id": "4b51ecfba9",
+  "total": 112.98,
+  "unidades": 1,
+  "status": "Recebido",
+  "pagamento": "Getnet - Cartão de crédito",
+  "envio_status": "Enviada",
+  "envio": "Frete fixo",
+  "itens": [
+   {
+    "produto": "CONJUNTO PEITORAL+ GUIA NEOPRENE FLORECER",
+    "variante": "Único",
+    "sku": "TCH0008",
+    "qtd": 1,
+    "preco": 99.99,
+    "total": 99.99
+   }
+  ]
+ },
  "222": {
   "num": 222,
   "data": "2026-11-09",
