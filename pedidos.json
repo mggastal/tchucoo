@@ -1,4 +1,27 @@
 {
+ "226": {
+  "num": 226,
+  "data": "2026-11-10",
+  "hora": "14:39",
+  "cliente": "Camila L.",
+  "cliente_id": "3d14df882d",
+  "total": 42.97,
+  "unidades": 2,
+  "status": "Recebido",
+  "pagamento": "Getnet - Pix",
+  "envio_status": "Enviada",
+  "envio": "São Paulo",
+  "itens": [
+   {
+    "produto": "COLEIRA DE GATO TATTOO MARINHEIRO",
+    "variante": "Único",
+    "sku": "CAT50106",
+    "qtd": 2,
+    "preco": 15.99,
+    "total": 31.98
+   }
+  ]
+ },
  "225": {
   "num": 225,
   "data": "2026-11-10",

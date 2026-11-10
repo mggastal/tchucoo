@@ -5,10 +5,17 @@
   "lancamento": "",
   "atualizado": "10/11/2026",
   "kpis": {
+<<<<<<< Updated upstream
     "spend": 4585.89,
     "purchase": 110,
     "cpv": 41.69,
     "faturamento": 11560.7,
+=======
+    "spend": 4601.8,
+    "purchase": 111,
+    "cpv": 41.46,
+    "faturamento": 11603.67,
+>>>>>>> Stashed changes
     "roas": 2.52
   }
 }
