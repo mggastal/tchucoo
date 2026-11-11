@@ -172,8 +172,11 @@ footer{border-top:1px solid var(--line);padding:22px 20px;text-align:center;font
 </section>
 
 <section id="horarios">
-  <h2>Horários e dias da semana</h2>
-  <div class="sub">Quando a tchucoo vende, no período escolhido. Hora do pedido na Nuvemshop.</div>
+  <div style="display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap;margin-bottom:12px">
+    <div><h2>Horários e dias da semana</h2>
+    <div class="sub" style="margin:0">Quando a tchucoo vende, no período escolhido. Hora do pedido na Nuvemshop.</div></div>
+    <div class="seg" id="hgrp" style="margin-left:auto"><button data-n="1" class="on">Por hora</button><button data-n="3">3 em 3h</button><button data-n="6">6 em 6h</button><button data-n="12">12 em 12h</button></div>
+  </div>
   <div class="insights" id="insights"></div>
   <div class="grid2">
     <div class="card"><h3>Faturamento por dia da semana</h3><div class="ch">Total no período</div>
@@ -288,7 +291,7 @@ const CAMPS = D.meta.campanhas, ADS = D.meta.anuncios;
 const ultimoDado = [P.length?P[P.length-1].data:'', D.meta.ultimo_dia||''].sort().pop();
 const ULT_PED = P.length ? P[P.length-1].data : ultimoDado;
 
-const S = {gran:'dia', ini:null, fim:null, preset:'30', modo:'vendas', diaHora:'all', heat:'ped',
+const S = {gran:'dia', ini:null, fim:null, preset:'30', modo:'vendas', diaHora:'all', heat:'ped', hgrp:1,
   labels: (()=>{ try{ return JSON.parse(localStorage.getItem('tch_labels')||'{}'); }catch(e){ return {}; } })()};
 
 const usaCamp = c => S.modo==='todas' || CAMPS[c].vendas;
@@ -407,6 +410,8 @@ function rotG(r, curto){
   return dBR(r.d)+(curto?'':' '+DIAS[pd(r.d).getDay()]);
 }
 const GTX = {dia:['diário','diária','por dia'], sem:['semanal','semanal','por semana'], mes:['mensal','mensal','por mês']};
+document.querySelectorAll('#hgrp button').forEach(b => b.onclick = () => {
+  S.hgrp=+b.dataset.n; document.querySelectorAll('#hgrp button').forEach(x=>x.classList.toggle('on',x===b)); renderHorarios(agrega(S.ini,S.fim)); });
 document.querySelectorAll('#gran button').forEach(b => b.onclick = () => {
   S.gran=b.dataset.g; document.querySelectorAll('#gran button').forEach(x=>x.classList.toggle('on',x===b)); renderDiario(agrega(S.ini,S.fim)); });
 function renderDiario(A){
@@ -468,6 +473,7 @@ function renderHorarios(A){
   ps.forEach(p=>{ sem[p.w].ped++; sem[p.w].fat+=p.total; });
   const heat = Array.from({length:7},()=>Array.from({length:24},()=>({ped:0,fat:0})));
   ps.forEach(p=>{ heat[p.w][p.h].ped++; heat[p.w][p.h].fat+=p.total; });
+  const GH = S.hgrp, hm = Array.from({length:7},(_,w)=>Array.from({length:24/GH},(_,i)=>{ const cs=heat[w].slice(i*GH,i*GH+GH); return {ped:cs.reduce((a,c)=>a+c.ped,0), fat:cs.reduce((a,c)=>a+c.fat,0)}; }));
 
   // insights
   const melhorDia = sem.slice().sort((a,b)=>b.fat-a.fat)[0];
@@ -491,21 +497,24 @@ function renderHorarios(A){
   // horário (com filtro de dia)
   chipsDia.innerHTML = [['all','Todos']].concat(ORD_SEM.map(w=>[String(w),DIAS[w]])).map(([k,t])=>`<button class="chip ${S.diaHora===k?'on':''}" data-k="${k}">${t}</button>`).join('');
   chipsDia.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{ S.diaHora=b.dataset.k; renderHorarios(agrega(S.ini,S.fim)); });
-  const hs = Array.from({length:24},(_,h)=>{ const sel = S.diaHora==='all' ? ps.filter(p=>p.h===h) : ps.filter(p=>p.h===h && p.w===+S.diaHora); return {ped:sel.length, fat:sel.reduce((a,p)=>a+p.total,0)}; });
-  chart('cHora', {type:'bar', data:{labels:hs.map((_,h)=>hh(h)), datasets:[barra('Pedidos',hs.map(x=>x.ped),C.fat)]},
-    options:{scales:{x:{...eixoX, ticks:{maxRotation:0, autoSkip:false, callback:(v,i)=>i%2?'':hh(i)}}, y:eixoY(v=>Number.isInteger(v)?v:'')},
-      plugins:{tooltip:{callbacks:{title:c=>hh(c[0].dataIndex)+' às '+hh(c[0].dataIndex+1), label:c=>{const x=hs[c.dataIndex]; return ['Pedidos: '+x.ped, 'Faturamento: '+brl(x.fat)];}}}, datalabels:{display:c=>c.dataset.data[c.dataIndex]>0?'auto':false}}}}, v=>v);
+  const G = S.hgrp, NB = 24/G, faixa = i => G===1 ? hh(i) : hh(i*G)+'–'+hh(i*G+G);
+  const hs = Array.from({length:NB},(_,i)=>{ const sel = ps.filter(p=>Math.floor(p.h/G)===i && (S.diaHora==='all' || p.w===+S.diaHora)); return {ped:sel.length, fat:sel.reduce((a,p)=>a+p.total,0)}; });
+  const totH = hs.reduce((a,x)=>a+x.ped,0);
+  chart('cHora', {type:'bar', data:{labels:hs.map((_,i)=>faixa(i)), datasets:[barra('Pedidos',hs.map(x=>x.ped),C.fat)]},
+    options:{scales:{x:{...eixoX, ticks:{maxRotation:0, autoSkip:false, callback:(v,i)=>G===1&&i%2?'':faixa(i)}}, y:eixoY(v=>Number.isInteger(v)?v:'')},
+      plugins:{tooltip:{callbacks:{title:c=>hh(c[0].dataIndex*G)+' às '+hh(c[0].dataIndex*G+G), label:c=>{const x=hs[c.dataIndex]; return ['Pedidos: '+x.ped+(totH?' ('+pct(x.ped/totH*100)+')':''), 'Faturamento: '+brl(x.fat)];}}}, datalabels:{display:c=>c.dataset.data[c.dataIndex]>0?'auto':false}}}}, v=>G===1?v:v+(totH?' · '+Math.round(v/totH*100)+'%':''));
 
   // mapa de calor
   chipsHeat.querySelectorAll('.chip').forEach(b=>{ b.classList.toggle('on', b.dataset.m===S.heat); b.onclick=()=>{ S.heat=b.dataset.m; renderHorarios(agrega(S.ini,S.fim)); }; });
-  const max = Math.max(1, ...heat.flat().map(c=>c[S.heat]));
-  let h = '<tr><th></th>'+Array.from({length:24},(_,i)=>`<th>${String(i).padStart(2,'0')}</th>`).join('')+'</tr>';
+  const max = Math.max(1, ...hm.flat().map(c=>c[S.heat]));
+  const hx = i => String(i).padStart(2,'0');
+  let h = '<tr><th></th>'+hm[0].map((_,i)=>`<th>${GH===1?hx(i):hx(i*GH)+'–'+hx(i*GH+GH)+'h'}</th>`).join('')+'</tr>';
   ORD_SEM.forEach(w=>{
-    h += `<tr><td class="dl">${DIAS[w]}</td>` + heat[w].map((c,i)=>{
+    h += `<tr><td class="dl">${DIAS[w]}</td>` + hm[w].map((c,i)=>{
       const v=c[S.heat], a = v ? .15 + .85*v/max : 0;
       const bg = v ? `rgba(171,132,88,${a.toFixed(2)})` : '#F7F2EB';
       const txt = v ? (S.heat==='ped'? v : kfmt(v)) : '';
-      return `<td style="background:${bg};color:${a>.6?'#fff':'#241612'}" title="${DIAS_L[w]} ${String(i).padStart(2,'0')}h: ${c.ped} pedidos, ${brl(c.fat)}">${txt}</td>`;
+      return `<td style="background:${bg};color:${a>.6?'#fff':'#241612'}" title="${DIAS_L[w]} ${GH===1?hx(i)+'h':hx(i*GH)+'h às '+hx(i*GH+GH)+'h'}: ${c.ped} pedidos, ${brl(c.fat)}">${txt}</td>`;
     }).join('') + '</tr>';
   });
   document.getElementById('heat').innerHTML = h;
