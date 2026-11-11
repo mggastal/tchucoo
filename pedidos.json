@@ -1,4 +1,35 @@
 {
+ "227": {
+  "num": 227,
+  "data": "2026-11-10",
+  "hora": "19:28",
+  "cliente": "Denise W.",
+  "cliente_id": "b49c7b250a",
+  "total": 90.97,
+  "unidades": 2,
+  "status": "Recebido",
+  "pagamento": "Getnet - Pix",
+  "envio_status": "Enviada",
+  "envio": "Frete fixo",
+  "itens": [
+   {
+    "produto": "ADAPTADOR DE CINTO DE SEGURANÇA LARANJINHA",
+    "variante": "Único",
+    "sku": "TCH0022",
+    "qtd": 1,
+    "preco": 37.99,
+    "total": 37.99
+   },
+   {
+    "produto": "GUIA LARANJINHA",
+    "variante": "G",
+    "sku": "354290855G",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   }
+  ]
+ },
  "226": {
   "num": 226,
   "data": "2026-11-10",
