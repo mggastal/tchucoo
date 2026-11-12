@@ -1,4 +1,121 @@
 {
+ "238": {
+  "num": 238,
+  "data": "2026-11-12",
+  "hora": "10:15",
+  "cliente": "Liz F.",
+  "cliente_id": "a537eee2f3",
+  "total": 78.97,
+  "unidades": 2,
+  "status": "Recebido",
+  "pagamento": "Getnet - Pix",
+  "envio_status": "Enviada",
+  "envio": "São Paulo",
+  "itens": [
+   {
+    "produto": "COLEIRA DE GATO TATTOO MARINHEIRO",
+    "variante": "Único",
+    "sku": "CAT50106",
+    "qtd": 1,
+    "preco": 15.99,
+    "total": 15.99
+   },
+   {
+    "produto": "CONJUNTO PEITORAL+ GUIA FITA ECO",
+    "variante": "Único",
+    "sku": "TCH0049",
+    "qtd": 1,
+    "preco": 51.99,
+    "total": 51.99
+   }
+  ]
+ },
+ "237": {
+  "num": 237,
+  "data": "2026-11-12",
+  "hora": "10:05",
+  "cliente": "Israel F.",
+  "cliente_id": "00bd36720b",
+  "total": 138.77,
+  "unidades": 3,
+  "status": "Recebido",
+  "pagamento": "Getnet - Cartão de crédito",
+  "envio_status": "Enviada",
+  "envio": "Frete grátis a partir de R$ 115,00",
+  "itens": [
+   {
+    "produto": "CINTO DE SEGURANÇA HAHAHA",
+    "variante": "Único",
+    "sku": "TCH0156",
+    "qtd": 1,
+    "preco": 47.99,
+    "total": 47.99
+   },
+   {
+    "produto": "GUIA HAHAHA",
+    "variante": "P",
+    "sku": "354297102P",
+    "qtd": 1,
+    "preco": 60.79,
+    "total": 60.79
+   },
+   {
+    "produto": "PEITORAL H HAHAHA",
+    "variante": "PP",
+    "sku": "354291046PP",
+    "qtd": 1,
+    "preco": 29.99,
+    "total": 29.99
+   }
+  ]
+ },
+ "236": {
+  "num": 236,
+  "data": "2026-11-12",
+  "hora": "08:22",
+  "cliente": "Amanda A.",
+  "cliente_id": "0111db2e46",
+  "total": 201.56,
+  "unidades": 4,
+  "status": "Recebido",
+  "pagamento": "Getnet - Pix",
+  "envio_status": "Enviada",
+  "envio": "Frete grátis a partir de R$ 115,00",
+  "itens": [
+   {
+    "produto": "GUIA HAHAHA",
+    "variante": "P",
+    "sku": "354297102P",
+    "qtd": 1,
+    "preco": 60.79,
+    "total": 60.79
+   },
+   {
+    "produto": "PEITORAL H POA POA",
+    "variante": "M",
+    "sku": "354290786M",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   },
+   {
+    "produto": "PEITORAL H HAHAHA",
+    "variante": "P",
+    "sku": "354291046P",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   },
+   {
+    "produto": "GUIA POA POA",
+    "variante": "P",
+    "sku": "354290674P",
+    "qtd": 1,
+    "preco": 60.79,
+    "total": 60.79
+   }
+  ]
+ },
  "235": {
   "num": 235,
   "data": "2026-11-11",
