@@ -1,4 +1,197 @@
 {
+ "235": {
+  "num": 235,
+  "data": "2026-11-11",
+  "hora": "19:36",
+  "cliente": "Monara M.",
+  "cliente_id": "adc45e9fe5",
+  "total": 28.98,
+  "unidades": 1,
+  "status": "Recebido",
+  "pagamento": "Getnet - Pix",
+  "envio_status": "Enviada",
+  "envio": "Frete fixo",
+  "itens": [
+   {
+    "produto": "COLEIRA DE GATO CORRIDA DE LISTRAS",
+    "variante": "Único",
+    "sku": "CAT50104",
+    "qtd": 1,
+    "preco": 15.99,
+    "total": 15.99
+   }
+  ]
+ },
+ "234": {
+  "num": 234,
+  "data": "2026-11-11",
+  "hora": "18:03",
+  "cliente": "Karine M.",
+  "cliente_id": "aa3707df20",
+  "total": 64.97,
+  "unidades": 2,
+  "status": "Recebido",
+  "pagamento": "Getnet - Cartão de crédito",
+  "envio_status": "Enviada",
+  "envio": "Frete fixo",
+  "itens": [
+   {
+    "produto": "COLEIRA DE GATO FLORECER",
+    "variante": "Único",
+    "sku": "TCH0015",
+    "qtd": 1,
+    "preco": 25.99,
+    "total": 25.99
+   },
+   {
+    "produto": "COLEIRA DE GATO OCEAN",
+    "variante": "Único",
+    "sku": "TCH0162",
+    "qtd": 1,
+    "preco": 25.99,
+    "total": 25.99
+   }
+  ]
+ },
+ "233": {
+  "num": 233,
+  "data": "2026-11-11",
+  "hora": "17:37",
+  "cliente": "Renata T.",
+  "cliente_id": "0c0afc56ff",
+  "total": 145.91,
+  "unidades": 2,
+  "status": "Recebido",
+  "pagamento": "Getnet - Pix",
+  "envio_status": "Enviada",
+  "envio": "Frete grátis a partir de R$ 115,00",
+  "itens": [
+   {
+    "produto": "COLEIRA DE GATO FLORECER",
+    "variante": "Único",
+    "sku": "TCH0015",
+    "qtd": 1,
+    "preco": 25.99,
+    "total": 25.99
+   },
+   {
+    "produto": "PEITORAL AERADO E GUIA SUNNY",
+    "variante": "Único",
+    "sku": "TCH0032",
+    "qtd": 1,
+    "preco": 119.92,
+    "total": 119.92
+   }
+  ]
+ },
+ "232": {
+  "num": 232,
+  "data": "2026-11-11",
+  "hora": "17:04",
+  "cliente": "Maria B.",
+  "cliente_id": "0e1a3e8a7f",
+  "total": 28.98,
+  "unidades": 1,
+  "status": "Recebido",
+  "pagamento": "Getnet - Pix",
+  "envio_status": "Enviada",
+  "envio": "Frete fixo",
+  "itens": [
+   {
+    "produto": "COLEIRA DE GATO TATTOO MARINHEIRO",
+    "variante": "Único",
+    "sku": "CAT50106",
+    "qtd": 1,
+    "preco": 15.99,
+    "total": 15.99
+   }
+  ]
+ },
+ "231": {
+  "num": 231,
+  "data": "2026-11-11",
+  "hora": "14:36",
+  "cliente": "Adson G.",
+  "cliente_id": "6a849cd2d5",
+  "total": 116.97,
+  "unidades": 2,
+  "status": "Recusado",
+  "pagamento": "Getnet - Pix",
+  "envio_status": "Por embalar",
+  "envio": "Frete fixo",
+  "itens": [
+   {
+    "produto": "CONJUNTO PEITORAL+ GUIA FLORECER",
+    "variante": "Único",
+    "sku": "TCH0018",
+    "qtd": 1,
+    "preco": 51.99,
+    "total": 51.99
+   },
+   {
+    "produto": "CONJUNTO PEITORAL+ GUIA FITA TATTOO MARINHEIRO",
+    "variante": "Único",
+    "sku": "TCH0140",
+    "qtd": 1,
+    "preco": 51.99,
+    "total": 51.99
+   }
+  ]
+ },
+ "230": {
+  "num": 230,
+  "data": "2026-11-11",
+  "hora": "12:23",
+  "cliente": "Rafaela B.",
+  "cliente_id": "f96aedceef",
+  "total": 28.98,
+  "unidades": 1,
+  "status": "Recebido",
+  "pagamento": "Getnet - Pix",
+  "envio_status": "Enviada",
+  "envio": "Frete fixo",
+  "itens": [
+   {
+    "produto": "COLEIRA DE GATO CORRIDA DE LISTRAS",
+    "variante": "Único",
+    "sku": "CAT50104",
+    "qtd": 1,
+    "preco": 15.99,
+    "total": 15.99
+   }
+  ]
+ },
+ "229": {
+  "num": 229,
+  "data": "2026-11-11",
+  "hora": "07:41",
+  "cliente": "Renata B.",
+  "cliente_id": "e20c985754",
+  "total": 78.97,
+  "unidades": 2,
+  "status": "Recebido",
+  "pagamento": "Getnet - Pix",
+  "envio_status": "Enviada",
+  "envio": "Frete fixo",
+  "itens": [
+   {
+    "produto": "COLEIRA DE GATO OCEAN",
+    "variante": "Único",
+    "sku": "TCH0162",
+    "qtd": 1,
+    "preco": 25.99,
+    "total": 25.99
+   },
+   {
+    "produto": "COLEIRA DE GATO ECO",
+    "variante": "Único",
+    "sku": "TCH0057",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   }
+  ]
+ },
  "228": {
   "num": 228,
   "data": "2026-11-10",
