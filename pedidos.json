@@ -1,4 +1,73 @@
 {
+ "241": {
+  "num": 241,
+  "data": "2026-11-12",
+  "hora": "16:44",
+  "cliente": "Clara M.",
+  "cliente_id": "9372d7998b",
+  "total": 36.98,
+  "unidades": 1,
+  "status": "Recebido",
+  "pagamento": "Getnet - Pix",
+  "envio_status": "Enviada",
+  "envio": "São Paulo",
+  "itens": [
+   {
+    "produto": "COLEIRA DE GATO CIRCUS",
+    "variante": "Único",
+    "sku": "TCH0014",
+    "qtd": 1,
+    "preco": 25.99,
+    "total": 25.99
+   }
+  ]
+ },
+ "240": {
+  "num": 240,
+  "data": "2026-11-12",
+  "hora": "13:50",
+  "cliente": "Bianca R.",
+  "cliente_id": "7a6dc48ea7",
+  "total": 64.98,
+  "unidades": 1,
+  "status": "Recebido",
+  "pagamento": "Getnet - Pix",
+  "envio_status": "Enviada",
+  "envio": "Frete fixo",
+  "itens": [
+   {
+    "produto": "CONJUNTO PEITORAL+ GUIA FITA TATTOO MARINHEIRO",
+    "variante": "Único",
+    "sku": "TCH0140",
+    "qtd": 1,
+    "preco": 51.99,
+    "total": 51.99
+   }
+  ]
+ },
+ "239": {
+  "num": 239,
+  "data": "2026-11-12",
+  "hora": "11:01",
+  "cliente": "Jonatas F.",
+  "cliente_id": "ab165eaf35",
+  "total": 110.98,
+  "unidades": 1,
+  "status": "Recebido",
+  "pagamento": "Getnet - Pix",
+  "envio_status": "Enviada",
+  "envio": "São Paulo",
+  "itens": [
+   {
+    "produto": "CONJUNTO PEITORAL+ GUIA NEOPRENE FLORECER",
+    "variante": "Único",
+    "sku": "TCH0008",
+    "qtd": 1,
+    "preco": 99.99,
+    "total": 99.99
+   }
+  ]
+ },
  "238": {
   "num": 238,
   "data": "2026-11-12",
