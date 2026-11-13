@@ -1,4 +1,215 @@
 {
+ "246": {
+  "num": 246,
+  "data": "2026-11-12",
+  "hora": "22:00",
+  "cliente": "Rafael A.",
+  "cliente_id": "3696b963a4",
+  "total": 491.88,
+  "unidades": 12,
+  "status": "Recebido",
+  "pagamento": "Getnet - Cartão de crédito",
+  "envio_status": "Por embalar",
+  "envio": "Frete grátis a partir de R$ 115,00",
+  "itens": [
+   {
+    "produto": "PEITORAL H + GUIA BLACK PP",
+    "variante": "",
+    "sku": "TCH0027",
+    "qtd": 1,
+    "preco": 89.99,
+    "total": 89.99
+   },
+   {
+    "produto": "PEITORAL H + GUIA SUNNY PP",
+    "variante": "",
+    "sku": "TCH0029",
+    "qtd": 1,
+    "preco": 89.99,
+    "total": 89.99
+   },
+   {
+    "produto": "COLEIRA BLACK",
+    "variante": "M",
+    "sku": "354290811M",
+    "qtd": 1,
+    "preco": 26.99,
+    "total": 26.99
+   },
+   {
+    "produto": "COLEIRA BLACK",
+    "variante": "P",
+    "sku": "354290811P",
+    "qtd": 1,
+    "preco": 26.99,
+    "total": 26.99
+   },
+   {
+    "produto": "COLEIRA BLACK",
+    "variante": "G",
+    "sku": "354290811G",
+    "qtd": 1,
+    "preco": 26.99,
+    "total": 26.99
+   },
+   {
+    "produto": "COLEIRA LAGOON",
+    "variante": "M",
+    "sku": "354290891M",
+    "qtd": 1,
+    "preco": 26.99,
+    "total": 26.99
+   },
+   {
+    "produto": "COLEIRA OCEAN",
+    "variante": "M",
+    "sku": "354291238M",
+    "qtd": 1,
+    "preco": 26.99,
+    "total": 26.99
+   },
+   {
+    "produto": "ADAPTADOR DE CINTO DE SEGURANÇA AMARELINDO",
+    "variante": "Único",
+    "sku": "TCH0074",
+    "qtd": 1,
+    "preco": 47.99,
+    "total": 47.99
+   },
+   {
+    "produto": "ADAPTADOR DE CINTO DE SEGURANÇA ECO",
+    "variante": "Único",
+    "sku": "TCH0061",
+    "qtd": 1,
+    "preco": 47.99,
+    "total": 47.99
+   },
+   {
+    "produto": "COLEIRA LAGOON",
+    "variante": "P",
+    "sku": "354290891P",
+    "qtd": 1,
+    "preco": 26.99,
+    "total": 26.99
+   },
+   {
+    "produto": "COLEIRA LAGOON",
+    "variante": "G",
+    "sku": "354290891G",
+    "qtd": 1,
+    "preco": 26.99,
+    "total": 26.99
+   },
+   {
+    "produto": "COLEIRA ECO",
+    "variante": "P",
+    "sku": "354290746P",
+    "qtd": 1,
+    "preco": 26.99,
+    "total": 26.99
+   }
+  ]
+ },
+ "245": {
+  "num": 245,
+  "data": "2026-11-12",
+  "hora": "19:15",
+  "cliente": "Juliana O.",
+  "cliente_id": "90525f7256",
+  "total": 38.98,
+  "unidades": 1,
+  "status": "Recebido",
+  "pagamento": "Getnet - Pix",
+  "envio_status": "Enviada",
+  "envio": "Frete fixo",
+  "itens": [
+   {
+    "produto": "COLEIRA DE GATO FLORECER",
+    "variante": "Único",
+    "sku": "TCH0015",
+    "qtd": 1,
+    "preco": 25.99,
+    "total": 25.99
+   }
+  ]
+ },
+ "244": {
+  "num": 244,
+  "data": "2026-11-12",
+  "hora": "18:47",
+  "cliente": "Tamara C.",
+  "cliente_id": "1181e2cfc7",
+  "total": 54.97,
+  "unidades": 2,
+  "status": "Recebido",
+  "pagamento": "Getnet - Pix",
+  "envio_status": "Enviada",
+  "envio": "Frete fixo",
+  "itens": [
+   {
+    "produto": "COLEIRA DE GATO POA POA",
+    "variante": "Único",
+    "sku": "TCH0055",
+    "qtd": 1,
+    "preco": 25.99,
+    "total": 25.99
+   },
+   {
+    "produto": "COLEIRA DE GATO TATTOO MARINHEIRO",
+    "variante": "Único",
+    "sku": "CAT50106",
+    "qtd": 1,
+    "preco": 15.99,
+    "total": 15.99
+   }
+  ]
+ },
+ "243": {
+  "num": 243,
+  "data": "2026-11-12",
+  "hora": "18:38",
+  "cliente": "Júlia J.",
+  "cliente_id": "c6fdf8ec1c",
+  "total": 38.98,
+  "unidades": 1,
+  "status": "Recebido",
+  "pagamento": "Getnet - Pix",
+  "envio_status": "Enviada",
+  "envio": "Frete fixo",
+  "itens": [
+   {
+    "produto": "COLEIRA DE GATO TECHNO",
+    "variante": "Único",
+    "sku": "TCH0016",
+    "qtd": 1,
+    "preco": 25.99,
+    "total": 25.99
+   }
+  ]
+ },
+ "242": {
+  "num": 242,
+  "data": "2026-11-12",
+  "hora": "17:45",
+  "cliente": "Victor B.",
+  "cliente_id": "c4ffbfdf92",
+  "total": 76.98,
+  "unidades": 1,
+  "status": "Recebido",
+  "pagamento": "Getnet - Cartão de crédito",
+  "envio_status": "Enviada",
+  "envio": "Frete fixo",
+  "itens": [
+   {
+    "produto": "PEITORAL H SUNNY",
+    "variante": "M",
+    "sku": "354290779M",
+    "qtd": 1,
+    "preco": 63.99,
+    "total": 63.99
+   }
+  ]
+ },
  "241": {
   "num": 241,
   "data": "2026-11-12",
