@@ -1,4 +1,35 @@
 {
+ "249": {
+  "num": 249,
+  "data": "2026-11-13",
+  "hora": "01:16",
+  "cliente": "Natalia L.",
+  "cliente_id": "5e8aa8f0c1",
+  "total": 54.97,
+  "unidades": 2,
+  "status": "Recebido",
+  "pagamento": "Getnet - Pix",
+  "envio_status": "Enviada",
+  "envio": "Frete fixo",
+  "itens": [
+   {
+    "produto": "COLEIRA DE GATO TATTOO MARINHEIRO",
+    "variante": "Único",
+    "sku": "CAT50106",
+    "qtd": 1,
+    "preco": 15.99,
+    "total": 15.99
+   },
+   {
+    "produto": "COLEIRA DE GATO TATTOO LOVE",
+    "variante": "Único",
+    "sku": "CAT50105",
+    "qtd": 1,
+    "preco": 25.99,
+    "total": 25.99
+   }
+  ]
+ },
  "248": {
   "num": 248,
   "data": "2026-11-12",
