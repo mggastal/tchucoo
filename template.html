@@ -145,7 +145,7 @@ footer{border-top:1px solid var(--line);padding:22px 20px;text-align:center;font
     <div class="card"><h3>Faturamento × investimento</h3>
       <div class="legend"><span><i style="background:var(--fat)"></i>Faturamento</span><span><i style="background:var(--inv)"></i>Investimento</span></div>
       <div class="cv"><canvas id="cDia"></canvas></div></div>
-    <div class="card"><h3><span>ROAS <span class="gtx">diário</span></span></h3><div class="ch">Faturamento ÷ investimento</div>
+    <div class="card"><h3><span>ROAS <span class="gtx">diário</span></span></h3><div class="ch">Faturamento ÷ investimento · dias com investimento abaixo de R$ 5 ficam de fora</div>
       <div class="cv"><canvas id="cRoas"></canvas></div></div>
     <div class="card"><h3><span>Ticket médio <span class="gtx">diário</span></span></h3><div class="ch">Faturamento ÷ pedidos</div>
       <div class="cv sm"><canvas id="cTicket"></canvas></div></div>
@@ -423,7 +423,7 @@ function renderDiario(A){
   chart('cDia', {type:'bar', data:{labels:L, datasets:[barra('Faturamento',R.map(r=>r.fat),C.fat), barra('Investimento',R.map(r=>r.inv),C.inv)]},
     options:{scales:{x:eixoX, y:eixoY(kfmt)}, plugins:{tooltip:{callbacks:{...tip, label:c=>c.dataset.label+': '+brl(c.raw), afterBody:c=>{const r=R[c[0].dataIndex]; return S.gran==='dia'?[]:['ROAS: '+xr(div(r.fat,r.inv)), 'Pedidos: '+r.ped];}}},
       datalabels:{display:c=>!denso && c.dataset.data[c.dataIndex]>0 ? 'auto':false}}}}, rkf);
-  const roas = R.map(r=>r.inv?r.fat/r.inv:null);
+  const roas = R.map(r=>r.inv>=5?r.fat/r.inv:null);   // investimento < R$ 5 (ex.: 03/09, campanha VENDAS começando) distorce o gráfico
   chart('cRoas', {type:'line', data:{labels:L, datasets:[{label:'ROAS', data:roas, borderColor:C.maroon, backgroundColor:C.maroon, borderWidth:2, pointRadius:R.length>45?0:3, pointHoverRadius:5, spanGaps:true, tension:.25}]},
     options:{scales:{x:eixoX, y:eixoY(v=>v+'x')}, plugins:{tooltip:{callbacks:{...tip, label:c=>'ROAS: '+xr(c.raw)}}, datalabels:{align:'top', display:denso?false:'auto'}}}}, v=>v==null?'':v.toLocaleString('pt-BR',{maximumFractionDigits:1})+'x');
   const tk = R.map(r=>r.ped?r.fat/r.ped:null);
