@@ -1,4 +1,43 @@
 {
+ "248": {
+  "num": 248,
+  "data": "2026-11-12",
+  "hora": "23:34",
+  "cliente": "Viviany R.",
+  "cliente_id": "122fbf6618",
+  "total": 117.96,
+  "unidades": 4,
+  "status": "Recebido",
+  "pagamento": "Getnet - Pix",
+  "envio_status": "Enviada",
+  "envio": "Frete grátis a partir de R$ 115,00",
+  "itens": [
+   {
+    "produto": "COLEIRA DE GATO ECO",
+    "variante": "Único",
+    "sku": "TCH0057",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   },
+   {
+    "produto": "COLEIRA DE GATO POA POA",
+    "variante": "Único",
+    "sku": "TCH0055",
+    "qtd": 1,
+    "preco": 25.99,
+    "total": 25.99
+   },
+   {
+    "produto": "COLEIRA DE GATO FLORECER",
+    "variante": "Único",
+    "sku": "TCH0015",
+    "qtd": 2,
+    "preco": 25.99,
+    "total": 51.98
+   }
+  ]
+ },
  "247": {
   "num": 247,
   "data": "2026-11-12",
