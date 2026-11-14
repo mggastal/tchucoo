@@ -1,4 +1,175 @@
 {
+ "255": {
+  "num": 255,
+  "data": "2026-11-13",
+  "hora": "21:36",
+  "cliente": "Miriam R.",
+  "cliente_id": "dfdfb7158e",
+  "total": 143.96,
+  "unidades": 4,
+  "status": "Recebido",
+  "pagamento": "Getnet - Pix",
+  "envio_status": "Enviada",
+  "envio": "Frete grátis a partir de R$ 115,00",
+  "itens": [
+   {
+    "produto": "COLEIRA DE GATO BLACK",
+    "variante": "Único",
+    "sku": "TCH0102",
+    "qtd": 1,
+    "preco": 45.99,
+    "total": 45.99
+   },
+   {
+    "produto": "COLEIRA DE GATO FLORECER",
+    "variante": "Único",
+    "sku": "TCH0015",
+    "qtd": 1,
+    "preco": 25.99,
+    "total": 25.99
+   },
+   {
+    "produto": "COLEIRA DE GATO POA POA",
+    "variante": "Único",
+    "sku": "TCH0055",
+    "qtd": 1,
+    "preco": 25.99,
+    "total": 25.99
+   },
+   {
+    "produto": "COLEIRA DE GATO SUNNY",
+    "variante": "Único",
+    "sku": "TCH0054",
+    "qtd": 1,
+    "preco": 45.99,
+    "total": 45.99
+   }
+  ]
+ },
+ "254": {
+  "num": 254,
+  "data": "2026-11-13",
+  "hora": "16:38",
+  "cliente": "Luísa M.",
+  "cliente_id": "bbf0c49402",
+  "total": 38.98,
+  "unidades": 1,
+  "status": "Recebido",
+  "pagamento": "Getnet - Cartão de crédito",
+  "envio_status": "Enviada",
+  "envio": "Frete fixo",
+  "itens": [
+   {
+    "produto": "COLEIRA DE GATO TATTOO LOVE",
+    "variante": "Único",
+    "sku": "CAT50105",
+    "qtd": 1,
+    "preco": 25.99,
+    "total": 25.99
+   }
+  ]
+ },
+ "253": {
+  "num": 253,
+  "data": "2026-11-13",
+  "hora": "15:45",
+  "cliente": "Marina A.",
+  "cliente_id": "57302355f2",
+  "total": 199.02,
+  "unidades": 4,
+  "status": "Recebido",
+  "pagamento": "Getnet - Cartão de crédito",
+  "envio_status": "Enviada",
+  "envio": "Frete grátis a partir de R$ 115,00",
+  "itens": [
+   {
+    "produto": "COLEIRA DE GATO CIRCUS",
+    "variante": "Único",
+    "sku": "TCH0014",
+    "qtd": 1,
+    "preco": 25.99,
+    "total": 25.99
+   },
+   {
+    "produto": "COLEIRA DE GATO FLORECER",
+    "variante": "Único",
+    "sku": "TCH0015",
+    "qtd": 1,
+    "preco": 25.99,
+    "total": 25.99
+   },
+   {
+    "produto": "CONJUNTO PEITORAL+ GUIA AMARELINDO",
+    "variante": "Único",
+    "sku": "TCH0067",
+    "qtd": 1,
+    "preco": 73.52,
+    "total": 73.52
+   },
+   {
+    "produto": "CONJUNTO PEITORAL+ GUIA PINK",
+    "variante": "Único",
+    "sku": "TCH0068",
+    "qtd": 1,
+    "preco": 73.52,
+    "total": 73.52
+   }
+  ]
+ },
+ "252": {
+  "num": 252,
+  "data": "2026-11-13",
+  "hora": "15:25",
+  "cliente": "Emano R.",
+  "cliente_id": "6e508621f6",
+  "total": 52.98,
+  "unidades": 1,
+  "status": "Recebido",
+  "pagamento": "Getnet - Pix",
+  "envio_status": "Enviada",
+  "envio": "Frete fixo",
+  "itens": [
+   {
+    "produto": "PEITORAL H WOODSMAN",
+    "variante": "G",
+    "sku": "354291041G",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   }
+  ]
+ },
+ "251": {
+  "num": 251,
+  "data": "2026-11-13",
+  "hora": "15:04",
+  "cliente": "Shalom Y.",
+  "cliente_id": "840965b198",
+  "total": 54.97,
+  "unidades": 2,
+  "status": "Recebido",
+  "pagamento": "Getnet - Cartão de crédito",
+  "envio_status": "Enviada",
+  "envio": "Frete fixo",
+  "itens": [
+   {
+    "produto": "COLEIRA DE GATO POA POA",
+    "variante": "Único",
+    "sku": "TCH0055",
+    "qtd": 1,
+    "preco": 25.99,
+    "total": 25.99
+   },
+   {
+    "produto": "COLEIRA DE GATO CORRIDA DE LISTRAS",
+    "variante": "Único",
+    "sku": "CAT50104",
+    "qtd": 1,
+    "preco": 15.99,
+    "total": 15.99
+   }
+  ]
+ },
  "250": {
   "num": 250,
   "data": "2026-11-13",
