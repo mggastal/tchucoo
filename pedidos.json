@@ -1,4 +1,74 @@
 {
+ "259": {
+  "num": 259,
+  "data": "2026-11-14",
+  "hora": "14:16",
+  "cliente": "Ananda L.",
+  "cliente_id": "13adcaea31",
+  "total": 199.68,
+  "unidades": 4,
+  "status": "Recebido",
+  "pagamento": "Getnet - Cartão de crédito",
+  "envio_status": "Enviada",
+  "envio": "São Paulo",
+  "itens": [
+   {
+    "produto": "GUIA BORDÔ",
+    "variante": "G",
+    "sku": "7890774124681",
+    "qtd": 1,
+    "preco": 60.72,
+    "total": 60.72
+   },
+   {
+    "produto": "PEITORAL H BORDÔ",
+    "variante": "G",
+    "sku": "7890774124476",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   },
+   {
+    "produto": "PEITORAL H FLORECER",
+    "variante": "G",
+    "sku": "354290538G",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   },
+   {
+    "produto": "ADAPTADOR DE CINTO DE SEGURANÇA FLORECER",
+    "variante": "Único",
+    "sku": "TCH0020",
+    "qtd": 1,
+    "preco": 47.99,
+    "total": 47.99
+   }
+  ]
+ },
+ "258": {
+  "num": 258,
+  "data": "2026-11-14",
+  "hora": "14:08",
+  "cliente": "Fernando C.",
+  "cliente_id": "a6066ae73f",
+  "total": 42.98,
+  "unidades": 1,
+  "status": "Recebido",
+  "pagamento": "Getnet - Pix",
+  "envio_status": "Enviada",
+  "envio": "Frete fixo",
+  "itens": [
+   {
+    "produto": "PEITORAL MOLETOM AERADO OCEAN",
+    "variante": "PP",
+    "sku": "354290926PP",
+    "qtd": 1,
+    "preco": 29.99,
+    "total": 29.99
+   }
+  ]
+ },
  "255": {
   "num": 255,
   "data": "2026-11-13",
