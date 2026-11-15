@@ -1,4 +1,43 @@
 {
+ "260": {
+  "num": 260,
+  "data": "2026-11-14",
+  "hora": "19:06",
+  "cliente": "Eduarda L.",
+  "cliente_id": "54b98ba4d0",
+  "total": 127.77,
+  "unidades": 3,
+  "status": "Recebido",
+  "pagamento": "Getnet - Pix",
+  "envio_status": "Enviada",
+  "envio": "Frete grátis a partir de R$ 115,00",
+  "itens": [
+   {
+    "produto": "PEITORAL H FLORECER",
+    "variante": "M",
+    "sku": "354290538M",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   },
+   {
+    "produto": "COLEIRA FLORECER",
+    "variante": "M",
+    "sku": "354290583M",
+    "qtd": 1,
+    "preco": 26.99,
+    "total": 26.99
+   },
+   {
+    "produto": "GUIA FLORECER",
+    "variante": "G",
+    "sku": "354290557G",
+    "qtd": 1,
+    "preco": 60.79,
+    "total": 60.79
+   }
+  ]
+ },
  "259": {
   "num": 259,
   "data": "2026-11-14",
