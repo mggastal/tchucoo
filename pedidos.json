@@ -108,6 +108,60 @@
    }
   ]
  },
+ "257": {
+  "num": 257,
+  "data": "2026-11-14",
+  "hora": "13:55",
+  "cliente": "Amanda E.",
+  "cliente_id": "39cec4050a",
+  "total": 80.97,
+  "unidades": 2,
+  "status": "Recusado",
+  "pagamento": "Getnet - Pix",
+  "envio_status": "Por embalar",
+  "envio": "Frete fixo",
+  "itens": [
+   {
+    "produto": "CONJUNTO PEITORAL+ GUIA FITA ECO",
+    "variante": "Único",
+    "sku": "TCH0049",
+    "qtd": 1,
+    "preco": 51.99,
+    "total": 51.99
+   },
+   {
+    "produto": "COLEIRA DE GATO CORRIDA DE LISTRAS",
+    "variante": "Único",
+    "sku": "CAT50104",
+    "qtd": 1,
+    "preco": 15.99,
+    "total": 15.99
+   }
+  ]
+ },
+ "256": {
+  "num": 256,
+  "data": "2026-11-14",
+  "hora": "11:34",
+  "cliente": "Andrea B.",
+  "cliente_id": "b09a9fbd7e",
+  "total": 58.96,
+  "unidades": 3,
+  "status": "Recebido",
+  "pagamento": "Getnet - Pix",
+  "envio_status": "Enviada",
+  "envio": "São Paulo",
+  "itens": [
+   {
+    "produto": "COLEIRA DE GATO CORRIDA DE LISTRAS",
+    "variante": "Único",
+    "sku": "CAT50104",
+    "qtd": 3,
+    "preco": 15.99,
+    "total": 47.97
+   }
+  ]
+ },
  "255": {
   "num": 255,
   "data": "2026-11-13",
