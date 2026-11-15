@@ -1,4 +1,175 @@
 {
+ "265": {
+  "num": 265,
+  "data": "2026-11-15",
+  "hora": "18:49",
+  "cliente": "Aline C.",
+  "cliente_id": "446eef7f18",
+  "total": 84.51,
+  "unidades": 1,
+  "status": "Recebido",
+  "pagamento": "Getnet - Pix",
+  "envio_status": "Enviada",
+  "envio": "São Paulo",
+  "itens": [
+   {
+    "produto": "CONJUNTO PEITORAL+ GUIA FITA HAPPY",
+    "variante": "Único",
+    "sku": "TCH0048",
+    "qtd": 1,
+    "preco": 73.52,
+    "total": 73.52
+   }
+  ]
+ },
+ "264": {
+  "num": 264,
+  "data": "2026-11-15",
+  "hora": "15:59",
+  "cliente": "Celio A.",
+  "cliente_id": "dadf4f673b",
+  "total": 159.96,
+  "unidades": 4,
+  "status": "Recusado",
+  "pagamento": "Getnet - Pix",
+  "envio_status": "Por embalar",
+  "envio": "Frete grátis a partir de R$ 115,00",
+  "itens": [
+   {
+    "produto": "PEITORAL H OCEAN",
+    "variante": "G",
+    "sku": "354291235G",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   },
+   {
+    "produto": "PEITORAL H PARADISE",
+    "variante": "M",
+    "sku": "354291044M",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   },
+   {
+    "produto": "PEITORAL H ECO",
+    "variante": "M",
+    "sku": "354290796M",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   },
+   {
+    "produto": "PEITORAL H SUNNY",
+    "variante": "G",
+    "sku": "354290779G",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   }
+  ]
+ },
+ "263": {
+  "num": 263,
+  "data": "2026-11-15",
+  "hora": "12:08",
+  "cliente": "Adriana S.",
+  "cliente_id": "715fec643e",
+  "total": 42.98,
+  "unidades": 1,
+  "status": "Recebido",
+  "pagamento": "Getnet - Pix",
+  "envio_status": "Enviada",
+  "envio": "Frete fixo",
+  "itens": [
+   {
+    "produto": "PEITORAL MOLETOM AERADO TATTOO LOVE",
+    "variante": "PP",
+    "sku": "354290955PP",
+    "qtd": 1,
+    "preco": 29.99,
+    "total": 29.99
+   }
+  ]
+ },
+ "262": {
+  "num": 262,
+  "data": "2026-11-15",
+  "hora": "10:47",
+  "cliente": "Janaina P.",
+  "cliente_id": "ae2a46a02e",
+  "total": 213.94,
+  "unidades": 6,
+  "status": "Recebido",
+  "pagamento": "Getnet - Pix",
+  "envio_status": "Enviada",
+  "envio": "Frete grátis a partir de R$ 115,00",
+  "itens": [
+   {
+    "produto": "COLEIRA TATTOO LOVE",
+    "variante": "M",
+    "sku": "354291076M",
+    "qtd": 1,
+    "preco": 26.99,
+    "total": 26.99
+   },
+   {
+    "produto": "PEITORAL H TATTOO LOVE",
+    "variante": "M",
+    "sku": "354291058M",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   },
+   {
+    "produto": "COLEIRA TATTOO MARINHEIRO",
+    "variante": "P",
+    "sku": "354291071P",
+    "qtd": 1,
+    "preco": 26.99,
+    "total": 26.99
+   },
+   {
+    "produto": "PEITORAL H TATTOO LOVE",
+    "variante": "P",
+    "sku": "354291058P",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   },
+   {
+    "produto": "PEITORAL H TATTOO MARINHEIRO",
+    "variante": "P",
+    "sku": "354290998P",
+    "qtd": 2,
+    "preco": 39.99,
+    "total": 79.98
+   }
+  ]
+ },
+ "261": {
+  "num": 261,
+  "data": "2026-11-15",
+  "hora": "01:02",
+  "cliente": "Geralda Z.",
+  "cliente_id": "ec5437c0b6",
+  "total": 84.51,
+  "unidades": 1,
+  "status": "Recebido",
+  "pagamento": "Getnet - Pix",
+  "envio_status": "Enviada",
+  "envio": "São Paulo",
+  "itens": [
+   {
+    "produto": "CONJUNTO PEITORAL+ GUIA FITA HAHAHA",
+    "variante": "Único",
+    "sku": "TCH0139",
+    "qtd": 1,
+    "preco": 73.52,
+    "total": 73.52
+   }
+  ]
+ },
  "260": {
   "num": 260,
   "data": "2026-11-14",
