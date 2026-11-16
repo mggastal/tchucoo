@@ -455,14 +455,14 @@ function renderPeriodos(){
   ;
   [['cMes',meses],['cSem',sems]].forEach(([id,R])=>{
     chart(id, {type:'bar', data:{labels:R.map(r=>r.rot), datasets:[barra('Faturamento',R.map(r=>r.fat),C.fat), barra('Investimento',R.map(r=>r.inv),C.inv)]},
-      options:{scales:{x:eixoX, y:eixoY(kfmt)}, plugins:{tooltip:{callbacks:{title:c=>{const r=R[c[0].dataIndex]; return dBR(r.ini)+' a '+dBR(r.fim)+' ('+r.dias+' dias)';},
+      options:{scales:{x:eixoX, y:eixoY(kfmt)}, plugins:{tooltip:{callbacks:{title:c=>{const r=R[c[0].dataIndex]; return dBR(r.ini)+' até '+dBR(r.fim)+' ('+r.dias+' dias)';},
         label:c=>c.dataset.label+': '+brl(c.raw), afterBody:c=>{const r=R[c[0].dataIndex]; return ['ROAS: '+xr(div(r.fat,r.inv)), 'Pedidos: '+r.ped, 'Ticket: '+(r.ped?brl(r.fat/r.ped):'–')];}}}}}}, rkf);
   });
   const cab = ['Período','Dias','Pedidos','Faturamento','Fat./dia','Ticket médio','Investimento','ROAS','Custo/pedido'];
   const lin = R => R.slice().reverse().map(r=>[[r.rot, r.k], [r.dias, r.dias], [n0(r.ped), r.ped], [brl(r.fat), r.fat], [brl(r.fat/r.dias), r.fat/r.dias],
     [r.ped?brl(r.fat/r.ped):'–', r.ped?r.fat/r.ped:-1], [brl(r.inv), r.inv], [xr(div(r.fat,r.inv)), div(r.fat,r.inv)??-1], [r.ped?brl(r.inv/r.ped):'–', r.ped?r.inv/r.ped:-1]]);
   tabela('tMes', cab, lin(meses));
-  tabela('tSem', ['Semana'].concat(cab.slice(1)), lin(sems).map(l=>{ const r=sems.find(s=>s.k===l[0][1]); l[0]=[dBR(r.ini)+' a '+dBR(r.fim), r.k]; return l; }));
+  tabela('tSem', ['Semana'].concat(cab.slice(1)), lin(sems).map(l=>{ const r=sems.find(s=>s.k===l[0][1]); l[0]=[dBR(r.ini)+' até '+dBR(r.fim), r.k]; return l; }));
 }
 
 // ── horários ──
