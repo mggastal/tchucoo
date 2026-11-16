@@ -1,4 +1,51 @@
 {
+ "267": {
+  "num": 267,
+  "data": "2026-11-16",
+  "hora": "00:02",
+  "cliente": "Ana T.",
+  "cliente_id": "8c1f4e5bcd",
+  "total": 157.96,
+  "unidades": 4,
+  "status": "Recebido",
+  "pagamento": "Getnet - Cartão de crédito",
+  "envio_status": "Enviada",
+  "envio": "Frete grátis a partir de R$ 115,00",
+  "itens": [
+   {
+    "produto": "COLEIRA DE GATO LARANJINHA",
+    "variante": "Único",
+    "sku": "TCH0091",
+    "qtd": 1,
+    "preco": 45.99,
+    "total": 45.99
+   },
+   {
+    "produto": "COLEIRA DE GATO FLORECER",
+    "variante": "Único",
+    "sku": "TCH0015",
+    "qtd": 1,
+    "preco": 25.99,
+    "total": 25.99
+   },
+   {
+    "produto": "COLEIRA DE GATO ECO",
+    "variante": "Único",
+    "sku": "TCH0057",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   },
+   {
+    "produto": "COLEIRA DE GATO AZUL",
+    "variante": "Único",
+    "sku": "TCH0090",
+    "qtd": 1,
+    "preco": 45.99,
+    "total": 45.99
+   }
+  ]
+ },
  "266": {
   "num": 266,
   "data": "2026-11-15",
