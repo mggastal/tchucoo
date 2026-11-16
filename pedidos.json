@@ -1,4 +1,35 @@
 {
+ "273": {
+  "num": 273,
+  "data": "2026-11-16",
+  "hora": "15:30",
+  "cliente": "Mariana M.",
+  "cliente_id": "4d5e51badf",
+  "total": 64.97,
+  "unidades": 2,
+  "status": "Recebido",
+  "pagamento": "Getnet - Cartão de crédito",
+  "envio_status": "Enviada",
+  "envio": "Frete fixo",
+  "itens": [
+   {
+    "produto": "COLEIRA DE GATO CIRCUS",
+    "variante": "Único",
+    "sku": "TCH0014",
+    "qtd": 1,
+    "preco": 25.99,
+    "total": 25.99
+   },
+   {
+    "produto": "COLEIRA DE GATO FLORECER",
+    "variante": "Único",
+    "sku": "TCH0015",
+    "qtd": 1,
+    "preco": 25.99,
+    "total": 25.99
+   }
+  ]
+ },
  "272": {
   "num": 272,
   "data": "2026-11-16",
