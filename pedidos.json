@@ -1,4 +1,35 @@
 {
+ "272": {
+  "num": 272,
+  "data": "2026-11-16",
+  "hora": "14:06",
+  "cliente": "Suelen Z.",
+  "cliente_id": "88ce625dfa",
+  "total": 101.77,
+  "unidades": 2,
+  "status": "Recebido",
+  "pagamento": "Getnet - Cartão de crédito",
+  "envio_status": "Enviada",
+  "envio": "São Paulo",
+  "itens": [
+   {
+    "produto": "GUIA ROSA",
+    "variante": "PP",
+    "sku": "354290849PP",
+    "qtd": 1,
+    "preco": 60.79,
+    "total": 60.79
+   },
+   {
+    "produto": "PEITORAL H ROSA",
+    "variante": "PP",
+    "sku": "354290866PP",
+    "qtd": 1,
+    "preco": 29.99,
+    "total": 29.99
+   }
+  ]
+ },
  "271": {
   "num": 271,
   "data": "2026-11-16",
