@@ -1,4 +1,107 @@
 {
+ "268": {
+  "num": 268,
+  "data": "2026-11-16",
+  "hora": "00:28",
+  "cliente": "Alexandre J.",
+  "cliente_id": "374285efb6",
+  "total": 502.82,
+  "unidades": 11,
+  "status": "Recebido",
+  "pagamento": "Getnet - Pix",
+  "envio_status": "Enviada",
+  "envio": "Frete grátis a partir de R$ 115,00",
+  "itens": [
+   {
+    "produto": "GUIA WOODSMAN",
+    "variante": "P",
+    "sku": "354290977P",
+    "qtd": 1,
+    "preco": 60.79,
+    "total": 60.79
+   },
+   {
+    "produto": "PEITORAL H WOODSMAN",
+    "variante": "P",
+    "sku": "354291041P",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   },
+   {
+    "produto": "COLEIRA WOODSMAN",
+    "variante": "P",
+    "sku": "354291082P",
+    "qtd": 1,
+    "preco": 26.99,
+    "total": 26.99
+   },
+   {
+    "produto": "CONJUNTO PEITORAL+ GUIA FITA CALIFÓRNIA",
+    "variante": "Único",
+    "sku": "TCH0143",
+    "qtd": 1,
+    "preco": 73.52,
+    "total": 73.52
+   },
+   {
+    "produto": "COLEIRA DE GATO CALIFÓRNIA",
+    "variante": "Único",
+    "sku": "TCH0160",
+    "qtd": 1,
+    "preco": 45.99,
+    "total": 45.99
+   },
+   {
+    "produto": "GUIA OCEAN",
+    "variante": "P",
+    "sku": "354290995P",
+    "qtd": 1,
+    "preco": 60.79,
+    "total": 60.79
+   },
+   {
+    "produto": "GUIA FLORECER",
+    "variante": "P",
+    "sku": "354290557P",
+    "qtd": 1,
+    "preco": 60.79,
+    "total": 60.79
+   },
+   {
+    "produto": "COLEIRA FLORECER",
+    "variante": "P",
+    "sku": "354290583P",
+    "qtd": 1,
+    "preco": 26.99,
+    "total": 26.99
+   },
+   {
+    "produto": "PEITORAL H FLORECER",
+    "variante": "P",
+    "sku": "354290538P",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   },
+   {
+    "produto": "PEITORAL H OCEAN",
+    "variante": "P",
+    "sku": "354291235P",
+    "qtd": 1,
+    "preco": 39.99,
+    "total": 39.99
+   },
+   {
+    "produto": "COLEIRA OCEAN",
+    "variante": "P",
+    "sku": "354291238P",
+    "qtd": 1,
+    "preco": 26.99,
+    "total": 26.99
+   }
+  ]
+ },
  "267": {
   "num": 267,
   "data": "2026-11-16",
