@@ -406,7 +406,7 @@ function porDia(A){
 function rotG(r, curto){
   const parcial = r.dias < (S.gran==='sem'?7:S.gran==='mes'?new Date(+r.d.slice(0,4), +r.d.slice(5,7), 0).getDate():1) ? '*' : '';
   if(S.gran==='mes') return MESES[+r.d.slice(5,7)-1]+'/'+r.d.slice(2,4)+parcial;
-  if(S.gran==='sem') return curto ? dBR(r.ini)+parcial : dBR(r.ini)+' a '+dBR(r.fim)+parcial;
+  if(S.gran==='sem') return curto ? [dBR(r.ini)+' até', dBR(r.fim)+parcial] : dBR(r.ini)+' até '+dBR(r.fim)+parcial;
   return dBR(r.d)+(curto?'':' '+DIAS[pd(r.d).getDay()]);
 }
 const GTX = {dia:['diário','diária','por dia'], sem:['semanal','semanal','por semana'], mes:['mensal','mensal','por mês']};
