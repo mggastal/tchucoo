@@ -1,4 +1,35 @@
 {
+ "274": {
+  "num": 274,
+  "data": "2026-11-16",
+  "hora": "19:29",
+  "cliente": "Paula K.",
+  "cliente_id": "eef0f4c8fd",
+  "total": 131.98,
+  "unidades": 2,
+  "status": "Recebido",
+  "pagamento": "Getnet - Cartão de crédito",
+  "envio_status": "Enviada",
+  "envio": "Frete grátis a partir de R$ 115,00",
+  "itens": [
+   {
+    "produto": "COLETE VELUDO COTELE ROSA CHÁ CACHORRO",
+    "variante": "Único",
+    "sku": "7890774134468",
+    "qtd": 1,
+    "preco": 65.99,
+    "total": 65.99
+   },
+   {
+    "produto": "COLETE PUFFER BORDÔ CACHORRO",
+    "variante": "Único",
+    "sku": "7890774124278",
+    "qtd": 1,
+    "preco": 65.99,
+    "total": 65.99
+   }
+  ]
+ },
  "273": {
   "num": 273,
   "data": "2026-11-16",
