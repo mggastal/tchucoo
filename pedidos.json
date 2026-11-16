@@ -1,4 +1,27 @@
 {
+ "266": {
+  "num": 266,
+  "data": "2026-11-15",
+  "hora": "22:45",
+  "cliente": "Maria C.",
+  "cliente_id": "a17c6e643a",
+  "total": 62.98,
+  "unidades": 1,
+  "status": "Recebido",
+  "pagamento": "Getnet - Pix",
+  "envio_status": "Enviada",
+  "envio": "São Paulo",
+  "itens": [
+   {
+    "produto": "CONJUNTO PEITORAL+ GUIA FLORECER",
+    "variante": "Único",
+    "sku": "TCH0018",
+    "qtd": 1,
+    "preco": 51.99,
+    "total": 51.99
+   }
+  ]
+ },
  "265": {
   "num": 265,
   "data": "2026-11-15",
