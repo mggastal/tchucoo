@@ -1,4 +1,27 @@
 {
+ "276": {
+  "num": 276,
+  "data": "2026-11-16",
+  "hora": "23:49",
+  "cliente": "Luiza O.",
+  "cliente_id": "593dfa6b63",
+  "total": 26.98,
+  "unidades": 1,
+  "status": "Recebido",
+  "pagamento": "Getnet - Pix",
+  "envio_status": "Enviada",
+  "envio": "São Paulo",
+  "itens": [
+   {
+    "produto": "COLEIRA DE GATO CORRIDA DE LISTRAS",
+    "variante": "Único",
+    "sku": "CAT50104",
+    "qtd": 1,
+    "preco": 15.99,
+    "total": 15.99
+   }
+  ]
+ },
  "275": {
   "num": 275,
   "data": "2026-11-16",
