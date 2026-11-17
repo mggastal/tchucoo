@@ -1,4 +1,27 @@
 {
+ "275": {
+  "num": 275,
+  "data": "2026-11-16",
+  "hora": "21:37",
+  "cliente": "Mateus F.",
+  "cliente_id": "a16ee9c124",
+  "total": 38.98,
+  "unidades": 1,
+  "status": "Recebido",
+  "pagamento": "Getnet - Cartão de crédito",
+  "envio_status": "Enviada",
+  "envio": "Frete fixo",
+  "itens": [
+   {
+    "produto": "COLEIRA DE GATO WOODSMAN",
+    "variante": "Único",
+    "sku": "TCH0167",
+    "qtd": 1,
+    "preco": 25.99,
+    "total": 25.99
+   }
+  ]
+ },
  "274": {
   "num": 274,
   "data": "2026-11-16",
