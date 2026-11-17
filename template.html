@@ -43,7 +43,7 @@ h2{font-family:'Baloo 2';font-size:21px;font-weight:600;color:var(--maroon);marg
 .sub{color:var(--muted);font-size:12.5px;margin-bottom:12px}
 .periodo{font-size:13px;color:var(--ink2);margin-bottom:12px}
 .periodo b{color:var(--maroon)}
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
 .kpi{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
 .kpi .kl{font-size:11.5px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
 .kpi .kv{font-size:27px;font-weight:600;line-height:1.15;margin-top:4px;color:var(--ink)}
@@ -301,7 +301,7 @@ function agrega(ini, fim){
   const ms = M.filter(m => m.data>=ini && m.data<=fim && usaCamp(m.c));
   const fat = ps.reduce((a,p)=>a+p.total,0), inv = ms.reduce((a,m)=>a+m.inv,0);
   const unid = ps.reduce((a,p)=>a+p.unid,0), dias = nDias(ini,fim);
-  return {ps, ms, fat, inv, unid, ped:ps.length, dias, roas:div(fat,inv), ticket:div(fat,ps.length), cpp:div(inv,ps.length), fatDia:fat/dias};
+  return {ps, ms, fat, inv, unid, ped:ps.length, dias, roas:div(fat,inv), ticket:div(fat,ps.length), cpp:div(inv,ps.length), cpu:div(inv,unid), bvf:fat?inv/fat*100:null, fatDia:fat/dias};
 }
 
 // ── presets ──
@@ -384,10 +384,12 @@ function renderKpis(A, B, ok){
     ['Faturamento', brl(A.fat), delta(A.fat,B.fat,ok), 'hl'],
     ['ROAS', xr(A.roas), delta(A.roas,B.roas,ok), 'hl'],
     ['Investimento', brl(A.inv), delta(A.inv,B.inv,ok)],
+    ['Budget vs faturamento', pct(A.bvf), delta(A.bvf,B.bvf,ok,true)],
     ['Pedidos', n0(A.ped), delta(A.ped,B.ped,ok)],
     ['Ticket médio', A.ticket==null?'–':brl(A.ticket), delta(A.ticket,B.ticket,ok)],
     ['Faturamento por dia', brl(A.fatDia), delta(A.fatDia,B.fatDia,ok)],
     ['Custo por pedido', A.cpp==null?'–':brl(A.cpp), delta(A.cpp,B.cpp,ok,true)],
+    ['Custo por unidade', A.cpu==null?'–':brl(A.cpu), delta(A.cpu,B.cpu,ok,true)],
     ['Unidades vendidas', n0(A.unid), `${A.ped?(A.unid/A.ped).toLocaleString('pt-BR',{maximumFractionDigits:1}):'–'} por pedido`],
   ];
   kpis.innerHTML = K.map(k=>`<div class="kpi ${k[3]||''}"><div class="kl">${k[0]}</div><div class="kv">${k[1]}</div><div class="kd">${k[2]}</div></div>`).join('');
@@ -671,7 +673,7 @@ btnWpp.onclick = () => {
   const tit = `*${pr&&!['tudo','black'].includes(S.preset)?pr[1]+' ':''}${S.preset==='black'?'Black ':''}(${dBR(S.ini)} a ${dBR(S.fim)})*`;
   const inv = S.modo==='vendas' ? 'Investimento em vendas' : 'Investimento total';
   const txt = [tit, `*Vendas:* ${brl(A.fat)}`, `*Pedidos:* ${A.ped}`, `*Unidades:* ${A.unid}`, `*Ticket médio:* ${A.ticket?brl(A.ticket):'–'}`,
-    `*Média por dia:* ${brl(A.fatDia)}`, `*${inv}:* ${brl(A.inv)}`, `*Custo por pedido:* ${A.cpp?brl(A.cpp):'–'}`, `*ROAS:* ${xr(A.roas)}`].join('\n');
+    `*Média por dia:* ${brl(A.fatDia)}`, `*${inv}:* ${brl(A.inv)}`, `*Budget vs faturamento:* ${pct(A.bvf)}`, `*ROAS:* ${xr(A.roas)}`].join('\n');
   const ok = () => { toast.textContent='Resumo copiado'; toast.classList.add('on'); setTimeout(()=>toast.classList.remove('on'),1800); };
   if(navigator.clipboard) navigator.clipboard.writeText(txt).then(ok, ()=>prompt('Copie o resumo:', txt)); else prompt('Copie o resumo:', txt);
 };
