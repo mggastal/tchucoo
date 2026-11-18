@@ -1,4 +1,27 @@
 {
+ "280": {
+  "num": 280,
+  "data": "2026-11-18",
+  "hora": "08:31",
+  "cliente": "Raquel O.",
+  "cliente_id": "4b8c13a6ad",
+  "total": 111.99,
+  "unidades": 1,
+  "status": "Recebido",
+  "pagamento": "Getnet - Cartão de crédito",
+  "envio_status": "Enviada",
+  "envio": "Frete fixo",
+  "itens": [
+   {
+    "produto": "CONJUNTO PEITORAL+ GUIA NEOPRENE TECHNO",
+    "variante": "Único",
+    "sku": "TCH0009",
+    "qtd": 1,
+    "preco": 99.0,
+    "total": 99.0
+   }
+  ]
+ },
  "279": {
   "num": 279,
   "data": "2026-11-17",
