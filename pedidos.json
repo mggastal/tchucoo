@@ -1,4 +1,141 @@
 {
+ "286": {
+  "num": 286,
+  "data": "2026-11-20",
+  "hora": "14:11",
+  "cliente": "Luisa L.",
+  "cliente_id": "9025b68f79",
+  "total": 147.04,
+  "unidades": 2,
+  "status": "Recebido",
+  "pagamento": "Getnet - Cartão de crédito",
+  "envio_status": "Enviada",
+  "envio": "Frete grátis a partir de R$ 115,00",
+  "itens": []
+ },
+ "285": {
+  "num": 285,
+  "data": "2026-11-20",
+  "hora": "07:26",
+  "cliente": "Ana F.",
+  "cliente_id": "e0138fd711",
+  "total": 123.77,
+  "unidades": 2,
+  "status": "Recebido",
+  "pagamento": "Getnet - Pix",
+  "envio_status": "Enviada",
+  "envio": "Frete fixo",
+  "itens": [
+   {
+    "produto": "GUIA FLORECER",
+    "variante": "P",
+    "sku": "354290557P",
+    "qtd": 1,
+    "preco": 60.79,
+    "total": 60.79
+   },
+   {
+    "produto": "PEITORAL H FLORECER",
+    "variante": "P",
+    "sku": "354290538P",
+    "qtd": 1,
+    "preco": 49.99,
+    "total": 49.99
+   }
+  ]
+ },
+ "284": {
+  "num": 284,
+  "data": "2026-11-19",
+  "hora": "18:26",
+  "cliente": "Rita F.",
+  "cliente_id": "4b84606753",
+  "total": 28.98,
+  "unidades": 1,
+  "status": "Recebido",
+  "pagamento": "Getnet - Pix",
+  "envio_status": "Enviada",
+  "envio": "Frete fixo",
+  "itens": [
+   {
+    "produto": "COLEIRA CORRIDA DE LISTRAS",
+    "variante": "PP",
+    "sku": "354291079PP",
+    "qtd": 1,
+    "preco": 15.99,
+    "total": 15.99
+   }
+  ]
+ },
+ "283": {
+  "num": 283,
+  "data": "2026-11-19",
+  "hora": "17:11",
+  "cliente": "Nathali C.",
+  "cliente_id": "80694ec2d2",
+  "total": 28.98,
+  "unidades": 1,
+  "status": "Recusado",
+  "pagamento": "Getnet - Pix",
+  "envio_status": "Por embalar",
+  "envio": "Frete fixo",
+  "itens": [
+   {
+    "produto": "COLEIRA DE GATO CORRIDA DE LISTRAS",
+    "variante": "Único",
+    "sku": "CAT50104",
+    "qtd": 1,
+    "preco": 15.99,
+    "total": 15.99
+   }
+  ]
+ },
+ "282": {
+  "num": 282,
+  "data": "2026-11-19",
+  "hora": "13:23",
+  "cliente": "Maria R.",
+  "cliente_id": "50bd3437a8",
+  "total": 28.98,
+  "unidades": 1,
+  "status": "Recebido",
+  "pagamento": "Getnet - Pix",
+  "envio_status": "Enviada",
+  "envio": "Frete fixo",
+  "itens": [
+   {
+    "produto": "COLEIRA DE GATO CORRIDA DE LISTRAS",
+    "variante": "Único",
+    "sku": "CAT50104",
+    "qtd": 1,
+    "preco": 15.99,
+    "total": 15.99
+   }
+  ]
+ },
+ "281": {
+  "num": 281,
+  "data": "2026-11-19",
+  "hora": "10:23",
+  "cliente": "Ana A.",
+  "cliente_id": "e20ffb283f",
+  "total": 62.98,
+  "unidades": 1,
+  "status": "Recebido",
+  "pagamento": "Getnet - Pix",
+  "envio_status": "Enviada",
+  "envio": "São Paulo",
+  "itens": [
+   {
+    "produto": "CONJUNTO PEITORAL+ GUIA FITA TATTOO MARINHEIRO",
+    "variante": "Único",
+    "sku": "TCH0140",
+    "qtd": 1,
+    "preco": 51.99,
+    "total": 51.99
+   }
+  ]
+ },
  "280": {
   "num": 280,
   "data": "2026-11-18",
