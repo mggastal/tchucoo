@@ -1,4 +1,51 @@
 {
+ "287": {
+  "num": 287,
+  "data": "2026-11-20",
+  "hora": "20:29",
+  "cliente": "Luísa A.",
+  "cliente_id": "7cd0295313",
+  "total": 169.96,
+  "unidades": 4,
+  "status": "Recebido",
+  "pagamento": "Getnet - Cartão de crédito",
+  "envio_status": "Enviada",
+  "envio": "Frete grátis a partir de R$ 115,00",
+  "itens": [
+   {
+    "produto": "COLEIRA FLORECER",
+    "variante": "M",
+    "sku": "354290583M",
+    "qtd": 1,
+    "preco": 29.99,
+    "total": 29.99
+   },
+   {
+    "produto": "PEITORAL H FLORECER",
+    "variante": "M",
+    "sku": "354290538M",
+    "qtd": 1,
+    "preco": 59.99,
+    "total": 59.99
+   },
+   {
+    "produto": "PEITORAL H CALIFÓRNIA",
+    "variante": "M",
+    "sku": "354291054M",
+    "qtd": 1,
+    "preco": 49.99,
+    "total": 49.99
+   },
+   {
+    "produto": "COLEIRA DE GATO POA POA",
+    "variante": "Único",
+    "sku": "TCH0055",
+    "qtd": 1,
+    "preco": 29.99,
+    "total": 29.99
+   }
+  ]
+ },
  "286": {
   "num": 286,
   "data": "2026-11-20",
@@ -11,7 +58,24 @@
   "pagamento": "Getnet - Cartão de crédito",
   "envio_status": "Enviada",
   "envio": "Frete grátis a partir de R$ 115,00",
-  "itens": []
+  "itens": [
+   {
+    "produto": "CONJUNTO DE GATO PEITORAL+ GUIA FITA BLACK",
+    "variante": "Único",
+    "sku": "TCH0093",
+    "qtd": 1,
+    "preco": 73.52,
+    "total": 73.52
+   },
+   {
+    "produto": "CONJUNTO PEITORAL+BABY GIRL",
+    "variante": "Único",
+    "sku": "TCH0023",
+    "qtd": 1,
+    "preco": 73.52,
+    "total": 73.52
+   }
+  ]
  },
  "285": {
   "num": 285,
