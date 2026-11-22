@@ -1,4 +1,27 @@
 {
+ "288": {
+  "num": 288,
+  "data": "2026-11-22",
+  "hora": "13:53",
+  "cliente": "Felipe M.",
+  "cliente_id": "14b3a9eac1",
+  "total": 42.98,
+  "unidades": 1,
+  "status": "Recebido",
+  "pagamento": "Getnet - Pix",
+  "envio_status": "Enviada",
+  "envio": "Frete fixo",
+  "itens": [
+   {
+    "produto": "COLEIRA HAHAHA",
+    "variante": "PP",
+    "sku": "354291087PP",
+    "qtd": 1,
+    "preco": 29.99,
+    "total": 29.99
+   }
+  ]
+ },
  "287": {
   "num": 287,
   "data": "2026-11-20",
